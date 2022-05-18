@@ -12,6 +12,8 @@ void display1(){
 
 
 char menu(){//Menu awal
+    char choice;
+    printf("\n");
     printf("==========================================================\n");
     printf("                          MY PERPUS\n");
     printf("==========================================================\n");
@@ -20,8 +22,10 @@ char menu(){//Menu awal
            "3. Edit Data\n"
            "4. Tambah Keanggotaan\n"
            "5. Exit\n"
+           "Pilihan: "
     );
-    return;
+    scanf("%c", &choice);
+    return choice;
 }
 
 
