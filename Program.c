@@ -17,10 +17,12 @@ char menu(){//Menu awal
     printf("==========================================================\n");
     printf("                          MY PERPUS\n");
     printf("==========================================================\n");
-    printf("1. Peminjaman\n"
-           "2. Cari Buku\n"
-           "3. Edit Data\n"
-           "4. Tambah Keanggotaan\n"
+    printf("1. Data Peminjaman Buku\n"
+           "2. Pinjam Buku\n"
+           "3. Pengembalian Buku\n"
+           "4. List Data Buku\n"
+           "5. Edit Data Buku\n"
+           "6. Membership"
            "0. Exit\n"
            "Pilihan: "
     );
