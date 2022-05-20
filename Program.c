@@ -5,13 +5,11 @@
 #include<windows.h>
 
 
-<<<<<<< Updated upstream
-=======
 //Data Peminjaman Buku  - ivan
 
 //Pengembalian Buku - edison
 
-char menuPengembalianBuku(){//Menu awal
+char menuPengembalianBuku(){//Menu Pengembalian Buku
     char pilihan;
     printf("\n");
     printf("==========================================================\n");
@@ -33,7 +31,6 @@ char menuPengembalianBuku(){//Menu awal
 //Anggota Baru - mae
 
 //
->>>>>>> Stashed changes
 void display1(){
     return;
 }
@@ -70,6 +67,17 @@ while (1)
         case '2':
             break;
         case '3':
+            switch (menuPengembalianBuku()){
+                case '1':
+                    break;
+                case '2':
+                    break;
+                case '0':
+                    return 0;
+                default:
+                    printf("Pilihan salah!");
+                    break;
+            } 
             break;
         case '4':
             break;
