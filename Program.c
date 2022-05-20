@@ -5,7 +5,33 @@
 #include<windows.h>
 #include <time.h>
 
+#define TABLE_SIZE 100000
+
+typedef struct DataBuku{
+    char judulBuku[100];
+    char penulis[100];
+    char tahunTerbit[5];
+    char ISBN[20];
+    char jenisBuku[10];
+    int jumlahBuku;
+}DataBuku;
+
+
 //Data Peminjaman Buku  - ivan
+void displayDataPeminjamanBuku(){
+    printf("=============================================================================================================================================\n");
+    printf("|                                                                  Daftar Buku                                                              |\n");
+    printf("=============================================================================================================================================\n");
+    printf("|                       Judul Buku                           |                  Penulis                |Tahun Terbit|    ISBN    |Jenis Buku|\n");
+    printf(" A Brief Guide to Superheroes: From Superman to the Avengers\n");
+    printf("==========================================================\n");
+    printf("");
+
+    return;
+}
+
+
+//HASH key
 
 //Pengembalian Buku - edison
 
@@ -119,6 +145,15 @@ void display1(){
 
 //
 char menu(){//Menu awal
+FILE *dataBUKU;
+DataBuku *node, *curr;
+dataBUKU = fopen("DataBuku.txt", "r");
+while (!feof(dataBUKU)){
+node = (DataBuku*)malloc(sizeof(DataBuku));
+node->next = NULL;
+}
+fclose(dataBUKU);
+char ch;
     char choice;
     printf("\n");
     printf("==========================================================\n");
@@ -144,6 +179,7 @@ while (1)
 {
     switch (menu()){
         case '1':
+            displayDataPeminjamanBuku();
             break;
         case '2':
             break;
