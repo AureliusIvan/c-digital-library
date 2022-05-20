@@ -5,6 +5,35 @@
 #include<windows.h>
 
 
+<<<<<<< Updated upstream
+=======
+//Data Peminjaman Buku  - ivan
+
+//Pengembalian Buku - edison
+
+char menuPengembalianBuku(){//Menu awal
+    char pilihan;
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     PENGEMBALIAN BUKU\n");
+    printf("==========================================================\n");
+    printf("1. Data Buku Yang Dipinjam\n"
+           "2. Kembalikan Buku\n"
+           "0. Exit\n"
+           "Pilihan: "
+    );
+    scanf("%c", &pilihan);
+    return pilihan;
+}
+
+//List Buku - soon 
+
+//Edit Buku - marcel 
+
+//Anggota Baru - mae
+
+//
+>>>>>>> Stashed changes
 void display1(){
     return;
 }
