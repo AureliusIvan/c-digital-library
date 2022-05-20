@@ -5,12 +5,23 @@
 #include<windows.h>
 
 
+//Data Peminjaman Buku  - ivan
+
+//Pengembalian Buku - edison
+
+//List Buku - soon 
+
+//Edit Buku - marcel 
+
+//Anggota Baru - mae
+
+//
 void display1(){
     return;
 }
 
 
-
+//
 char menu(){//Menu awal
     char choice;
     printf("\n");
