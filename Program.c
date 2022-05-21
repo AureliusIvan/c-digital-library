@@ -39,6 +39,65 @@ void displayDataPeminjamanBuku(){
 
 //Edit Buku - marcel 
 
+// void editBuku(){
+//     FILE* buku;
+//     FILE* bukuBaru;
+
+//     int count = 0;
+//     int n;
+
+//     buku = fopen("buku.txt", "r");
+//     bukuBaru = fopen("buku.txt", "a");
+
+//     printf("====== Menu Edit Buku ======");
+//     printf("1. Tambah buku\n");
+//     printf("2. Hapus buku\n");
+//     printf("3. Edit info buku\n");
+//     printf("0. Kembali ke menu utama\n");
+//     printf("Pilihan: ");
+//     scanf("%d", &n);
+
+//     if (n == 1)
+//     {
+//         printf("Masukkan judul buku              :  \n");
+//         printf("Masukkan nama author             :  \n");
+//         printf("Masukkan tahun terbit buku       :  \n");
+//         printf("Masukkan ISBN buku               :  \n");
+//         printf("Masukkan tipe buku               :  \n");   
+//     }
+//     else if(n == 2)
+//     {
+//         char judul[100];
+//         int i, j;
+
+//         DataBuku *temp;
+
+//         printf("Masukkan judul buku yang ingin dihapus: ");
+//         scanf("%c", judul);
+
+//         for (i = 0; i < count; i++)
+//         {
+//             if (strcmp(DataBuku[i].judulBuku, judul)==0)
+//             {
+//                 system("cls");
+//                 printf("\nBuku dengan judul %s akan dihapus.", DataBuku[i].judulBuku);
+//                 for (j = i; j < count - 1; j++)
+//                     DataBuku = DataBuku+1;
+
+//                     count--;
+//                     return;
+//             }
+            
+//         }
+        
+//     }
+//     else if(n == 3)
+//     {
+
+//     }
+// }
+
+
 //Anggota Baru - mae
 
 char name[50];
