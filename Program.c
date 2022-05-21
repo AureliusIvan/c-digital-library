@@ -13,19 +13,27 @@ typedef struct DataBuku{
     char ISBN[20];
     char jenisBuku[10];
     int jumlahBuku;
+    struct DataBuku *next, *prev;
 }DataBuku;
 
 
+DataBuku *head;
+
 //Data Peminjaman Buku  - ivan
 void displayDataPeminjamanBuku(){
-    printf("=============================================================================================================================================\n");
-    printf("|                                                                  Daftar Buku                                                              |\n");
-    printf("=============================================================================================================================================\n");
-    printf("|                       Judul Buku                           |                  Penulis                |Tahun Terbit|    ISBN    |Jenis Buku|\n");
-    printf(" A Brief Guide to Superheroes: From Superman to the Avengers\n");
-    printf("==========================================================\n");
-    printf("");
-
+    DataBuku *curr;
+    curr = head;
+    int counter = 1;
+    printf("================================================================================================================================================================\n");
+    printf("|                                                                               Daftar Buku                                                                    |\n");
+    printf("================================================================================================================================================================\n");
+    printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
+    printf("================================================================================================================================================================\n");
+    while (curr->next != NULL){
+        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, curr->judulBuku, curr->penulis, curr->tahunTerbit, curr->ISBN, curr->jenisBuku);
+        curr = curr->next;
+        counter++;
+    }
     return;
 }
 
@@ -46,17 +54,8 @@ void display1(){
 }
 
 
-//
+
 char menu(){//Menu awal
-FILE *dataBUKU;
-DataBuku *node, *curr;
-dataBUKU = fopen("DataBuku.txt", "r");
-while (!feof(dataBUKU)){
-node = (DataBuku*)malloc(sizeof(DataBuku));
-node->next = NULL;
-}
-fclose(dataBUKU);
-char ch;
     char choice;
     printf("\n");
     printf("==========================================================\n");
@@ -78,7 +77,27 @@ char ch;
 
 
 int main(){//Main
-
+FILE *dataBUKU;
+DataBuku *node, *curr;
+dataBUKU = fopen("FileBuku.txt", "r");
+while (!feof(dataBUKU)){
+node = (DataBuku*)malloc(sizeof(DataBuku));
+node->next = NULL;
+fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
+curr = head;
+if(head == NULL){
+        head = node;
+    }
+    else{
+        while (curr->next != NULL){
+            curr = curr->next;
+        }
+        curr->next = node;
+        node->prev = curr;
+    }
+}
+fclose(dataBUKU);
+char ch;
 while (1)
 {
    switch (menu()){

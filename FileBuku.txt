@@ -51,7 +51,6 @@ COLOURLIBRARY:VANGOGH#Wilhelm Uhde#1975#9780714827247#Design & Art
 Clean: The New Science of Skin#James Hamblin#2009#9780593328767#health
 Campbell Biology#Lisa A. Urry#2016#0134093410#science
 Cell Biology#Thomas D. Pollard#2016#0323341268#science
-Camino Winds#John Grisham#20202#2266159305#novel
 Collapse#Jared Diamond#2014#9799106826#history
 Choosing Theo#Victoria Aveline#2020#B084Z6WMV2#fiction
 Death in the Clouds#Agatha Christie#1935#0061743119#novel
@@ -138,7 +137,7 @@ iOS Programming: The Big Nerd Ranch Guide#Christian Keur#2020#013526555X#science
 Jokes: Have a Laugh and Improve Your English#Adrian Wallwork#2018#3319672479#lifestyle
 Jokelopedia: The Biggest, Best, Silliest, Dumbest Joke Book Ever!#Blank, Eva#2013#9780761176#ensiklopedia
 Jack#Marilynne Robinson#2020#9788985332439#fiction
-Jane Austen Book Club#Karen Joy Fowler#2004#novel
+Jane Austen Book Club#Karen Joy Fowler#2004#9788985332439#novel
 Japanese from zero!#George Trombley#2014#0976998122#sastra
 Jika Kita Tak Pernah Jadi Apa-Apa#Alvi Syahrin#2019#979780948X#lifestyle
 Knowledge Encyclopedia#DK, Smithsonian#2013#9781465414#ensiklopedia
@@ -195,7 +194,7 @@ Maybe Not#Colleen Hoover#2014#1476799849#fiction
 No Longer Human#Osamu Dazai#1973#0811204812#novel
 NEIGHBORS#Danielle Steel#2014#9781984821393#novel
 Norwegian Wood#Haruki Murakami#2006#9780307744661#novel
-Nutrition For Dummies, 7th Edition Carol Ann Rinzler#2021#9781119723905#ensiklopedia
+Nutrition For Dummies, 7th Edition# Carol Ann Rinzler#2021#9781119723905#ensiklopedia
 New StructuralPackaging#Studio JM Garrofe#2018#9788417412494#Design & Art
 Noddy the Magic Bagpipes#Enid Blyton#2019#9780007307630#children book
 Nordic Knits for Children#Monica Russel#2016#9781782218203#design & art
@@ -313,7 +312,7 @@ The Ultimate Guide to Chakras#Athena Perrakis#2021#159233847X#lifestyle
 The Shadow of the Wind#Carlos Ruiz Zafon#2004#1594200106#fiction
 The Enchanted Wood#Enid Blyton#2016#9781405283014#children book
 The Bells of Old Tokyo#Anna Sherman#2007#9781529000498#history
-Ten Myths about Israel Ilan Pappe#2014#9781786630193#history
+Ten Myths about Israel# Ilan Pappe#2014#9781786630193#history
 The Wanderlust World Travel Quiz Book#Wanderlust#2022#9781787396852#game & puzzle
 The True Life of Habibie#Makmur Makka#2016#9797945298#biography
 THE BOOK OF IKIGAI#Ken Mogi#2017#602385415X#lifestyle
@@ -359,10 +358,10 @@ Yakusoku No Neverland, Vol 18#Kaiu Shirai#2020#9784088822235#komik
 Yakusoku No Neverland, Vol 20#Kaiu Shirai#2021#9781974721863#komik
 Yes, You Can Talk About Mental Health#Melissa Doman#2012#9781789563030#health
 Yin Yoga#Bernie Clark#2021#9780968766583#health
-You Can Sleep Well#Christopher Idzikowski#2014#9781780287942
+You Can Sleep Well#Christopher Idzikowski#2014#9781780287942#health
 Your Skirt Your Way#Jeniffer Taylor#2019#9781782215936#design & art
 Year of Wonders#Geraldine Brooks#2008#9789457564464#sastra
-Yertle the Turtle and Other Stories#2006#Dr. Seuss#9781881512837#children book
+Yertle the Turtle and Other Stories#Dr. Seuss#2006#9781881512837#children book
 You Are a Badass#Jen Sincero#2013#0762447699#fiction
 Zoology: Inside the Secret World of Animals#DK#2019#1465482512#ensiklopedia
 Zoology: Understanding the Animal World#Donald E. Moore III#2017#9780930436155#ensiklopedia
