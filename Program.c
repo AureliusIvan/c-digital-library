@@ -112,8 +112,6 @@ typedef struct dataMember {
 dataMember *head = NULL;
 
 void inputNew() {
-    char nameT[45];
-    char phoneNumT[15];
     char idT[10]; // yg dipake cuma 8
 
     dataMember *curr;
@@ -137,18 +135,17 @@ void inputNew() {
     }
     strcpy (node->id, idT);
 
+    FILE *insertData = fopen("DataMember.txt", "a");
+    fprintf (insertData, "%s#%s#%s\n", node->name, node->phoneNum, node->id);
+    fclose(insertData);
+
     node->next = NULL;
     curr = head;
 
-    if (head == NULL) {
-        head = node;
+    while (curr != NULL && curr->next != NULL) {
+        curr = curr->next;
     }
-    else {
-        while (curr != NULL && curr->next != NULL) {
-            curr = curr->next;
-        }
-        curr->next = node;
-    }
+    curr->next = node;
 
     // // check
     // printf ("Check nama     : %s\n", node->name);
@@ -172,20 +169,35 @@ void showMember() {
             "---------------------------------------------------------------------\n"
     );
 
-    if (curr == NULL) {
-        printf ("|                       No data in database yet                     |\n");
-    }
-    else {
-        while (curr != NULL) {
-            printf ("| %-36s | %-9s | %-14s |\n", curr->name, curr->id, curr->phoneNum);
-            curr = curr->next;
+    FILE *defaultMem = fopen("DataMember.txt", "r");
+
+    while(!feof(defaultMem)) {
+        dataMember *node = (struct dataMember*) malloc(sizeof(dataMember));
+        dataMember *curr;
+
+        fscanf (defaultMem, "%[^#]#%[^#]#%[^\n]\n", node->name, node->phoneNum, node->id);
+        printf ("| %-36s | %-9s | %-14s |\n", node->name, node->id, node->phoneNum);
+        
+        node->next = NULL;
+        curr = head;
+
+        if (head == NULL) {
+            head = node;
+        }
+        else {
+            while (curr != NULL && curr->next != NULL) {
+                curr = curr->next;
+            }
+            curr->next = node;
         }
     }
 
+    fclose(defaultMem);
     printf ("---------------------------------------------------------------------\n\n");
 }
 
 void newMemberMenu() {
+    // defaultMember();
     int choice;
 
     while(1) {
@@ -237,14 +249,15 @@ void display1(){
 
 //
 char menu(){//Menu awal
-// FILE *dataBUKU;
-// DataBuku *node, *curr;
-// dataBUKU = fopen("DataBuku.txt", "r");
-// while (!feof(dataBUKU)){
-// node = (DataBuku*)malloc(sizeof(DataBuku));
-// node->next = NULL;
-// }
-// fclose(dataBUKU);
+FILE *dataBUKU;
+DataBuku *node, *curr;
+dataBUKU = fopen("DataBuku.txt", "r");
+while (!feof(dataBUKU)){
+node = (DataBuku*)malloc(sizeof(DataBuku));
+node->next = NULL;
+}
+fclose(dataBUKU);
+
 char ch;
     char choice;
     printf("\n");
@@ -267,30 +280,29 @@ char ch;
 
 //Main
 int main(){
-while (1)
-{
-    switch (menu()){
-        case '1':
-            displayDataPeminjamanBuku();
-            break;
-        case '2':
-            break;
-        case '3':
-            break;
-        case '4':
-            break;
-        case '5':
-            break;
-        case '6':
-            newMemberMenu();
-            break;
-        case '0':
-            printf ("\nThank you for using this service ^-^\n\n");
-            return 0;
-        default:
-            printf("Pilihan salah!");
-            break;
-    } 
-}
+    while (1) {
+        switch (menu()){
+            case '1':
+                displayDataPeminjamanBuku();
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
+            case '5':
+                break;
+            case '6':
+                newMemberMenu();
+                break;
+            case '0':
+                printf ("\nThank you for using this service ^-^\n\n");
+                return 0;
+            default:
+                printf("Pilihan salah!");
+                break;
+        } 
+    }
     return 0;
 }
