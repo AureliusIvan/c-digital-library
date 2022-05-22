@@ -85,9 +85,10 @@ void editBuku(){
             scanf("%s", data[i].jenisBuku);
 
             bukuBaru = fopen("FileBuku.txt", "a");
-
-
-            // fprintf(bukuBaru, "%s#%s#%s#%s#%s", );
+            fprintf(bukuBaru, "%s#%s#%s#%s#%s", 
+                    data[i].judulBuku, data[i].penulis, data[i].tahunTerbit,
+                    data[i].ISBN, data[i].jenisBuku
+                    );
 
             fclose(bukuBaru);
             fclose(buku);
@@ -141,6 +142,32 @@ typedef struct dataMember {
 
 // masih global, nanti pindahin aja
 dataMember *headMem = NULL;
+
+void defaultMember() {
+    FILE *defaultMem = fopen("DataMember.txt", "r");
+
+    while(!feof(defaultMem)) {
+        dataMember *node = (struct dataMember*) malloc(sizeof(dataMember));
+        dataMember *curr;
+
+        fscanf (defaultMem, "%[^#]#%[^#]#%[^\n]\n", node->name, node->phoneNum, node->id);
+        
+        node->next = NULL;
+        curr = headMem;
+
+        if (headMem == NULL) {
+            headMem = node;
+        }
+        else {
+            while (curr != NULL && curr->next != NULL) {
+                curr = curr->next;
+            }
+            curr->next = node;
+        }
+    }
+
+    fclose(defaultMem);
+}
 
 void inputNew() {
     char idT[10]; // yg dipake cuma 8
@@ -200,35 +227,45 @@ void showMember() {
             "---------------------------------------------------------------------\n"
     );
 
-    FILE *defaultMem = fopen("DataMember.txt", "r");
-
-    while(!feof(defaultMem)) {
-        dataMember *node = (struct dataMember*) malloc(sizeof(dataMember));
-        dataMember *curr;
-
-        fscanf (defaultMem, "%[^#]#%[^#]#%[^\n]\n", node->name, node->phoneNum, node->id);
-        printf ("| %-36s | %-9s | %-14s |\n", node->name, node->id, node->phoneNum);
-        
-        node->next = NULL;
-        curr = headMem;
-
-        if (headMem == NULL) {
-            headMem = node;
-        }
-        else {
-            while (curr != NULL && curr->next != NULL) {
-                curr = curr->next;
-            }
-            curr->next = node;
-        }
+    while (curr != NULL) {
+        printf ("| %-36s | %-9s | %-14s |\n", curr->name, curr->id, curr->phoneNum);
+        curr = curr->next;
     }
 
-    fclose(defaultMem);
+    printf ("---------------------------------------------------------------------\n\n");
+}
+
+void searchMember() {
+    dataMember *curr = headMem;
+
+    char key[20], *ret;
+    printf ("\nInput keyword: "); scanf (" %[^\n]s", key);
+
+    system("cls");
+    printf ("\n");
+    printf ("=====================================================================\n");
+    printf ("                           List Of Member                            \n");
+    printf ("=====================================================================\n\n");
+    printf ("---------------------------------------------------------------------\n"
+            "|                 Name                 | ID Number |  Phone Number  |\n"
+            "---------------------------------------------------------------------\n"
+    );
+
+    while (curr != NULL) {
+        char *compare; 
+        strcpy (compare, curr->name);
+
+        ret = strstr(strlwr(compare), strlwr(key));
+        if (ret)
+            printf ("| %-36s | %-9s | %-14s |\n", curr->name, curr->id, curr->phoneNum);
+        
+        curr = curr->next;
+    }
+
     printf ("---------------------------------------------------------------------\n\n");
 }
 
 void newMemberMenu() {
-    // defaultMember();
     int choice;
 
     while(1) {
@@ -239,12 +276,13 @@ void newMemberMenu() {
         printf("==========================================================\n");
         printf ("1. Input new member\n"
                 "2. Show member list\n"
+                "3. Search member\n"
                 "0. Back to menu\n"
                 "Pilihan: "
         );
         scanf ("%d", &choice);
 
-        if (choice < 0 || choice > 2) {
+        if (choice < 0 || choice > 3) {
             printf ("Pilihan salah!\n");
             printf ("Press any key to continue...");
             getch();
@@ -259,8 +297,14 @@ void newMemberMenu() {
                     break;
                 }
                 case 2 : {
-                    // fungsi show list menu
                     showMember();
+                    printf ("Press any key to continue...");
+                    getch();
+                    break;
+                }
+                case 3 : {
+                    searchMember();
+                    printf ("Ini buat test search aja, harusnya gaada menu ini di bagian ini. Jgn lupa delete\n");
                     printf ("Press any key to continue...");
                     getch();
                     break;
@@ -311,26 +355,29 @@ char ch;
 
 
 int main(){//Main
-FILE *dataBUKU;
-DataBuku *node, *curr;
-dataBUKU = fopen("FileBuku.txt", "r");
-while (!feof(dataBUKU)){
-node = (DataBuku*)malloc(sizeof(DataBuku));
-node->next = NULL;
-fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
-curr = head;
-if(head == NULL){
-        head = node;
-    }
-    else{
-        while (curr->next != NULL){
-            curr = curr->next;
-        }
-        curr->next = node;
-        node->prev = curr;
-    }
-}
-fclose(dataBUKU);
+// FILE *dataBUKU;
+// DataBuku *node, *curr;
+// dataBUKU = fopen("FileBuku.txt", "r");
+// while (!feof(dataBUKU)){
+// node = (DataBuku*)malloc(sizeof(DataBuku));
+// node->next = NULL;
+// fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
+// curr = head;
+// if(head == NULL){
+//         head = node;
+//     }
+//     else{
+//         while (curr->next != NULL){
+//             curr = curr->next;
+//         }
+//         curr->next = node;
+//         node->prev = curr;
+//     }
+// }
+// fclose(dataBUKU);
+
+defaultMember();
+
 char ch;
 while (1)
 {
