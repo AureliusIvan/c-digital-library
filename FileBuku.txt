@@ -1,5 +1,11 @@
 A Brief Guide to Superheroes: From Superman to the Avengers#Brian J. Robb#2014#0762452315#Comic
 A Caribbean Mystery#Agatha Christie#2011#0062073680#Novel
+Aku, Meps, dan Beps#Soca Sobhita#2020#9783598215759#Children Book
+A Game Of Thrones#George R.R. Martin#1996#9783598215582#Novel
+A Clash of Kings#George R.R. Martin#1998#9783598215599#Novel
+A Storm of Swords#George R.R. Martin#2000#9783598215605#Novel
+A Feast for Crows#George R.R. Martin#2005#9783598215612#Novel
+A Dance with Dragons#George R.R. Martin#2011#9783598215629#Novel
 After the Funeral#Agatha Christie#1953#0425173909#Novel
 Alam Pikiran Yunani#Mohammad Hatta#1920#9781220342628#Filosofi
 And Then There Were None#Agatha Christie#2011#0062073478#Novel
@@ -17,6 +23,7 @@ A Brief History of Time: From Big Bang to Black Holes#Stephen Hawking#2009#14090
 A Short History of Nearly Everything#Bill Bryson#2004#076790818X#History
 Atomic Habits#James Clear#2019#6020633179#Lifestyle
 A Court of Thorns and Roses#Sarah J. Maas#2015#1619634457#Fiction
+Atlantis Code#Charles Brokaw#2009#9783598215346#Game & Puzzle
 A Little Life#Hanya Yanagihara#2015#0385539258#Fiction
 Alter ego#Annie Berthet#2006#2011554209#Lifestyle
 Assassins and Wolves#Gilliart Adam#2017#9783598215001#Novel
@@ -44,7 +51,7 @@ Bewitched by the Lobster of Myster#Michael Black#2016#9783598215025#Novel
 Beyond the Storm# Ahn Yeong Ah#2020#9783598215216#Children Book
 Cards on the Table#Agatha Christie#1936#0425205959#Novel
 Cat's Cradle#Kurt Vonnegut#2009#0307567273#Novel
-Crooked House#Agatha Christie#2011#-#Novel
+Crooked House#Agatha Christie#2011#9783598215698#Novel
 Curtain: Poirot's Last Case#Agatha Christie#1975#0425173747#Novel
 Contender:The Challenger#TaranMatharu#2017#9781444938999#Comic
 Convenience Store Woman#Sayaka Murata#2021#9780802129628#Sastra
@@ -52,23 +59,37 @@ ChangelstheOnlyConstant#BenOrlin#2019#9780316509084#Science
 Crime and Punishment#Fyodor Dostoevsky#2017#1631490338#Fiction
 City of Thorns#C.N. Crawford#2021#B09B51QD2F#Fiction
 COLOURLIBRARY:VANGOGH#Wilhelm Uhde#1975#9780714827247#Design & Art
+Crank Palace#James Dashner#2020#9783598215421#Novel
 Clean: The New Science of Skin#James Hamblin#2009#9780593328767#Health
 Campbell Biology#Lisa A. Urry#2016#0134093410#Science
 Cell Biology#Thomas D. Pollard#2016#0323341268#Science
 Collapse#Jared Diamond#2014#9799106826#History
 Choosing Theo#Victoria Aveline#2020#B084Z6WMV2#Fiction
+Coraline#Neil Gaiman#1998#9783598215650#Children Book
+Charlie and The Chocolate Factory#Ronal Dahl#2000#9783598215742#Children Book
 Creation with Silver#Tyler Sims Smith#2022#9783598215063#Ensiklopedia
 Death in the Clouds#Agatha Christie#1935#0061743119#Novel
 Death on the Nile#Agatha Christie#2001#1579126898#Novel
-Dumb Witness#Agatha Christie#2010#-#Novel
-Dumb Husky and his White Cat Shizun#Meatbun doesn't eat meat#2017#-#Novel
+Dumb Witness#Agatha Christie#2010#9783598215704#Novel
+Dumb Husky and his White Cat Shizun#Meatbun doesn't eat meat#2017#9783598215711#Novel
 Dark Psychology Secrets#Daniel James Hollins#2019#1072739798#Lifestyle
 Death Is The Only Ending For The Villainess#Gyeoeul Gwon#2019#9791126449#Novel
 Design Wisdom in Small Space#Jon Gentry#2020#9781910596623#Design & Art
 Demons and how to deal with them#Kenneth E Hagin#1983#0892760265#Religion
 Design Engineering Manual#Mike Tooley BA#2009#1856178641#Science
-Diary of a Wimpy Kid: Wrecking Ball#Jeff Kinney#2019#-#Children Book
-Developmental biology#Michael J. F. Barresi#2016#1605354708#Science
+Diary of A Wimpy Kid#Jeff Kinney#2007#9783598215766#Children Book
+Diary of a Wimpy Kid: Rodrick Rules#Jeff Kinney#2008#9783598215773#Children Book
+Diary of a Wimpy Kid: The Last Straw#Jeff Kinney#2009#9783598215780#Children Book
+Diary of a Wimpy Kid: Dog Days#Jeff Kinney#2009#9783598215797#Children Book
+Diary of a Wimpy Kid: The Third Wheel#Jeff Kinney#2012#9783598215803#Children Book
+Diary of a Wimpy Kid: Hard Luck#Jeff Kinney#2013#9783598215810#Children Book
+Diary of a Wimpy Kid: The Long Haul Book#Jeff Kinney#2014#9783598215827#Children Book
+Diary of a Wimpy Kid: Old School Book#Jeff Kinney#2015#9783598215834#Children Book
+Diary of a Wimpy Kid: Wrecking Ball#Jeff Kinney#2019#9783598215728#Children Book
+Diary of a Wimpy Kid: Big Shot#Jeff Kinney#2021#9783598215841#Children Book
+Diary of an Awesome Friendly Kid#Jeff Kinney#2019#9783598215858#Children Book
+Rowley Jefferson's Awesome Friendly Adventure#Jeff Kinney#2020#9783598215865#Children Book
+Developmental Biology#Michael J. F. Barresi#2016#1605354708#Science
 Discovered by the Behemoth of the Star#Galle Fuller#2009#9783598215032#Science
 Death of the Carnival at the Night#Blair Gilbert#2019#9783598215049#Novel
 Doctor of the Time Machine#Carson Kemp#2018#9783598215100#Lifestyle
@@ -89,6 +110,8 @@ Einstein's Unfinished Revolution#Lee Smolin#2003#9780143111160#Filosofi
 Encyclopedia of Birds#Laurie E. Likoff#2007#0816059047#Ensiklopedia
 Electric Vehicle Technology Explained#James Larminie#2003#0470851635#Science
 Find Me#Andre Aciman#2012#9781250758071#Novel
+Four Letter Words#Michelle Arnot#2008#9783598215322#Game & Puzzle
+Fantastic Beasts and Where to Find Them#2016#9783598215490#Novel
 Fight Club 2#Chuck Palahniuk#2016#9781506706283#Comic
 Finding My Right Mind#Vanessa Potter#2022#9781789562163#Health
 From Lukov with Love#Mariana Zapata#2018#099042927X#Novel
@@ -112,9 +135,14 @@ Games We Play#Dana Isaly#2021#B094MZT5RC#Novel
 Goodbye, Things#Fumio Sasaki#2018#6020398404#Sastra
 Heaven Official's Blessing#Mo Xiang Tong Xiu#2020#9781535021955#Novel
 Hamster Holmes Afraid of The Dark?#Albin Sadar#2018#9781534421943#Children Book
+Harry Potter and the Philosopher's Stone#Rowling JK#1997#9783598215438#Novel
+Harry Potter and the Chamber of Secrets#Rowling JK#1998#9783598215445#Novel
+Harry Potter and the Prisoner of Azkaban#Rowling JK#1999#9783598215452#Novel
+Harry Potter and the Goblet of Fire#Rowling JK#2000#9783598215469#Novel
+Harry Potter and the Order of Phoenix#Rowling JK#2003#9783598215476#Novel
+Harry Potter and the Halfblood Prince#Rowling JK#2005#9780001912366#Novel
+Harry Potter and the Deathly Hallows#Rowling JK#2007#9783598215483#Novel
 Harry Potter and the Cursed Child#Rowling JK#2016#1781107041#Novel
-Harry potter and the Halfblood Prince#Rowling JK#2010#9780001912366#Novel
-Harry potter and the Chamber Of Secrets#Rowling JK#2010#9780122992343#Novel
 Hell in Japanese Art#Kazuya Takaoka#2004#9784756249234#Design & Art
 How to Be Good at Science, Technology & Engineering#DK#2018#1465473599#Children Book
 Hujan bulan Juni#Sapardi Djoko Damono#1994#979553467X#Sastra
@@ -162,7 +190,7 @@ Kitab Anti-Bodoh#Bo Bennett#2015#6022900549#Lifestyle
 Kitab Anti-Bodoh#Bo Bennett#2015#6022900549#Sastra
 Kim Ji-Yeong#Cho Nam-Joo#2019#6020636208#Fiction
 Le Morte Darthur#Sir Thomas Malory#1988#9780199537341#Sastra
-Lady Clementine#Marie Benedict#2020#978-1492666936#Novel
+Lady Clementine#Marie Benedict#2020#9781492666936#Novel
 Lake News#Barbara Delinsky#1999#9781416503842#Novel
 Loving the Wounded Soul#Regis Machdy#2019#6020633713#Lifestyle
 Lamb Lord#Helena Moore#2017#9780684864327#Children Book
@@ -193,6 +221,9 @@ Math Without Numbers#Milo Beckman#2020#9781524745547#Filosofi
 Molecular Biology of the Cell#Bruce Alberts#2014#0815344325#Science
 Molecular Cell Biology#Harvey Lodish#2016#1464183392#Science
 Magic Faraway Tree#Enid Blyton#2016#9781405284264#Children Book
+Moon Knight 1#Shalvey Bunn#2014#9783598215513#Comic
+Moon Knight 11#Shalvey Bunn#2015#9783598215537#Comic
+Moon Knight 17#Shalvey Bunn#2015#9783598215520#Comic
 Matahari#Tere Liye#2016#602657737#Novel
 Marketing 4.0#Philip Kotler#2019#6020621170#Lifestyle
 Mengenal Kesehatan Jiwa#Anta Samsara#2020#6029193678#Health
@@ -218,21 +249,25 @@ One of Us is Lying#Karen M. McManus#2017#6020376176#Novel
 Originals: "Tabrak Aturan"#Adam M. Grant#2017#6023852777#Lifestyle
 Oxford Japanese Grammar and Verbs#Jonathan Bunt#2003#0198603827#Sastra
 Overshaw’s Ominous Vaults#Tracy Cress#2005#9783598215131#Novel
+Off the Record#Camryn Garrett#2021#9783598215636#Game & Puzzle
+Of Thee I Sing#Barack Obama#2016#9783598215735#Children Book
 Putri Cleopatra#Hesti Ainun#2022#9786236370698#Novel
 Patuhi Rules#Yossi Zahra#2022#9786022204411#Comic
 Pelangi Kehidupan : Kumpulan Puisi#Ery Yunita#2022#9786235276458#Sastra
 Pesona Bos Tampan#Queeny#2022#9786235503738#Novel
-Percy Jackson & the Olympians  - The Lightning Thief#Disney-Hyperion#2005#0786856297#Novel
+Percy Jackson & the Olympians - The Lightning Thief#Disney-Hyperion#2005#0786856297#Novel
 Pimp Your Noodles#Sarah Cook#2017#9781841884257#Cooking
 Punch Needle Embroidery for Beginners#Lucy Davidson#2019#9781782218647#Design & Art
 Podcasting For Dummies#Tee Morris#2008#0470397438#Lifestyle
 Psychic Witch#Mat Auryn#2020#0738760846#Religion
 Point of Retreat#Colleen Hoover#2015#1476899849#Fiction
+Player of Games#Iain Banks#2019#9783598215339#Game & Puzzle
 Queen of Shadows#Sarah J Maas#2015#1619636042#Fiction
 Queen of Dreams#Chitra Banerjee Divakaruni#2004#9780034051483#Novel
 Quiet! Dave!#Sharlon Aime#2020#9783324528191#Children Book
 Quiet Twin#Dan Vyleta#2012#9789437200788#Novel
 Quiet Impact#Sylvia Loehken#2019#6020634086#Lifestyle
+Quidditch Through the Ages#Rowling JK#2016#9783598215506#Novel
 Reprieve#James Han Mattson#2018#9781526635556#Sastra
 Robot#DK#2018#1465475842#Children Book
 Ricochet#Sandra Brown#2019#9781416523321#Novel
@@ -247,9 +282,14 @@ Ricochet#Sandra Brown#2008#9781416523321#Children Book
 Rich Dad Poor Dad#Robert T. Kiyosaki#2017#1612680194#Lifestyle
 Reasons to Stay Alive#Matt Haig#2018#6020386600#Lifestyle
 Rocket#Levi Shagg#2019#9783598215209#Children Book
+Ready Player One#Ernest Cline#2011#9783598215353#Game & Puzzle
 Sleep Tight Very Hungry Caterpillar#EricCarle#2019#9780241330319#Children Book
 Sejarah Dunia yang Disembunyikan#Jonathan Black#2015#6029193678#Sastra
-Star Wars Character Encyclopedia#DK#2017#1465454942#Fiction
+Star Wars Character Encyclopedia#DK#2017#1465454942#Ensiklopedia
+Star Wars: The Phantom Menance#Patricia Wrede#1999#9783598215544#Fiction
+Star Wars: Attack of the Clones#Patricia Wrede#2002#9783598215551#Fiction
+Star Wars: Revenge of the Sith#Patricia Wrede#2005#9783598215568#Fiction
+Star Wars: A New Hope#Alan Dean Foster#1980#9783598215575#Fiction
 Shatter Me#Tahereh Mafi#2012#0062085506#Fiction
 Suicide Notes#Michael Thomas Ford#2010#0060737573#Children Book
 Smart Thinking#Matthew Allen#2004#0195517334#Lifestyle
@@ -270,6 +310,7 @@ Supernova Akar#Dee Lestari#2016#6028811718#Novel
 Sisi Lain Diponegoro#Peter Carey#2017#6024246803#Filosofi
 Sejarah Dunia yang Disembunyikan#Jonathan Black#2015#6029193678#History
 Sign of the Whispering Puppet# Renee Wagner#2008#9783598215179#Novel
+Taste of Fire#Kelly Middleton#2019#9783598215315#Novel
 The Birth of Tragedy#Friedrich Nietzsche#1872#9780199540143#Sastra
 The Modern Guide to Witchcraft#Skye Alexander#2014#1440580030#Religion
 The House Witch#Arin Murphy-Hiscock#2014#1507209460#Religion
@@ -294,11 +335,13 @@ The Five Love Languages#Gary Chapman#2010#0802473156#Lifestyle
 The ABC Murders#Agatha Christie#1936#1579126243#Novel
 The Body in the Library#Agatha Christie#1942#157912626X#Novel
 The Setting Sun#Osamu Dazai#1968#0811200329#Novel
-The Villainess Reverses The Hourglass#San Sobee#2018#-#Comic
-The Mark of Athena#Rick Riordan#2012#-#Fiction
+The Villainess Reverses The Hourglass#San Sobee#2018#9783598215681#Comic
+The Little Prince#Antoine de Saint#2019#9783598215674#Children Book
+The Mark of Athena#Rick Riordan#2012#9783598215667#Fiction
 The Math of Life and Death#Kit Yates#2018#9781982111885#Filosofi
 The New Climate War..#Michael E. Mann#2022#9781541758230#Science
 The Brothers Karamazov#Fyodor Dostoevsky#2011#0679729259#Fiction
+The Suitcase Kid#Jacqueline Wilson#2007#9783598215735#Children Book
 The Idiot#Fyodor Dostoevsky#2003#0375702245#Fiction
 The Wild Geese#Mori, Ogai#1991#4805308842#Fiction
 The Demon in the Wood#Bardugo, Leigh#2015#1627796622#Children Book
@@ -312,6 +355,7 @@ The Jester#Sullivan, Michael J#2014#7241555619#Fiction
 The Secret History#Donna Tartt#2004#1400031702#Fiction
 The Male Lead’s Villainess Fiancée#Ryu Heon#2020#1421590624#Comic
 The Hating Game#Sally Thorne#2016#0062439596#Novel
+The Giving Tree#Shel SilverStein#2008#9783598215643#Children Book
 Twisted Games#Ana Huang#2021#1735056669#Novel
 The Inheritance Games#Jennifer Lynn Barnes#2020#9353579147#Novel
 The Deal#Elle Kennedy#2015#1775293939#Novel
@@ -334,6 +378,11 @@ The Book Of Ikigai#Ken Mogi#2017#602385415X#Lifestyle
 The Palace of the Amphibious Patrol#Gillian Payne#2016#9783598215117#Fiction
 The Missing Thought#Sklyar Ray#2019#9783598215124#Sastra
 The Tetris Effect#Dan Ackerman#2016#9783598215254#Game & Puzzle
+The Maze Runner#James Dashner#2009#9783598215377#Novel
+The Scroch Trials#James Dashner#2010#9783598215384#Novel
+The Death Cure#James Dashner#2011#9783598215391#Novel
+The Kill Order#James Dashner#2012#9783598215407#Novel
+The Fever Code#James Dashner#2016#9783598215414#Novel
 Ultimate Bread#Eric Treuille#2004#0756603706#Cooking
 Undomestic Goddess#Sophie Kinsella#2016#9780552153140#Novel
 Ugly Love#Colleen Hoover#2014#1476753199#Fiction
@@ -362,9 +411,11 @@ World War II: The Definitive Visual History#DK#2009#0756642787#Science
 Weapon: A Visual History of Arms and Armor#DK#2006#075666540X#History
 World War I: The Definitive Visual History: From Sarajevo to Versailles#R. G. Grant#2014#1465419381#History
 What Is Religious Authority?#Ismail Fajrie Alatas#2016#9780691204314#Religion
+Wolf in White Van#John Darnielle#2014#9783598215360#Novel
 Witchery#Juliet Diaz#2019#1788172043#Religion
 Words That Change Minds#Shelle Rose Charvet#2019#1733670327#Lifestyle
 Willing Silence#Kris Riley#2021#9783598215094#Fiction 
+Wonder#R.J Palacio#2010#9783598215742#Children Book
 Xylophone#Snow, K Z#2012#162380258X#Fiction
 XOXO#Oh, Axie#2021#0063024993#Fiction
 Xoxo I Love you#Julie capulet#2019#B07RKJCXNG#Fiction
@@ -372,9 +423,14 @@ X Isle#Steve Augarde#2013#9780385751933#Novel
 Xombies#Juliet Stiene#2016#9781795670692#Novel
 XVI#Julia Karr#2015#9782688242101#Novel
 xxxHolic, Vol. 1#CLAMP#2017#9790218652375#Comic
-Yakusoku No Neverland, Vol 1#Kaiu Shirai#2016# 9784088808727#Comic
-Yakusoku No Neverland, Vol 2#Kaiu Shirai#2016# 9784088810065#Comic
-Yakusoku No Neverland, Vol 8#Kaiu Shirai#2018# 9784088813844#Comic
+Yakusoku No Neverland, Vol 1#Kaiu Shirai#2016#9784088808727#Comic
+Yakusoku No Neverland, Vol 2#Kaiu Shirai#2016#9784088810065#Comic
+Yakusoku No Neverland, Vol 3#Kaiu Shirai#2016#9783598215261#Comic
+Yakusoku No Neverland, Vol 4#Kaiu Shirai#2017#9783598215278#Comic
+Yakusoku No Neverland, Vol 5#Kaiu Shirai#2017#9783598215285#Comic
+Yakusoku No Neverland, Vol 6#Kaiu Shirai#2017#9783598215292#Comic
+Yakusoku No Neverland, Vol 7#Kaiu Shirai#2017#9783598215308#Comic
+Yakusoku No Neverland, Vol 8#Kaiu Shirai#2018#9784088813844#Comic
 Yakusoku No Neverland, Vol 14#Kaiu Shirai#2019#9784088818610#Comic
 Yakusoku No Neverland, Vol 18#Kaiu Shirai#2020#9784088822235#Comic
 Yakusoku No Neverland, Vol 20#Kaiu Shirai#2021#9781974721863#Comic
@@ -385,6 +441,14 @@ Your Skirt Your Way#Jeniffer Taylor#2019#9781782215936#Design & Art
 Year of Wonders#Geraldine Brooks#2008#9789457564464#Sastra
 Yertle the Turtle and Other Stories#Dr. Seuss#2006#9781881512837#Children Book
 You Are a Badass#Jen Sincero#2013#0762447699#Fiction
+Yokai Watch, Vol 1#Noriyuki Konishi#2015#9781421582511#Comic
+Yokai Watch, Vol 6#Noriyuki Konishi#2016#9781421592176#Comic
+Yokai Watch, Vol 7#Noriyuki Konishi#2017#9781421592183#Comic
+Yokai Watch, Vol 13#Noriyuki Konishi#2020#9781974703111#Comic
+Yokai Watch, Vol 14#Noriyuki Konishi#2020#9781974703128#Comic
+Yokai Watch, Vol 17#Noriyuki Konishi#2021#9781974718818#Comic
+Yokai Watch, Vol 18#Noriyuki Konishi#2021#9781974714858#Comic
+Yokai Watch, Vol 19#Noriyuki Konishi#2022#9781974733613#Comic
 Zoology: Inside the Secret World of Animals#DK#2019#1465482512#Ensiklopedia
 Zoology: Understanding the Animal World#Donald E. Moore III#2017#9780930436155#Ensiklopedia
 Zami: A New Spelling of My Name#Audre Lorde#1982#9780895941237#Fiction
