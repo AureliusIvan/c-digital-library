@@ -15,8 +15,7 @@ typedef struct DataBuku{
     char jenisBuku[10];
     int jumlahBuku;
     struct DataBuku *next, *prev;
-}DataBuku;
-
+}DataBuku;  
 
 DataBuku *head;
 
@@ -141,7 +140,7 @@ typedef struct dataMember {
 }dataMember;
 
 // masih global, nanti pindahin aja
-dataMember *head = NULL;
+dataMember *headMem = NULL;
 
 void inputNew() {
     char idT[10]; // yg dipake cuma 8
@@ -172,7 +171,7 @@ void inputNew() {
     fclose(insertData);
 
     node->next = NULL;
-    curr = head;
+    curr = headMem;
 
     while (curr != NULL && curr->next != NULL) {
         curr = curr->next;
@@ -189,7 +188,7 @@ void inputNew() {
 }
 
 void showMember() {
-    dataMember *curr = head;
+    dataMember *curr = headMem;
 
     system("cls");
     printf ("\n");
@@ -211,10 +210,10 @@ void showMember() {
         printf ("| %-36s | %-9s | %-14s |\n", node->name, node->id, node->phoneNum);
         
         node->next = NULL;
-        curr = head;
+        curr = headMem;
 
-        if (head == NULL) {
-            head = node;
+        if (headMem == NULL) {
+            headMem = node;
         }
         else {
             while (curr != NULL && curr->next != NULL) {
@@ -337,7 +336,7 @@ while (1)
 {
    switch (menu()){
         case '1':
-            displayDataPeminjamanBuku();
+            // displayDataPeminjamanBuku();
             break;
         case '2':
             break;
