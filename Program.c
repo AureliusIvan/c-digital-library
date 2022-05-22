@@ -367,8 +367,6 @@ void testDoang(){
     return;
 }
 
-
-
 int main(){//Main
 FILE *dataBUKU;
 DataBuku *node, *curr;
