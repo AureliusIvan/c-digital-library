@@ -47,7 +47,6 @@ void displayDataPeminjamanBuku(){
 //Edit Buku - marcel 
 
 void editBuku(){
-    FILE* buku;
     FILE* bukuBaru;
 
     DataBuku *data;
@@ -56,9 +55,7 @@ void editBuku(){
     int n;
     int k;
 
-    buku = fopen("FileBuku.txt", "r");
-
-    printf("====== Menu Edit Buku ======");
+    printf("====== Menu Edit Buku ======\n");
     printf("1. Tambah buku\n");
     printf("2. Hapus buku\n");
     printf("3. Edit info buku\n");
@@ -71,26 +68,30 @@ void editBuku(){
         printf("Masukkan jumlah buku yang ingin ditambahkan   :  ");
         scanf("%d", &k);
 
-        for (i = 0; i < k; i++)
+        while (k != 0)
         {
-            printf("Masukkan judul buku              :  \n");
-            scanf("%s", data[i].judulBuku);
-            printf("Masukkan nama author             :  \n");
-            scanf("%s", data[i].penulis);
-            printf("Masukkan tahun terbit buku       :  \n");
-            scanf("%s", data[i].tahunTerbit);
-            printf("Masukkan ISBN buku               :  \n");
-            scanf("%s", data[i].ISBN);
-            printf("Masukkan tipe buku               :  \n");   
-            scanf("%s", data[i].jenisBuku);
+            fflush(stdin);
+            printf("Masukkan judul buku         :  ");
+            scanf(" %[^\n]s", data[i].judulBuku); 
+            printf("Masukkan nama author        :  ");
+            scanf(" %[^\n]s", data[i].penulis); 
+            printf("Masukkan tahun terbit buku  :  ");
+            scanf("%s", data[i].tahunTerbit); 
+            printf("Masukkan ISBN buku          :  ");
+            scanf("%s", data[i].ISBN); 
+            printf("Masukkan tipe buku          :  ");   
+            scanf("%s", data[i].jenisBuku); 
+            count++; 
 
             bukuBaru = fopen("FileBuku.txt", "a");
 
 
-            // fprintf(bukuBaru, "%s#%s#%s#%s#%s", );
+            fprintf(bukuBaru, "%s#%s#%s#%s#%s", 
+                    data[i].judulBuku, data[i].penulis, data[i].tahunTerbit,
+                    data[i].ISBN, data[i].jenisBuku
+                    );
 
             fclose(bukuBaru);
-            fclose(buku);
         }
         
       
@@ -280,14 +281,14 @@ void display1(){
 
 
 char menu(){//Menu awal
-FILE *dataBUKU;
-DataBuku *node, *curr;
-dataBUKU = fopen("DataBuku.txt", "r");
-while (!feof(dataBUKU)){
-node = (DataBuku*)malloc(sizeof(DataBuku));
-node->next = NULL;
-}
-fclose(dataBUKU);
+// FILE *dataBUKU;
+// DataBuku *node, *curr;
+// dataBUKU = fopen("DataBuku.txt", "r");
+// while (!feof(dataBUKU)){
+// node = (DataBuku*)malloc(sizeof(DataBuku));
+// node->next = NULL;
+// }
+// fclose(dataBUKU);
 
 char ch;
     char choice;
@@ -311,26 +312,26 @@ char ch;
 
 
 int main(){//Main
-FILE *dataBUKU;
-DataBuku *node, *curr;
-dataBUKU = fopen("FileBuku.txt", "r");
-while (!feof(dataBUKU)){
-node = (DataBuku*)malloc(sizeof(DataBuku));
-node->next = NULL;
-fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
-curr = head;
-if(head == NULL){
-        head = node;
-    }
-    else{
-        while (curr->next != NULL){
-            curr = curr->next;
-        }
-        curr->next = node;
-        node->prev = curr;
-    }
-}
-fclose(dataBUKU);
+// FILE *dataBUKU;
+// DataBuku *node, *curr;
+// dataBUKU = fopen("FileBuku.txt", "r");
+// while (!feof(dataBUKU)){
+// node = (DataBuku*)malloc(sizeof(DataBuku));
+// node->next = NULL;
+// fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
+// curr = head;
+// if(head == NULL){
+//         head = node;
+//     }
+//     else{
+//         while (curr->next != NULL){
+//             curr = curr->next;
+//         }
+//         curr->next = node;
+//         node->prev = curr;
+//     }
+// }
+// fclose(dataBUKU);
 char ch;
 while (1)
 {
