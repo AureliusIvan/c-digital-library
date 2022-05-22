@@ -4,6 +4,8 @@
 #include<conio.h>
 #include<windows.h>
 #include <time.h>
+#include <Windows.h>
+#include <unistd.h>
 
 #define TABLE_SIZE 100000
 
@@ -18,23 +20,28 @@ typedef struct DataBuku{
 }DataBuku;
 
 
-DataBuku *head;
+DataBuku *headBook;
 
 //Data Peminjaman Buku  - ivan
 void displayDataPeminjamanBuku(){
     DataBuku *curr;
-    curr = head;
+    curr = headBook;
     int counter = 1;
     printf("================================================================================================================================================================\n");
     printf("|                                                                               Daftar Buku                                                                    |\n");
     printf("================================================================================================================================================================\n");
     printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
     printf("================================================================================================================================================================\n");
-    while (curr->next != NULL){
+    while (curr->next != NULL && counter<=50){
         printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, curr->judulBuku, curr->penulis, curr->tahunTerbit, curr->ISBN, curr->jenisBuku);
         curr = curr->next;
         counter++;
     }
+    printf("================================================================================================================================================================\n");
+    printf("1. Next Page\n");
+    printf("2. Previous Page\n");
+    printf("0. Back\n");
+    printf("Pilihan: ");
     return;
 }
 
@@ -117,7 +124,7 @@ typedef struct dataMember {
 }dataMember;
 
 // masih global, nanti pindahin aja
-dataMember *head = NULL;
+dataMember *headMEM = NULL;
 
 void inputNew() {
     char idT[10]; // yg dipake cuma 8
@@ -148,7 +155,7 @@ void inputNew() {
     fclose(insertData);
 
     node->next = NULL;
-    curr = head;
+    curr = headMEM;
 
     while (curr != NULL && curr->next != NULL) {
         curr = curr->next;
@@ -165,7 +172,7 @@ void inputNew() {
 }
 
 void showMember() {
-    dataMember *curr = head;
+    dataMember *curr = headMEM;
 
     system("cls");
     printf ("\n");
@@ -187,10 +194,10 @@ void showMember() {
         printf ("| %-36s | %-9s | %-14s |\n", node->name, node->id, node->phoneNum);
         
         node->next = NULL;
-        curr = head;
+        curr = headMEM;
 
-        if (head == NULL) {
-            head = node;
+        if (headMEM == NULL) {
+            headMEM = node;
         }
         else {
             while (curr != NULL && curr->next != NULL) {
@@ -257,16 +264,6 @@ void display1(){
 
 
 char menu(){//Menu awal
-FILE *dataBUKU;
-DataBuku *node, *curr;
-dataBUKU = fopen("DataBuku.txt", "r");
-while (!feof(dataBUKU)){
-node = (DataBuku*)malloc(sizeof(DataBuku));
-node->next = NULL;
-}
-fclose(dataBUKU);
-
-char ch;
     char choice;
     printf("\n");
     printf("==========================================================\n");
@@ -287,6 +284,23 @@ char ch;
 
 
 
+//test doang
+void testDoang(){
+    int count = 1;
+    while (1)
+    {
+        printf("%d",count);
+        sleep(1);
+        system("cls");
+        count++;
+    }
+    
+    printf("");
+    return;
+}
+
+
+
 int main(){//Main
 FILE *dataBUKU;
 DataBuku *node, *curr;
@@ -295,9 +309,9 @@ while (!feof(dataBUKU)){
 node = (DataBuku*)malloc(sizeof(DataBuku));
 node->next = NULL;
 fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
-curr = head;
-if(head == NULL){
-        head = node;
+curr = headBook;
+if(headBook == NULL){
+        headBook = node;
     }
     else{
         while (curr->next != NULL){
@@ -308,7 +322,6 @@ if(head == NULL){
     }
 }
 fclose(dataBUKU);
-char ch;
 while (1)
 {
    switch (menu()){
@@ -316,6 +329,7 @@ while (1)
             displayDataPeminjamanBuku();
             break;
         case '2':
+            testDoang();
             break;
         case '3':
             break;
@@ -333,4 +347,6 @@ while (1)
             printf("Pilihan salah!");
             break;
     } 
+}
+return 0;
 }
