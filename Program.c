@@ -483,6 +483,7 @@ void borrowMenu(int borrower) {
         }
 
         // data bisa masuk, tapi kalo di print dia langsung ilang lagi
+        // harusnya nanti kalo udah ada yg balikin baru di dequeue (?)
         peminjaman *curr = headBorrow;
         while (!isEmptyBorrower(&curr)) {
             peekBorrower(curr);
