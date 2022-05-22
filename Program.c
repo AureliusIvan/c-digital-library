@@ -42,6 +42,17 @@ char menuPengembalianBuku(){//Menu Pengembalian Buku
     );
     scanf("%c", &pilihan);
     return pilihan;
+    switch (pilihan){
+                case '1':
+                    break;
+                case '2':
+                    break;
+                case '0':
+                    return 0;
+                default:
+                    printf("Pilihan salah!");
+                    break;
+            } 
 }
 
 //List Buku - soon 
@@ -115,17 +126,7 @@ while (1)
         case '2':
             break;
         case '3':
-            switch (menuPengembalianBuku()){
-                case '1':
-                    break;
-                case '2':
-                    break;
-                case '0':
-                    return 0;
-                default:
-                    printf("Pilihan salah!");
-                    break;
-            } 
+            menuPengembalianBuku();
             break;
         case '4':
             break;
