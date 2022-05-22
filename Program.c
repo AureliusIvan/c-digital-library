@@ -332,6 +332,9 @@ void newMemberMenu() {
 
 }
 
+
+// QUEUE (+ PRIORITY)
+
 int checkMember(char *key) {
     dataMember *curr = headMem;
 
@@ -348,9 +351,6 @@ int checkMember(char *key) {
         curr = curr->next;
     }
 }
-
-
-// QUEUE (+ PRIORITY)
 
 peminjaman *newBorrower (char *nama, char *judul, int prior) {
     peminjaman *node = (peminjaman*) malloc(sizeof(peminjaman));
@@ -467,10 +467,11 @@ void borrowMenu(int borrower) {
     }
 
     else {
+        // belom bikin algoritma utk nge-check apakah bukunya ada ato ga (nantinya kl tersedia, perlu liat stock juga)
         printf ("Judul buku     : "); 
         scanf (" %[^\n]s", judul);
 
-        // if jenis bukunya ... -> prioritynya berapa, nanti tentuinnya otomatis
+        // if jenis bukunya ... -> priority nya berapa, nanti tentuinnya otomatis
         // tapi sementara dibikin manual dulu
         printf ("Priority       : ");
         scanf ("%d", &prior);
