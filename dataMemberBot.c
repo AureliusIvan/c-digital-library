@@ -27,7 +27,7 @@ int main() {
         // printf ("%s#%s#%s\n", name, phoneNum, id);
 
         FILE *insertData = fopen("DataMember.txt", "a");
-        fprintf (insertData, "%s#%s#%s\n", name, phoneNum, id);
+        fprintf (insertData, "%s#%s#%s#0\n", name, phoneNum, id);
         fclose(insertData);
     }
 
