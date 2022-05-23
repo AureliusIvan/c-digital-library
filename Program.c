@@ -252,17 +252,21 @@ void editBuku(){
 
         while (k != 0)
         {
-            fflush(stdin);
+            
             printf("Masukkan judul buku         :  ");
             scanf(" %[^\n]s", data[i].judulBuku); 
+            fflush(stdin);
             printf("Masukkan nama author        :  ");
             scanf(" %[^\n]s", data[i].penulis); 
+            fflush(stdin);
             printf("Masukkan tahun terbit buku  :  ");
             scanf(" %[^\n]s", data[i].tahunTerbit); 
+            fflush(stdin);
             printf("Masukkan ISBN buku          :  ");
             scanf(" %[^\n]s", data[i].ISBN); 
+            fflush(stdin);
             printf("Masukkan tipe buku          :  ");   
-            scanf(" %[^\n]s", data[i].jenisBuku); 
+            scanf(" %[^\n]s", data[i].jenisBuku); fflush(stdin);
             // tambahin stock buku
             count++; 
 
