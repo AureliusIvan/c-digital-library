@@ -5,9 +5,11 @@
 #include <windows.h>
 #include <time.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #define TABLE_SIZE 100000
 
+// bikin tree sesuai abjad judul
 typedef struct DataBuku{
     char judulBuku[100]; // sejauh ini paling panjang 71 char
     char penulis[100];
@@ -37,7 +39,6 @@ void inorder(DataBuku *root){
         inorder(root->left);
         printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
         inorder(root->right);
-        
     }
 }
 
@@ -57,9 +58,6 @@ DataBuku *insert(DataBuku *node, char key[100],
 
     return node;
 }
-
-
-
 
 typedef struct dataMember {
     char name[45];
@@ -145,7 +143,103 @@ void displayBookMenu(){
 
 //Pengembalian Buku - edison
 
+//Menu Pengembalian Buku
+/*
+char menuPengembalianBuku(){
+    int pilihan;
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     PENGEMBALIAN BUKU\n");
+    printf("==========================================================\n");
+    printf("1. Data Buku Yang Dipinjam\n"
+           "2. Kembalikan Buku\n"
+           "0. Exit\n"
+           "Pilihan: "
+    );
+    scanf("%d", &pilihan);
+    fflush(stdin);
+    switch (pilihan){
+                case 1:
+                    system("cls");
+                    printf ("=================================================================================================\n");
+                    printf ("                                               List Of Member                               \n");
+                    printf ("=================================================================================================\n\n");
+                    printf ("-------------------------------------------------------------------------------------------------\n"
+                            "| No. |                 Name                 |         Judul Buku          |      Priority      |\n"
+                            "-------------------------------------------------------------------------------------------------\n"
+                    );
+                    break;
+                case 2:
+                    char nama[30];
+                    char judul[30];
+                    printf("\n");
+                    printf("==========================================================\n");
+                    printf("                     PENGEMBALIAN BUKU\n");
+                    printf("==========================================================\n");
+                    printf("Nama            : "); scanf("%[^\n]", &nama);
+                    fflush(stdin);
+                    printf("Judul Buku      : "); scanf("%[^\n]", &judul);
+                    fflush(stdin);
+                    printf("%s, %s\n", nama, judul);
+                    break;
+                case 0:
+                    return 0;
+                default:
+                    printf("hmm");
+                    break;
+            } 
+}
+*/
+
 //List Buku - soon 
+
+// Cek Stok Buku
+bool checkBook (DataBuku *root, char *key){
+    if (root == NULL)
+        return false;
+    
+    if (strcmpi (root->judulBuku, key) == 0)
+        return true;
+    
+    bool res1 = checkBook (root->left, key);
+    if (res1) 
+        return true;
+
+    bool res2 = checkBook (root->right, key);
+    
+    return res2;
+}
+
+DataBuku *searchBookBook (DataBuku *root, char *key) {
+    if (root == NULL || (strcmpi (root->judulBuku, key) == 0))
+        return root;
+    
+    if (strcmpi (root->judulBuku, key) < 0)
+        return searchBookBook(root->right, key);
+    
+    return searchBookBook(root->left, key);
+}
+
+int cekStok(char *judul, DataBuku *root){
+    DataBuku *treeRoot = root;
+
+    // kl ada bukunya
+    if (checkBook (root, judul)) {
+        DataBuku *toCheck = searchBookBook(treeRoot, judul);
+
+        if (toCheck->jumlahBuku == 0) {
+            printf ("Stock buku habis!\n");
+            return 0;
+        }
+        else   
+            return 1;
+
+    }
+
+    // kl gaada
+    else
+        printf ("Buku tidak tersedia\n");
+}
 
 //Edit Buku - marcel 
 
@@ -179,11 +273,12 @@ void editBuku(){
             printf("Masukkan nama author        :  ");
             scanf(" %[^\n]s", data[i].penulis); 
             printf("Masukkan tahun terbit buku  :  ");
-            scanf("%s", data[i].tahunTerbit); 
+            scanf(" %[^\n]s", data[i].tahunTerbit); 
             printf("Masukkan ISBN buku          :  ");
-            scanf("%s", data[i].ISBN); 
+            scanf(" %[^\n]s", data[i].ISBN); 
             printf("Masukkan tipe buku          :  ");   
-            scanf("%s", data[i].jenisBuku); 
+            scanf(" %[^\n]s", data[i].jenisBuku); 
+            // tambahin stock buku
             count++; 
 
             bukuBaru = fopen("FileBuku.txt", "a");
@@ -248,6 +343,7 @@ void defaultMember() {
         if (headMem == NULL) {
             headMem = node;
         }
+
         else {
             while (curr != NULL && curr->next != NULL) {
                 curr = curr->next;
@@ -308,7 +404,14 @@ void inputNew() {
 }
 
 void showMember() {
-    dataMember *curr = headMem;
+    dataMember *kepala = headMem;
+    // dataMember *tail = headMem;
+    // while (tail != NULL && tail != NULL) {
+    //     tail = tail->next;
+    // }
+
+    // quickSort(kepala, tail);
+    // quickSort (&kepala);
 
     system("cls");
     printf ("\n");
@@ -321,7 +424,9 @@ void showMember() {
     );
 
     int count = 1;
+    dataMember *curr = headMem;
     while (curr != NULL) {
+        // quickSort(curr, 0, total);
         printf ("| %-3d | %-36s | %-14s | %-9s |\n", count, curr->name, curr->phoneNum, curr->id);
         count += 1;
         curr = curr->next;
@@ -418,7 +523,7 @@ int checkMember(char *key) {
     dataMember *curr = headMem;
 
     while (curr != NULL) {
-        if (strcmpi(curr->name, key) == 0) {
+        if (stricmp(curr->name, key) == 0) {
             system ("cls");
             printf ("==========================================================\n");
             printf ("                          Pinjam Buku                     \n");
@@ -475,11 +580,20 @@ void peekBorrower (peminjaman *headBorrow) {
     dataMember *currMem = headMem;
     DataBuku *currBook = headBook;
 
-    printf ("-----------------------------------------------------------\n");
+    time_t t;
+    time(&t);
+
+    system ("cls");
+    printf ("==========================================================\n");
+    printf ("                   Data Peminjaman Baru                   \n");
+    printf ("==========================================================\n");
+
+    printf ("\nWaktu Peminjaman : %s", ctime(&t));
+    printf ("----------------------------------------------------------\n");
 
     while (currMem != NULL) {
         if (strcmpi(currMem->name, headBorrow->who) == 0) {
-            printf ("\nNama         : %s\n", currMem->name);
+            printf ("Nama         : %s\n", currMem->name);
             printf ("ID           : %s\n", currMem->id);
             printf ("No. Telp     : %s\n", currMem->phoneNum);
             break;
@@ -489,7 +603,7 @@ void peekBorrower (peminjaman *headBorrow) {
 
     while (currBook != NULL) {
         if (strcmpi(currBook->judulBuku, headBorrow->what) == 0) {
-            printf ("\nJudul Buku   : %s\n", currBook->judulBuku);
+            printf ("Judul Buku   : %s\n", currBook->judulBuku);
             printf ("ISBN         : %s\n", currBook->ISBN);
             printf ("Author       : %s\n", currBook->penulis);
             printf ("Year         : %s\n", currBook->tahunTerbit);
@@ -499,8 +613,7 @@ void peekBorrower (peminjaman *headBorrow) {
         //currBook = currBook->next;
     }
 
-    // cari curr di database Member dan Book yg sama kyk nama and judul buku
-    printf ("Priority           : %d\n", headBorrow->priority);
+    printf ("Priority     : %d\n", headBorrow->priority);
 }
 
 int isEmptyBorrower (peminjaman **headBorrow) {
@@ -546,40 +659,39 @@ void borrowMenu(int borrower) {
     }
 
     else {
-        // belom bikin algoritma utk nge-check apakah bukunya ada ato ga (nantinya kl tersedia, perlu liat stock juga)
         printf ("Judul buku     : "); 
         scanf (" %[^\n]s", judul);
 
-        // if jenis bukunya ... -> priority nya berapa, nanti tentuinnya otomatis
-        // tapi sementara dibikin manual dulu
-        printf ("Priority       : ");
-        scanf ("%d", &prior);
+        DataBuku *treeRoot = root;
+        
+        if (cekStok(judul, treeRoot)) {
+            // if jenis bukunya ... -> priority nya berapa, nanti tentuinnya otomatis
+            // tapi sementara dibikin manual dulu
+            printf ("Priority       : ");
+            scanf ("%d", &prior);
 
-        if (borrower == 0) {
-            headBorrow = newBorrower(nama, judul, prior);
-        }
-        else {
-            enqueueNewBorrower(&headBorrow, nama, judul, prior);
+            if (borrower == 0) {
+                headBorrow = newBorrower(nama, judul, prior);
+            }
+            else {
+                enqueueNewBorrower(&headBorrow, nama, judul, prior);
+            }
+
+            // data bisa masuk, tapi kalo di print dia langsung ilang lagi
+            // harusnya nanti kalo udah ada yg balikin baru di dequeue (?)
+            peminjaman *curr = headBorrow;
+            while (!isEmptyBorrower(&curr)) {
+                peekBorrower(curr);
+                dequeueBorrower(&curr);
+            }
+
+            borrower = 1;
+            printf ("\nData berhasil ditambahkan\n");
         }
 
-        // data bisa masuk, tapi kalo di print dia langsung ilang lagi
-        // harusnya nanti kalo udah ada yg balikin baru di dequeue (?)
-        peminjaman *curr = headBorrow;
-        while (!isEmptyBorrower(&curr)) {
-            peekBorrower(curr);
-            dequeueBorrower(&curr);
-        }
-
-        borrower = 1;
-        printf ("\nData berhasil ditambahkan\n");
         printf ("Press any key to continue...");
         getch();
     }
-    // kl ada
-    // kl ini data pertama, head = newNode(nama, judul);
-    // kl bukan data pertama, langsung enqueue (&head, nama, judul);
-
-
 }
 
 //
@@ -598,7 +710,7 @@ char menu(){//Menu awal
 // fclose(dataBUKU);
 
 char ch;
-    char choice;
+    int choice;
     // system ("cls");
     printf("\n");
     printf("==========================================================\n");
@@ -613,7 +725,7 @@ char ch;
             "0. Exit\n"
             "Pilihan: "
     );
-    scanf("%c", &choice);
+    scanf("%d", &choice);
     return choice;
 }
 
@@ -656,24 +768,26 @@ int main(){//Main
     while (1)
     {
         switch (menu()){
-            case '1':
+            case 1:
                 displayBookMenu();
                 break;
-            case '2':
+            case 2:
                 // testDoang();
                 borrowMenu(borrower);
                 break;
             case '3':
+                
                 break;
-            case '4':
+            case 4:
                 break;
-            case '5':
+            case 5:
                 editBuku();
                 break;
-            case '6':
+            case 6:
+
                 newMemberMenu();
                 break;
-            case '0':
+            case 0:
                 printf ("\nThank you for using this service ^-^\n\n");
                 return 0;
             default:
