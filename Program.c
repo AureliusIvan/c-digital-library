@@ -145,7 +145,6 @@ char menuPengembalianBuku(){//Menu Pengembalian Buku
            "Pilihan: "
     );
     scanf("%d", &pilihan);
-    printf("%d", pilihan);
     fflush(stdin);
     switch (pilihan){
                 case 1:
