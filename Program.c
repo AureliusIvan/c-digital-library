@@ -131,6 +131,30 @@ void displayBookMenu(){
 //Menu Turnitin
 
 void menuTurnitin(){
+    int pilihan;
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     TURN IT IN\n");
+    printf("==========================================================\n");
+    printf("1. Daftar Turn It In\n"
+           "2. Cek Queue\n"
+           "0. Exit\n"
+           "Pilihan: "
+    );
+    scanf("%d", &pilihan);
+    fflush(stdin);
+    switch (pilihan){
+        case 1:
+            break;
+        case 2;
+            break;
+        case 0:
+            printf ("\nThank you for using this service ^-^\n\n");
+            return 0;
+        default:
+            printf("Pilihan salah!");
+            break;
+    }
     return;
 }
 
