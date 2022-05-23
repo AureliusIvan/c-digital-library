@@ -133,7 +133,8 @@ int cekStok(char judul){
 //Edit Buku - marcel 
 
 void editBuku(){
-    FILE* bukuBaru;
+    FILE* bukuBaru = NULL;
+    FILE* buku = NULL;
 
     DataBuku *data;
 
@@ -151,34 +152,31 @@ void editBuku(){
 
     if (n == 1)
     {
-        printf("Masukkan jumlah buku yang ingin ditambahkan   :  ");
-        scanf("%d", &k);
+        buku = fopen("FileBuku.txt", "r");
+        bukuBaru = fopen("FileBuku.txt", "a");
 
-        while (k != 0)
-        {
-            fflush(stdin);
-            printf("Masukkan judul buku         :  ");
-            scanf(" %[^\n]s", data[i].judulBuku); 
-            printf("Masukkan nama author        :  ");
-            scanf(" %[^\n]s", data[i].penulis); 
-            printf("Masukkan tahun terbit buku  :  ");
-            scanf("%s", data[i].tahunTerbit); 
-            printf("Masukkan ISBN buku          :  ");
-            scanf("%s", data[i].ISBN); 
-            printf("Masukkan tipe buku          :  ");   
-            scanf("%s", data[i].jenisBuku); 
-            count++; 
+    while (1)
+    {
+        count++; 
+        printf("Masukkan judul buku         :  ");
+        scanf(" %s", data[i].judulBuku); 
+        printf("Masukkan nama author        :  ");
+        scanf(" %s", data[i].penulis); 
+        printf("Masukkan tahun terbit buku  :  ");
+        scanf("%s", data[i].tahunTerbit); 
+        printf("Masukkan ISBN buku          :  ");
+        scanf("%s", data[i].ISBN); 
+        printf("Masukkan tipe buku          :  ");   
+        scanf("%s", data[i].jenisBuku); 
 
-            bukuBaru = fopen("FileBuku.txt", "a");
-            fprintf(bukuBaru, "%s#%s#%s#%s#%s\n", 
+        fprintf(bukuBaru, "%s#%s#%s#%s#%s\n", 
                     data[i].judulBuku, data[i].penulis, data[i].tahunTerbit,
                     data[i].ISBN, data[i].jenisBuku
                     );
+    }
 
             fclose(bukuBaru);
-        }
-        
-    
+            fclose(buku);
 
     }
     else if(n == 2)
