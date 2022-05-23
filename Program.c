@@ -335,86 +335,92 @@ void menuTurnitin(){
 }
 
 //Menu Pengembalian Buku
-void menuPengembalianBuku() {
-    int pilihan;
+
+void returnBook() {
+    DataBuku *treeRoot = root;
+
+    char nama[45];
+    char judul[100];
+
+    system ("cls");
     printf("\n");
     printf("==========================================================\n");
     printf("                     PENGEMBALIAN BUKU                    \n");
     printf("==========================================================\n");
-    printf("1. Data Buku Yang Dipinjam\n"
-           "2. Kembalikan Buku\n"
-           "0. Exit\n"
-           "Pilihan: "
-    );
-    scanf("%d", &pilihan);
+    fflush(stdin);
+    printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
+    fflush(stdin);
+    printf("Judul Buku      : "); scanf("%[^\n]", judul);
     fflush(stdin);
 
-    switch (pilihan){
-                case 1:
-                    system("cls");
-                    printf ("=================================================================================================\n");
-                    printf ("                                           List Peminjam Buku                                    \n");
-                    printf ("=================================================================================================\n\n");
-                    printf ("-------------------------------------------------------------------------------------------------\n"
-                            "| No. |                 Name                 |                              Judul Buku                             |    ID    |\n"
-                            "-------------------------------------------------------------------------------------------------\n"
-                    );
-                    break;
+    //check nama
+    if (checkMember(nama) && checkBook(treeRoot, judul)) {
+        DataBuku *toRestock = searchBookBook(treeRoot, judul);
+        toRestock->jumlahBuku += 1;
 
-                case 2:
-                    DataBuku *treeRoot = root;
+        dataMember *currMem = headMem;
+        while (currMem != NULL) {
+            if (strcmpi(currMem->name, nama) == 0) {
+                break;
+            }
+            currMem = currMem->next;
+        }
 
-                    char nama[45];
-                    char judul[100];
+        FILE *delBorrower = fopen("DataPeminjaman.txt", "w");
+        peminjaman *curr = headBorrow;
+        while (curr != NULL) {
+            fprintf (delBorrower, "%s#%s#%s#%s#hehe\n", currMem->name, currMem->id, toRestock->judulBuku, toRestock->ISBN);
+            curr = curr->next;
+        }
+        fclose(delBorrower);
+        printf ("\nPengembalian buku berhasil\n");
+    }
+    
+    else {
+        printf ("\nData peminjaman buku tidak tersedia\nSilahkan periksa ulang data");
+    }
 
-                    system ("cls");
-                    printf("\n");
-                    printf("==========================================================\n");
-                    printf("                     PENGEMBALIAN BUKU                    \n");
-                    printf("==========================================================\n");
-                    printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
-                    fflush(stdin);
-                    printf("Judul Buku      : "); scanf("%[^\n]", judul);
-                    fflush(stdin);
+    printf ("Press any key to continue...");
+    getch();
+}
 
-                    //check nama
-                    if (checkMember(nama) && checkBook(treeRoot, judul)) {
-                        DataBuku *toRestock = searchBookBook(treeRoot, judul);
-                        toRestock->jumlahBuku += 1;
+void menuPengembalianBuku() {
+    int pilihan;
+    printf ("\n");
+    printf ("==========================================================\n");
+    printf ("                     PENGEMBALIAN BUKU                    \n");
+    printf ("==========================================================\n");
 
-                        dataMember *currMem = headMem;
-                        while (currMem != NULL) {
-                            if (strcmpi(currMem->name, nama) == 0) {
-                                break;
-                            }
-                            currMem = currMem->next;
-                        }
+    returnBook();
 
-                        FILE *delBorrower = fopen("DataPeminjaman.txt", "w");
-                        peminjaman *curr = headBorrow;
-                        while (curr != NULL) {
-                            fprintf (delBorrower, "%s#%s#%s#%s#hehe\n", currMem->name, currMem->id, toRestock->judulBuku, toRestock->ISBN);
-                            curr = curr->next;
-                        }
+    // printf ("1. Data Buku Yang Dipinjam\n"
+    //         "2. Kembalikan Buku\n"
+    //         "0. Exit\n"
+    //         "Pilihan: "
+    // );
+    // scanf("%d", &pilihan);
+    // fflush(stdin);
 
-                        fclose(delBorrower);
-                        printf ("\nPengembalian buku berhasil\n");
-                    }
-
-                    else {
-                        printf ("\nData peminjaman buku tidak tersedia\nSilahkan periksa ulang data");
-                    }
-
-                    printf ("Press any key to continue...");
-                    getch();
-
-                    break;
-                case 0:
-                    return;
-                default:
-                    printf("hmm");
-                    break;
-            } 
+    // switch (pilihan){
+    //     case 1:
+    //         system("cls");
+    //         printf ("=================================================================================================\n");
+    //         printf ("                                           List Peminjam Buku                                    \n");
+    //         printf ("=================================================================================================\n\n");
+    //         printf ("-------------------------------------------------------------------------------------------------\n"
+    //                 "| No. |                 Name                 |                              Judul Buku                             |    ID    |\n"
+    //                 "-------------------------------------------------------------------------------------------------\n"
+    //         );
+    //         break;
+    //     case 2:
+    //         returnBook();
+    //         break;
+    //     case 0:
+    //         return;
+    //     default:
+    //         printf("hmm");
+    //         break;
+    // } 
 }
 
 //List Buku - soon 
