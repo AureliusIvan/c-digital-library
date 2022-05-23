@@ -412,7 +412,6 @@ void menuTurnitin(){
 
 void returnBook() {
     DataBuku *treeRoot = root;
-
     char nama[45];
     char judul[100];
 
@@ -440,13 +439,15 @@ void returnBook() {
             currMem = currMem->next;
         }
 
-        FILE *delBorrower = fopen("DataPeminjaman.txt", "w");
+        FILE *delBorrower = fopen("DataPeminjaman.txt", "a");
         peminjaman *curr = headBorrow;
         while (curr != NULL) {
-            fprintf (delBorrower, "%s#%s#%s#%s#hehe\n", currMem->name, currMem->id, toRestock->judulBuku, toRestock->ISBN);
+            fprintf (delBorrower, "%s#%s#%s#%s\n", currMem->name, currMem->id, toRestock->judulBuku, toRestock->ISBN);
             curr = curr->next;
         }
         fclose(delBorrower);
+        free(currMem->name);
+        printf("%s", currMem->name);
         printf ("\nPengembalian buku berhasil\n");
     }
     
@@ -523,7 +524,7 @@ void tambahBuku(){
     scanf("\n%s", jenisBuku);
     printf("Masukan Jumlah Buku: ");
     root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
-    FILE *data;
+    FILE *data , *ptr;
     data = fopen("FileBuku.txt", "a");
     fprintf(data,"\n%s#%s#%s#%s#%s",judulBuku,penulis,tahunTerbit, ISBN, jenisBuku);
     fclose(data);
