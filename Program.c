@@ -159,6 +159,9 @@ void defaultPeminjaman() {
 
 }
 
+
+// Cek Member & Title valid ga
+
 DataBuku *searchBookBook (DataBuku *root, char *key) {
     if (root == NULL || (strcmpi (root->judulBuku, key) == 0))
         return root;
@@ -168,6 +171,56 @@ DataBuku *searchBookBook (DataBuku *root, char *key) {
     
     return searchBookBook(root->left, key);
 }
+
+bool checkBook (DataBuku *root, char *key){
+    if (root == NULL)
+        return false;
+    
+    if (strcmpi (root->judulBuku, key) == 0)
+        return true;
+    
+    bool res1 = checkBook (root->left, key);
+    if (res1) 
+        return true;
+
+    bool res2 = checkBook (root->right, key);
+    
+    return res2;
+}
+
+int cekStok(char *judul, DataBuku *root){
+    DataBuku *treeRoot = root;
+
+    // kl ada bukunya
+    if (checkBook (root, judul)) {
+        DataBuku *toCheck = searchBookBook(treeRoot, judul);
+
+        if (toCheck->jumlahBuku == 0) {
+            printf ("Stock buku habis!\n");
+            return 0;
+        }
+        else   
+            return 1;
+
+    }
+
+    // kl gaada
+    else
+        printf ("Buku tidak tersedia\n");
+}
+
+int checkMember(char *key) {
+    dataMember *curr = headMem;
+
+    while (curr != NULL) {
+        if (stricmp(curr->name, key) == 0) {
+            return 1;
+        }
+        
+        curr = curr->next;
+    }
+}
+
 
 void displayPeminjaman() {
     int urutan = 1;
@@ -286,7 +339,7 @@ void menuPengembalianBuku() {
     int pilihan;
     printf("\n");
     printf("==========================================================\n");
-    printf("                     PENGEMBALIAN BUKU\n");
+    printf("                     PENGEMBALIAN BUKU                    \n");
     printf("==========================================================\n");
     printf("1. Data Buku Yang Dipinjam\n"
            "2. Kembalikan Buku\n"
@@ -307,18 +360,54 @@ void menuPengembalianBuku() {
                             "-------------------------------------------------------------------------------------------------\n"
                     );
                     break;
+
                 case 2:
+                    DataBuku *treeRoot = root;
+
                     char nama[45];
                     char judul[100];
+
+                    system ("cls");
                     printf("\n");
                     printf("==========================================================\n");
                     printf("                     PENGEMBALIAN BUKU                    \n");
                     printf("==========================================================\n");
-                    printf("Nama            : "); scanf("%[^\n]", &nama);
+                    printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
                     fflush(stdin);
-                    printf("Judul Buku      : "); scanf("%[^\n]", &judul);
+                    printf("Judul Buku      : "); scanf("%[^\n]", judul);
                     fflush(stdin);
-                    printf("%s, %s\n", nama, judul);
+
+                    //check nama
+                    if (checkMember(nama) && checkBook(treeRoot, judul)) {
+                        DataBuku *toRestock = searchBookBook(treeRoot, judul);
+                        toRestock->jumlahBuku += 1;
+
+                        dataMember *currMem = headMem;
+                        while (currMem != NULL) {
+                            if (strcmpi(currMem->name, nama) == 0) {
+                                break;
+                            }
+                            currMem = currMem->next;
+                        }
+
+                        FILE *delBorrower = fopen("DataPeminjaman.txt", "w");
+                        peminjaman *curr = headBorrow;
+                        while (curr != NULL) {
+                            fprintf (delBorrower, "%s#%s#%s#%s#hehe\n", currMem->name, currMem->id, toRestock->judulBuku, toRestock->ISBN);
+                            curr = curr->next;
+                        }
+
+                        fclose(delBorrower);
+                        printf ("\nPengembalian buku berhasil\n");
+                    }
+
+                    else {
+                        printf ("\nData peminjaman buku tidak tersedia\nSilahkan periksa ulang data");
+                    }
+
+                    printf ("Press any key to continue...");
+                    getch();
+
                     break;
                 case 0:
                     return;
@@ -608,63 +697,6 @@ void newMemberMenu() {
     }
     
 
-}
-
-
-// Cek Member & Title valid ga
-
-bool checkBook (DataBuku *root, char *key){
-    if (root == NULL)
-        return false;
-    
-    if (strcmpi (root->judulBuku, key) == 0)
-        return true;
-    
-    bool res1 = checkBook (root->left, key);
-    if (res1) 
-        return true;
-
-    bool res2 = checkBook (root->right, key);
-    
-    return res2;
-}
-
-int cekStok(char *judul, DataBuku *root){
-    DataBuku *treeRoot = root;
-
-    // kl ada bukunya
-    if (checkBook (root, judul)) {
-        DataBuku *toCheck = searchBookBook(treeRoot, judul);
-
-        if (toCheck->jumlahBuku == 0) {
-            printf ("Stock buku habis!\n");
-            return 0;
-        }
-        else   
-            return 1;
-
-    }
-
-    // kl gaada
-    else
-        printf ("Buku tidak tersedia\n");
-}
-
-int checkMember(char *key) {
-    dataMember *curr = headMem;
-
-    while (curr != NULL) {
-        if (stricmp(curr->name, key) == 0) {
-            system ("cls");
-            printf ("==========================================================\n");
-            printf ("                          Pinjam Buku                     \n");
-            printf ("==========================================================\n");
-            printf ("Nama peminjam  : %s\n", curr->name);
-            return 1;
-        }
-        
-        curr = curr->next;
-    }
 }
 
 
