@@ -38,6 +38,7 @@ void inorder(DataBuku *root){
     if(root != NULL){
         inorder(root->left);
         printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+        counter++;
         inorder(root->right);
     }
 }
@@ -104,7 +105,7 @@ void displaySearchBuku(){
 }
 
 void displayDataPeminjamanBuku(){
-    int counter = 1;
+    counter = 1;
     printf("================================================================================================================================================================\n");
     printf("|                                                                               Daftar Buku                                                                    |\n");
     printf("================================================================================================================================================================\n");
@@ -123,10 +124,9 @@ void displayDataPeminjamanBuku(){
 void displayBookMenu(){
     while (1){
     char choice;
-    printf("\n");
     printf("1. Cari Buku\n");
     printf("2. Daftar buku \n");
-    printf("Pilihan: "); scanf("%c", &choice);
+    printf("Pilihan: "); scanf("\n%c", &choice);
     switch (choice){
     case '1':
         displaySearchBuku();
@@ -257,15 +257,19 @@ void tambahBuku(){
     printf("Masukan Judul Buku: ");
     scanf("%s",judulBuku);
     printf("Masukan Penulis Buku: ");
-    scanf("%s",penulis);
+    scanf("\n%s",penulis);
     printf("Masukan Tahun Terbit: ");
-    scanf("%s", tahunTerbit);
+    scanf("\n%s", tahunTerbit);
     printf("Masukan ISBN: ");
-    scanf("%s", ISBN);
+    scanf("\n%s", ISBN);
     printf("Masukan Jenis Buku: ");
-    scanf("%s", jenisBuku);
+    scanf("\n%s", jenisBuku);
     printf("Masukan Jumlah Buku: ");
     root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
+    FILE *data;
+    data = fopen("FileBuku.txt", "a");
+    fprintf(data,"\n%s#%s#%s#%s#%s",judulBuku,penulis,tahunTerbit, ISBN, jenisBuku);
+    fclose(data);
     printf("data berhasil dimasukan!");
     getchar();
     return;
@@ -808,22 +812,20 @@ int main(){//Main
     {
         switch (menu()){
             case 1:
-                displayBookMenu();
                 break;
             case 2:
                 // testDoang();
                 borrowMenu(borrower);
                 break;
             case '3':
-                
                 break;
             case 4:
+                displayBookMenu();
                 break;
             case 5:
                 editBuku();
                 break;
             case 6:
-
                 newMemberMenu();
                 break;
             case 0:
