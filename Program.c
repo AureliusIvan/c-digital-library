@@ -128,10 +128,14 @@ void displayBookMenu(){
 
 //HASH key
 
-//Pengembalian Buku - edison
+//Menu Turnitin
+
+void menuTurnitin(){
+    return;
+}
 
 //Menu Pengembalian Buku
-char menuPengembalianBuku(){
+void menuPengembalianBuku(){
     int pilihan;
     printf("\n");
     printf("==========================================================\n");
@@ -764,7 +768,7 @@ int main(){//Main
                 // testDoang();
                 borrowMenu(borrower);
                 break;
-            case '3':
+            case 3:
                 menuPengembalianBuku();
                 break;
             case 4:
@@ -773,8 +777,10 @@ int main(){//Main
                 editBuku();
                 break;
             case 6:
-
                 newMemberMenu();
+                break;
+            case 7;
+                turnitinMenu();
                 break;
             case 0:
                 printf ("\nThank you for using this service ^-^\n\n");
