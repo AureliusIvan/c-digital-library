@@ -94,7 +94,22 @@ char menuPengembalianBuku(){//Menu Pengembalian Buku
 
 
 //List Buku - soon 
-
+void printListBuku(){
+    DataBuku *node;
+    int counter = 0;
+    node = headBook;
+        
+    printf("================================================================================================================================================================\n");
+    printf("|                                                                               Daftar Buku                                                                    |\n");
+    printf("================================================================================================================================================================\n");
+    printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
+    printf("================================================================================================================================================================\n");
+    do{
+        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);   
+        node = node->next;
+    }
+    while(node->judulBuku != NULL);
+}
 //Cek Stok Buku
 
 int cekStok(char judul){
@@ -643,6 +658,7 @@ int main(){//Main
                 menuPengembalianBuku();
                 break;
             case '4':
+                printListBuku();
                 break;
             case '5':
                 editBuku();
