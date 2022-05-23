@@ -8,6 +8,7 @@
 
 #define TABLE_SIZE 100000
 
+// bikin tree sesuai abjad judul
 typedef struct DataBuku{
     char judulBuku[100]; // sejauh ini paling panjang 71 char
     char penulis[100];
@@ -15,6 +16,7 @@ typedef struct DataBuku{
     char ISBN[20];
     char jenisBuku[10];
     int jumlahBuku;
+
     struct DataBuku *next, *prev;
 }DataBuku;
 
@@ -105,6 +107,7 @@ void editBuku(){
             scanf("%s", data[i].ISBN); 
             printf("Masukkan tipe buku          :  ");   
             scanf("%s", data[i].jenisBuku); 
+            // tambahin stock
             count++; 
 
             bukuBaru = fopen("FileBuku.txt", "a");
@@ -229,7 +232,14 @@ void inputNew() {
 }
 
 void showMember() {
-    dataMember *curr = headMem;
+    dataMember *kepala = headMem;
+    // dataMember *tail = headMem;
+    // while (tail != NULL && tail != NULL) {
+    //     tail = tail->next;
+    // }
+
+    // quickSort(kepala, tail);
+    // quickSort (&kepala);
 
     system("cls");
     printf ("\n");
@@ -242,7 +252,9 @@ void showMember() {
     );
 
     int count = 1;
+    dataMember *curr = headMem;
     while (curr != NULL) {
+        // quickSort(curr, 0, total);
         printf ("| %-3d | %-36s | %-14s | %-9s |\n", count, curr->name, curr->phoneNum, curr->id);
         count += 1;
         curr = curr->next;
@@ -284,8 +296,8 @@ void searchMember() {
     }
 
     printf ("---------------------------------------------------------------------------\n\n");
-    printf ("\nPress any key to continue...");
-    getch();
+    printf ("\nPress any key to continue..."); getch();
+    return; //error :)
 }
 
 void newMemberMenu() {
@@ -396,11 +408,20 @@ void peekBorrower (peminjaman *headBorrow) {
     dataMember *currMem = headMem;
     DataBuku *currBook = headBook;
 
-    printf ("-----------------------------------------------------------\n");
+    time_t t;
+    time(&t);
+
+    system ("cls");
+    printf ("==========================================================\n");
+    printf ("                   Data Peminjaman Baru                   \n");
+    printf ("==========================================================\n");
+
+    printf ("\nWaktu Peminjaman : %s", ctime(&t));
+    printf ("----------------------------------------------------------\n");
 
     while (currMem != NULL) {
         if (strcmpi(currMem->name, headBorrow->who) == 0) {
-            printf ("\nNama         : %s\n", currMem->name);
+            printf ("Nama         : %s\n", currMem->name);
             printf ("ID           : %s\n", currMem->id);
             printf ("No. Telp     : %s\n", currMem->phoneNum);
             break;
@@ -410,7 +431,7 @@ void peekBorrower (peminjaman *headBorrow) {
 
     while (currBook != NULL) {
         if (strcmpi(currBook->judulBuku, headBorrow->what) == 0) {
-            printf ("\nJudul Buku   : %s\n", currBook->judulBuku);
+            printf ("Judul Buku   : %s\n", currBook->judulBuku);
             printf ("ISBN         : %s\n", currBook->ISBN);
             printf ("Author       : %s\n", currBook->penulis);
             printf ("Year         : %s\n", currBook->tahunTerbit);
@@ -421,7 +442,7 @@ void peekBorrower (peminjaman *headBorrow) {
     }
 
     // cari curr di database Member dan Book yg sama kyk nama and judul buku
-    printf ("Priority           : %d\n", headBorrow->priority);
+    printf ("Priority     : %d\n", headBorrow->priority);
 }
 
 int isEmptyBorrower (peminjaman **headBorrow) {
@@ -467,7 +488,7 @@ void borrowMenu(int borrower) {
     }
 
     else {
-        // belom bikin algoritma utk nge-check apakah bukunya ada ato ga (nantinya kl tersedia, perlu liat stock juga)
+        // belom bikin algoritma utk nge-check apakah bukunya ada ato ga (nantinya kl tersedia, perlu liat stock juga) - 
         printf ("Judul buku     : "); 
         scanf (" %[^\n]s", judul);
 
@@ -496,11 +517,6 @@ void borrowMenu(int borrower) {
         printf ("Press any key to continue...");
         getch();
     }
-    // kl ada
-    // kl ini data pertama, head = newNode(nama, judul);
-    // kl bukan data pertama, langsung enqueue (&head, nama, judul);
-
-
 }
 
 //
