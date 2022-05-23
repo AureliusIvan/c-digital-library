@@ -74,11 +74,12 @@ typedef struct peminjaman {
     char who[45];
     int priority;
 
-    struct peminjaman *next;
+    struct peminjaman *next, *prev;
 }peminjaman;
 
 DataBuku *headBook;
 dataMember *headMem = NULL;
+peminjaman *headBorrow = NULL;
 
 //Data Peminjaman Buku  - ivan
 
@@ -115,11 +116,10 @@ void displayDataPeminjamanBuku(){
     inorder(root);
     printf("1. Next Page\n");
     printf("2. Previous Page\n");
-    printf("0. Back\n");
+    printf("0. Back to menu\n");
     printf("Pilihan: ");
     return;
 }
-
 
 void displayBookMenu(){
     while (1){
@@ -141,9 +141,38 @@ void displayBookMenu(){
     }
 }
 
-//HASH key
+void defaultPeminjaman() {
+    FILE *defaultBorrower = fopen("DataPeminjaman.txt", "r");
 
-//Pengembalian Buku - edison
+    char temp1[50];
+    char temp2[50];
+
+    while(!feof(defaultBorrower)) {
+        peminjaman *node = (struct peminjaman*) malloc(sizeof(peminjaman));
+        peminjaman *curr;
+
+        fscanf (defaultBorrower, "%[^#]#%[^#]#%[^#]#%[^\n]\n", node->who, temp1, node->what, temp2);
+        
+        node->next = NULL;
+        node->prev = NULL;
+        curr = headBorrow;
+
+        if (headBorrow == NULL) {
+            headBorrow = node;
+            headBorrow->prev = NULL;
+        }
+
+        else {
+            while (curr != NULL && curr->next != NULL) {
+                curr = curr->next;
+            }
+            curr->next = node;
+            node->prev = curr;
+            node->next = NULL;
+        }
+    }
+
+    fclose(defaultBorrower);
 
 //Menu Pengembalian Buku
 /*
@@ -193,9 +222,19 @@ char menuPengembalianBuku(){
 }
 */
 
-//List Buku - soon 
 
-// Cek Stok Buku
+// Cek Member & Title valid ga
+
+DataBuku *searchBookBook (DataBuku *root, char *key) {
+    if (root == NULL || (strcmpi (root->judulBuku, key) == 0))
+        return root;
+    
+    if (strcmpi (root->judulBuku, key) < 0)
+        return searchBookBook(root->right, key);
+    
+    return searchBookBook(root->left, key);
+}
+
 bool checkBook (DataBuku *root, char *key){
     if (root == NULL)
         return false;
@@ -210,16 +249,6 @@ bool checkBook (DataBuku *root, char *key){
     bool res2 = checkBook (root->right, key);
     
     return res2;
-}
-
-DataBuku *searchBookBook (DataBuku *root, char *key) {
-    if (root == NULL || (strcmpi (root->judulBuku, key) == 0))
-        return root;
-    
-    if (strcmpi (root->judulBuku, key) < 0)
-        return searchBookBook(root->right, key);
-    
-    return searchBookBook(root->left, key);
 }
 
 int cekStok(char *judul, DataBuku *root){
@@ -242,6 +271,223 @@ int cekStok(char *judul, DataBuku *root){
     else
         printf ("Buku tidak tersedia\n");
 }
+
+int checkMember(char *key) {
+    dataMember *curr = headMem;
+
+    while (curr != NULL) {
+        if (stricmp(curr->name, key) == 0) {
+            return 1;
+        }
+        
+        curr = curr->next;
+    }
+}
+
+
+void displayPeminjaman() {
+    int urutan = 1;
+    int pilih;
+    peminjaman *curr = headBorrow;
+    dataMember *currMem = headMem;
+    DataBuku *currBook = root;
+
+    if (headBorrow == NULL) {
+        printf ("\nNo Data in Database\n");
+        return;
+    }
+
+    while (curr != NULL) {
+        system("cls");
+        printf ("==========================================================\n");
+        printf ("                     Data Peminjaman Buku                 \n");
+        printf ("==========================================================\n");
+
+        // gabisa prev
+        // data kedua, etc ga nampilin informasi orang yang pinjem buku, cuma bukunya
+
+        printf ("\nData - %d\n", urutan);
+        while (currMem != NULL) {
+            if (strcmpi(currMem->name, curr->who) == 0) {
+                printf ("Nama         : %s\n", currMem->name);
+                printf ("ID           : %s\n", currMem->id);
+                printf ("No. Telp     : %s\n", currMem->phoneNum);
+                break;
+            }
+            currMem = currMem->next;
+        }
+
+        DataBuku *toPrint = searchBookBook(currBook, curr->what);
+        printf ("Judul Buku   : %s\n", toPrint->judulBuku);
+        printf ("ISBN         : %s\n", toPrint->ISBN);
+        printf ("Author       : %s\n", toPrint->penulis);
+        printf ("Year         : %s\n", toPrint->tahunTerbit);
+        printf ("Type         : %s\n", toPrint->jenisBuku);
+        
+        int pilih;
+        printf ("----------------------------------------------------------\n");
+        printf("Menu :\n");
+        printf("1. Next\n");
+        printf("2. Prev\n");
+        printf("0. Back to menu\n");
+        printf("Pilihan : "); scanf ("%d", &pilih);
+        printf("\n");
+
+        switch (pilih) {
+            case 1: { //NEXT DATA
+                if (curr->next == NULL) {
+                    printf ("\nNo more data ahead\n");
+                    printf ("Press any key to continue ...\n");
+                    getch();
+                }
+                else {
+                    curr = curr->next; 
+                    urutan ++;
+                }
+                system ("cls");
+                break;    
+            }
+            case 2: { //NEXT DATA
+                if (curr->prev == NULL) {
+                    printf ("\nNo previous data\n");
+                    printf ("Press any key to continue ...\n");
+                    getch();
+                }
+                else {
+                    curr = curr->prev; 
+                    urutan --;
+                }
+                system ("cls");
+                break;    
+            }
+            default: return;
+        }
+    }
+}
+
+//HASH key
+
+//Menu Turnitin
+
+void menuTurnitin(){
+    int pilihan;
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     TURN IT IN\n");
+    printf("==========================================================\n");
+    printf("1. Daftar Turn It In\n"
+           "2. Cek Queue\n"
+           "0. Exit\n"
+           "Pilihan: "
+    );
+    scanf("%d", &pilihan);
+    fflush(stdin);
+    switch (pilihan){
+        case 1:
+            break;
+        case 2:
+            break;
+        case 0:
+            printf ("\nThank you for using this service ^-^\n\n");
+            return;
+        default:
+            printf("Pilihan salah!");
+            break;
+    }
+    return;
+}
+
+//Menu Pengembalian Buku
+
+void returnBook() {
+    DataBuku *treeRoot = root;
+
+    char nama[45];
+    char judul[100];
+
+    system ("cls");
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     PENGEMBALIAN BUKU                    \n");
+    printf("==========================================================\n");
+    fflush(stdin);
+    printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
+    fflush(stdin);
+    printf("Judul Buku      : "); scanf("%[^\n]", judul);
+    fflush(stdin);
+
+    //check nama
+    if (checkMember(nama) && checkBook(treeRoot, judul)) {
+        DataBuku *toRestock = searchBookBook(treeRoot, judul);
+        toRestock->jumlahBuku += 1;
+
+        dataMember *currMem = headMem;
+        while (currMem != NULL) {
+            if (strcmpi(currMem->name, nama) == 0) {
+                break;
+            }
+            currMem = currMem->next;
+        }
+
+        FILE *delBorrower = fopen("DataPeminjaman.txt", "w");
+        peminjaman *curr = headBorrow;
+        while (curr != NULL) {
+            fprintf (delBorrower, "%s#%s#%s#%s#hehe\n", currMem->name, currMem->id, toRestock->judulBuku, toRestock->ISBN);
+            curr = curr->next;
+        }
+        fclose(delBorrower);
+        printf ("\nPengembalian buku berhasil\n");
+    }
+    
+    else {
+        printf ("\nData peminjaman buku tidak tersedia\nSilahkan periksa ulang data");
+    }
+
+    printf ("Press any key to continue...");
+    getch();
+}
+
+void menuPengembalianBuku() {
+    int pilihan;
+    printf ("\n");
+    printf ("==========================================================\n");
+    printf ("                     PENGEMBALIAN BUKU                    \n");
+    printf ("==========================================================\n");
+
+    returnBook();
+
+    // printf ("1. Data Buku Yang Dipinjam\n"
+    //         "2. Kembalikan Buku\n"
+    //         "0. Exit\n"
+    //         "Pilihan: "
+    // );
+    // scanf("%d", &pilihan);
+    // fflush(stdin);
+
+    // switch (pilihan){
+    //     case 1:
+    //         system("cls");
+    //         printf ("=================================================================================================\n");
+    //         printf ("                                           List Peminjam Buku                                    \n");
+    //         printf ("=================================================================================================\n\n");
+    //         printf ("-------------------------------------------------------------------------------------------------\n"
+    //                 "| No. |                 Name                 |                              Judul Buku                             |    ID    |\n"
+    //                 "-------------------------------------------------------------------------------------------------\n"
+    //         );
+    //         break;
+    //     case 2:
+    //         returnBook();
+    //         break;
+    //     case 0:
+    //         return;
+    //     default:
+    //         printf("hmm");
+    //         break;
+    // } 
+}
+
+//List Buku - soon 
+
 
 //Edit Buku - marcel 
 
@@ -574,68 +820,37 @@ void newMemberMenu() {
 }
 
 
-// QUEUE (+ PRIORITY)
+// Input data peminjaman baru
 
-int checkMember(char *key) {
-    dataMember *curr = headMem;
-
-    while (curr != NULL) {
-        if (stricmp(curr->name, key) == 0) {
-            system ("cls");
-            printf ("==========================================================\n");
-            printf ("                          Pinjam Buku                     \n");
-            printf ("==========================================================\n");
-            printf ("Nama peminjam  : %s\n", curr->name);
-            return 1;
-        }
-        
-        curr = curr->next;
-    }
-}
-
-peminjaman *newBorrower (char *nama, char *judul, int prior) {
+peminjaman *newBorrower (char *nama, char *judul) {
     peminjaman *node = (peminjaman*) malloc(sizeof(peminjaman));
+    peminjaman *curr;
     
     strcpy (node->who, nama);
     strcpy (node->what, judul);
-    node->priority = prior;
+
     node->next = NULL;
+    node->prev = NULL;
+    curr = headBorrow;
 
-    return node;
-}
-
-void enqueueNewBorrower (peminjaman **headBorrow, char *nama, char *judul, int prior) {
-    peminjaman *start = (*headBorrow);
-
-    //create new node
-    peminjaman* node = newBorrower(nama, judul, prior);
-
-    // Jika priority head lebih kecil dibanding new node,
-    // insert node sebelum head, terus ganti head nodenya
-    if ((*headBorrow)->priority > prior) {
-        // insert node sebelum head
-        node->next = *headBorrow;
-        (*headBorrow) = node;
+    if (headBorrow == NULL) {
+        headBorrow = node;
+        headBorrow->prev = NULL;
     }
+
     else {
-        while (start->next != NULL && start->next->priority < prior) {
-            start = start->next;
+        while (curr != NULL && curr->next != NULL) {
+            curr = curr->next;
         }
-
-        node->next = start->next;
-        start->next = node;
+        curr->next = node;
+        node->prev = curr;
+        node->next = NULL;
     }
 }
 
-void dequeueBorrower (peminjaman **headBorrow) {
-    peminjaman *temp = *headBorrow;
-    (*headBorrow) = (*headBorrow)->next;
-    free(temp);
-}
-
-void peekBorrower (peminjaman *headBorrow) {
+void peekBorrower (peminjaman *curr) {
     dataMember *currMem = headMem;
-    DataBuku *currBook = headBook;
+    DataBuku *treeRoot = root;
 
     time_t t;
     time(&t);
@@ -649,7 +864,7 @@ void peekBorrower (peminjaman *headBorrow) {
     printf ("----------------------------------------------------------\n");
 
     while (currMem != NULL) {
-        if (strcmpi(currMem->name, headBorrow->who) == 0) {
+        if (strcmpi(currMem->name, curr->who) == 0) {
             printf ("Nama         : %s\n", currMem->name);
             printf ("ID           : %s\n", currMem->id);
             printf ("No. Telp     : %s\n", currMem->phoneNum);
@@ -658,32 +873,23 @@ void peekBorrower (peminjaman *headBorrow) {
         currMem = currMem->next;
     }
 
-    while (currBook != NULL) {
-        if (strcmpi(currBook->judulBuku, headBorrow->what) == 0) {
-            printf ("Judul Buku   : %s\n", currBook->judulBuku);
-            printf ("ISBN         : %s\n", currBook->ISBN);
-            printf ("Author       : %s\n", currBook->penulis);
-            printf ("Year         : %s\n", currBook->tahunTerbit);
-            printf ("Type         : %s\n", currBook->jenisBuku);
-            break;
-        }
-        //currBook = currBook->next;
-    }
+    DataBuku *toPrint = searchBookBook(treeRoot, curr->what);
+    printf ("Judul Buku   : %s\n", toPrint->judulBuku);
+    printf ("ISBN         : %s\n", toPrint->ISBN);
+    printf ("Author       : %s\n", toPrint->penulis);
+    printf ("Year         : %s\n", toPrint->tahunTerbit);
+    printf ("Type         : %s\n", toPrint->jenisBuku);
+    toPrint->jumlahBuku -= 1;
 
-    printf ("Priority     : %d\n", headBorrow->priority);
+    FILE *insertBorrow = fopen("DataPeminjaman.txt", "a");
+    fprintf (insertBorrow, "%s#%s#%s#%s\n", currMem->name, currMem->id, toPrint->judulBuku, toPrint->ISBN);
+    fclose(insertBorrow);
 }
 
-int isEmptyBorrower (peminjaman **headBorrow) {
-    if(*headBorrow == NULL) 
-        return 1;
-    else 
-        return 0;
-}
-
-void borrowMenu(int borrower) {
+void borrowMenu() {
     peminjaman *headBorrow;
     char nama[45], judul[100];
-    int pilih, prior;
+    int pilih;
 
     system ("cls");
     printf ("==========================================================\n");
@@ -721,30 +927,12 @@ void borrowMenu(int borrower) {
 
         DataBuku *treeRoot = root;
         
-        if (cekStok(judul, treeRoot)) {
-            // if jenis bukunya ... -> priority nya berapa, nanti tentuinnya otomatis
-            // tapi sementara dibikin manual dulu
-            printf ("Priority       : ");
-            scanf ("%d", &prior);
-
-            if (borrower == 0) {
-                headBorrow = newBorrower(nama, judul, prior);
-            }
-            else {
-                enqueueNewBorrower(&headBorrow, nama, judul, prior);
-            }
-
-            // data bisa masuk, tapi kalo di print dia langsung ilang lagi
-            // harusnya nanti kalo udah ada yg balikin baru di dequeue (?)
-            peminjaman *curr = headBorrow;
-            while (!isEmptyBorrower(&curr)) {
-                peekBorrower(curr);
-                dequeueBorrower(&curr);
-            }
-
-            borrower = 1;
+        // if (cekStok(judul, treeRoot)) {
+            peminjaman *curr = newBorrower(nama, judul);
+            peekBorrower(curr);
+;
             printf ("\nData berhasil ditambahkan\n");
-        }
+        // }
 
         printf ("Press any key to continue...");
         getch();
@@ -766,7 +954,7 @@ char menu(){//Menu awal
 // }
 // fclose(dataBUKU);
 
-char ch;
+    char ch;
     int choice;
     // system ("cls");
     printf("\n");
@@ -779,6 +967,7 @@ char ch;
             "4. List Data Buku\n"
             "5. Edit Data Buku\n"
             "6. Membership\n"
+            "7. Turn It In\n"
             "0. Exit\n"
             "Pilihan: "
     );
@@ -788,36 +977,38 @@ char ch;
 
 
 
-
 int main(){//Main
     FILE *dataBUKU;
     DataBuku *node, *curr;
     dataBUKU = fopen("FileBuku.txt", "r");
     while (!feof(dataBUKU)){
-    char judulBuku[100];
-    char penulis[100];
-    char tahunTerbit[5];
-    char ISBN[20];
-    char jenisBuku[20];
-    int jumlahBuku;
-    fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
-    root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku );
+        char judulBuku[100];
+        char penulis[100];
+        char tahunTerbit[5];
+        char ISBN[20];
+        char jenisBuku[20];
+        int jumlahBuku;
+        fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
+        root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku );
     }
     fclose(dataBUKU);
     defaultMember();
-    int borrower = 0;
+    defaultPeminjaman();
 
     char ch;
     while (1)
     {
         switch (menu()){
             case 1:
+                displayPeminjaman();
+                // displayBookMenu();
                 break;
             case 2:
                 // testDoang();
-                borrowMenu(borrower);
+                borrowMenu();
                 break;
-            case '3':
+            case 3:
+                menuPengembalianBuku();
                 break;
             case 4:
                 displayBookMenu();
@@ -827,6 +1018,9 @@ int main(){//Main
                 break;
             case 6:
                 newMemberMenu();
+                break;
+            case 7:
+                menuTurnitin();
                 break;
             case 0:
                 printf ("\nThank you for using this service ^-^\n\n");
