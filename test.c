@@ -34,7 +34,7 @@ DataBuku *newBookNode(char data[100],char data2[100],char data3[5],char data4[20
     return temp;
 }
 
-void inorder(DataBuku *root){
+void inorder(DataBuku *goot){
     if(root != NULL){
         inorder(root->left);
         printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter,root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
@@ -999,12 +999,13 @@ int main(){//Main
         char ISBN[20];
         char jenisBuku[20];
         int jumlahBuku;
+        printf("test");
         fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
         root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku );
     }
     fclose(dataBUKU);
     defaultMember();
-    //defaultPeminjaman();
+    defaultPeminjaman();
 
     char ch;
     while (1)
