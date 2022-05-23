@@ -97,6 +97,7 @@ void searchBuku(DataBuku *root, char key[100]){
 
 void displaySearchBuku(){
     char key[100];
+    printf("\n");
     printf("Masukan Key: ");
     scanf("%s",key);
     searchBuku(root, key);
@@ -122,6 +123,7 @@ void displayDataPeminjamanBuku(){
 void displayBookMenu(){
     while (1){
     char choice;
+    printf("\n");
     printf("1. Cari Buku\n");
     printf("2. Daftar buku \n");
     printf("Pilihan: "); scanf("%c", &choice);
