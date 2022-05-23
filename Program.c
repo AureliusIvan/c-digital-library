@@ -66,7 +66,53 @@ void displayDataPeminjamanBuku(){
 
 //Pengembalian Buku - edison
 
+char menuPengembalianBuku(){//Menu Pengembalian Buku
+    char pilihan;
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     PENGEMBALIAN BUKU\n");
+    printf("==========================================================\n");
+    printf("1. Data Buku Yang Dipinjam\n"
+           "2. Kembalikan Buku\n"
+           "0. Exit\n"
+           "Pilihan: "
+    );
+    scanf("%c", &pilihan);
+    return pilihan;
+    switch (pilihan){
+                case '1':
+                    break;
+                case '2':
+                    break;
+                case '0':
+                    return 0;
+                default:
+                    printf("Pilihan salah!");
+                    break;
+            } 
+}
+
+
 //List Buku - soon 
+
+//Cek Stok Buku
+
+int cekStok(char judul){
+    DataBuku *node;
+    do{
+        if(node->judulBuku == judul){
+            break;
+        }
+        node = node->next;
+    }
+    while(node->judulBuku != NULL);
+    if (node->jumlahBuku == 0){
+        printf("Stock Buku Habis!");
+        return 0;
+    } else if(node->jumlahBuku > 0){
+        return 1;
+    }
+}
 
 //Edit Buku - marcel 
 
@@ -476,6 +522,8 @@ void borrowMenu(int borrower) {
         printf ("Priority       : ");
         scanf ("%d", &prior);
 
+        cekStok(judul);
+
         if (borrower == 0) {
             headBorrow = newBorrower(nama, judul, prior);
         }
@@ -592,6 +640,7 @@ int main(){//Main
                 borrowMenu(borrower);
                 break;
             case '3':
+                menuPengembalianBuku();
                 break;
             case '4':
                 break;
