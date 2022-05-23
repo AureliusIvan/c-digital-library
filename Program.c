@@ -87,6 +87,7 @@ void searchBuku(DataBuku *root, char key[100]){
         char *ret = strstr(strlwr(root->judulBuku), strlwr(key));
         if(ret){
         printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+        counter++;
         }
         searchBuku(root->right, key);
         
@@ -95,6 +96,7 @@ void searchBuku(DataBuku *root, char key[100]){
 
 void displaySearchBuku(){
     char key[100];
+    counter = 1;
     printf("\n");
     printf("Masukan Key: ");
     scanf("%s",key);
@@ -243,88 +245,139 @@ int cekStok(char *judul, DataBuku *root){
 
 //Edit Buku - marcel 
 
+
+void tambahBuku(){
+    char choice;
+    char judulBuku[100];
+    char penulis[100];
+    char tahunTerbit[5];
+    char ISBN[20];
+    char jenisBuku[20];
+    int jumlahBuku;
+    printf("Masukan Judul Buku: ");
+    scanf("%s",judulBuku);
+    printf("Masukan Penulis Buku: ");
+    scanf("%s",penulis);
+    printf("Masukan Tahun Terbit: ");
+    scanf("%s", tahunTerbit);
+    printf("Masukan ISBN: ");
+    scanf("%s", ISBN);
+    printf("Masukan Jenis Buku: ");
+    scanf("%s", jenisBuku);
+    printf("Masukan Jumlah Buku: ");
+    root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
+    printf("data berhasil dimasukan!");
+    getchar();
+    return;
+}
+
+
+
+void search(DataBuku *cur, char key[100], DataBuku *parent)  
+{  
+    while (cur != NULL && (strcmp(cur->judulBuku,key)!= 0))  
+    {  
+        parent = cur;  
+        if ((strcmp(cur->judulBuku,key)!= 0)>0)  
+            cur = cur->left;  
+        else  
+            cur = cur->right;  
+    }  
+}  
+
+  
+DataBuku* findMinimum(DataBuku* cur)  {  
+    while(cur->left != NULL) {  
+        cur = cur->left;  
+    }  
+    return cur;  
+}  
+
+
+
+void deleteNode(DataBuku *root, char key[100] )  
+{  
+    DataBuku* parent = NULL;  
+    DataBuku* cur = root;  
+  
+    search(cur, key, parent);  
+    if (cur == NULL)  
+        return;  
+    if (cur->left == NULL && cur->right == NULL)  
+    {  
+        if (cur != root)  
+        {  
+            if (parent->left == cur)  
+                parent->left = NULL;  
+            else  
+                parent->right = NULL;  
+        }  
+        else  
+            root = NULL;  
+  
+        free(cur);       
+    }  
+    else if (cur->left && cur->right)  
+    {  
+        DataBuku* succ  = findMinimum(cur->right);  
+  
+        char val[100];  
+        strcpy(val,succ->judulBuku);  
+  
+        deleteNode(root, succ->judulBuku);  
+        strcpy(cur->judulBuku,val);  
+    }  
+    else  
+    {  
+        DataBuku* child = (cur->left)? cur->left: cur->right;  
+        if (cur != root)  {  
+            if (cur == parent->left)  
+                parent->left = child;  
+            else  
+                parent->right = child;  
+        }  
+  
+        else  
+            root = child;  
+        free(cur);  
+    }  
+}  
+
+void hapusBuku(){
+    char key[100];
+    printf("Judul Buku yang ingin di hapus: ");
+    scanf("%s", key);
+    deleteNode(root, key);
+    printf("Penghapusan Sukses\n");
+    return;
+}
+
 void editBuku(){
-    FILE* bukuBaru;
-
-    DataBuku *data;
-
-    int i, count = 0;
-    int n;
-    int k;
-
+    while (1){
+    char choice;
     printf("====== Menu Edit Buku ======\n");
     printf("1. Tambah buku\n");
     printf("2. Hapus buku\n");
     printf("3. Edit info buku\n");
     printf("0. Kembali ke menu utama\n");
     printf("Pilihan: ");
-    scanf("%d", &n);
-
-    if (n == 1)
-    {
-        printf("Masukkan jumlah buku yang ingin ditambahkan   :  ");
-        scanf("%d", &k);
-
-        while (k != 0)
-        {
-            fflush(stdin);
-            printf("Masukkan judul buku         :  ");
-            scanf(" %[^\n]s", data[i].judulBuku); 
-            printf("Masukkan nama author        :  ");
-            scanf(" %[^\n]s", data[i].penulis); 
-            printf("Masukkan tahun terbit buku  :  ");
-            scanf(" %[^\n]s", data[i].tahunTerbit); 
-            printf("Masukkan ISBN buku          :  ");
-            scanf(" %[^\n]s", data[i].ISBN); 
-            printf("Masukkan tipe buku          :  ");   
-            scanf(" %[^\n]s", data[i].jenisBuku); 
-            // tambahin stock buku
-            count++; 
-
-            bukuBaru = fopen("FileBuku.txt", "a");
-            fprintf(bukuBaru, "%s#%s#%s#%s#%s\n", 
-                    data[i].judulBuku, data[i].penulis, data[i].tahunTerbit,
-                    data[i].ISBN, data[i].jenisBuku
-                    );
-
-            fclose(bukuBaru);
-        }
-        
-    
-
+    scanf("\n%c", &choice);
+    switch (choice){
+    case '1':
+        tambahBuku();
+        break;
+    case '2':
+        hapusBuku();
+        break;
+    case '3':
+        break;
+    case '0':
+        return;
+    default:
+        break;
     }
-    else if(n == 2)
-    {
-        char judul[100];
-        int i, j;
-
-        DataBuku *temp;
-
-        printf("Masukkan judul buku yang ingin dihapus: ");
-        scanf("%c", judul);
-
-        for (i = 0; i < count; i++)
-        {
-            if (strcmp(data[i].judulBuku, judul)==0)
-            {
-                system("cls");
-                printf("\nBuku dengan judul %s akan dihapus.", data[i].judulBuku);
-                for (j = i; j < count - 1; j++)
-                    data = data+1;
-
-                    count--;
-                    return;
-            }
-            
-        }
-        
-    }
-    else if(n == 3)
-    {
-
     }
 }
-
 
 // Anggota Baru - mae
 
@@ -731,20 +784,6 @@ char ch;
 
 
 
-//test doang
-void testDoang(){
-    int count = 1;
-    while (1)
-    {
-        printf("%d",count);
-        sleep(1);
-        system("cls");
-        count++;
-    }
-    
-    printf("");
-    return;
-}
 
 int main(){//Main
     FILE *dataBUKU;
