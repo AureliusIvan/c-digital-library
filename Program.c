@@ -109,6 +109,7 @@ void printListBuku(){
         node = node->next;
     }
     while(node->judulBuku != NULL);
+    return;
 }
 //Cek Stok Buku
 
