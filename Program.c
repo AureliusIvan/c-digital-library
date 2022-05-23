@@ -88,6 +88,7 @@ dataMember *headMem = NULL;
 void searchBuku(){
     char key[100];
     printf("Buku di tengah: %s", root->judulBuku);
+
 }
 
 
@@ -132,75 +133,12 @@ void displayBookMenu(){
 
 //Pengembalian Buku - edison
 
-char menuPengembalianBuku(){//Menu Pengembalian Buku
-    char pilihan;
-    printf("\n");
-    printf("==========================================================\n");
-    printf("                     PENGEMBALIAN BUKU\n");
-    printf("==========================================================\n");
-    printf("1. Data Buku Yang Dipinjam\n"
-           "2. Kembalikan Buku\n"
-           "0. Exit\n"
-           "Pilihan: "
-    );
-    scanf("%c", &pilihan);
-    return pilihan;
-    switch (pilihan){
-                case '1':
-                    break;
-                case '2':
-                    break;
-                case '0':
-                    return 0;
-                default:
-                    printf("Pilihan salah!");
-                    break;
-            } 
-}
-
-
 //List Buku - soon 
-void printListBuku(){
-    DataBuku *node;
-    int counter = 0;
-    node = headBook;
-        
-    printf("================================================================================================================================================================\n");
-    printf("|                                                                               Daftar Buku                                                                    |\n");
-    printf("================================================================================================================================================================\n");
-    printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
-    printf("================================================================================================================================================================\n");
-    do{
-        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);   
-        node = node->next;
-    }
-    while(node->judulBuku != NULL);
-    return;
-}
-//Cek Stok Buku
-
-int cekStok(char judul){
-    DataBuku *node;
-    do{
-        if(node->judulBuku == judul){
-            break;
-        }
-        node = node->next;
-    }
-    while(node->judulBuku != NULL);
-    if (node->jumlahBuku == 0){
-        printf("Stock Buku Habis!");
-        return 0;
-    } else if(node->jumlahBuku > 0){
-        return 1;
-    }
-}
 
 //Edit Buku - marcel 
 
 void editBuku(){
-    FILE* bukuBaru = NULL;
-    FILE* buku = NULL;
+    FILE* bukuBaru;
 
     DataBuku *data;
 
@@ -218,31 +156,34 @@ void editBuku(){
 
     if (n == 1)
     {
-        buku = fopen("FileBuku.txt", "r");
-        bukuBaru = fopen("FileBuku.txt", "a");
+        printf("Masukkan jumlah buku yang ingin ditambahkan   :  ");
+        scanf("%d", &k);
 
-    while (1)
-    {
-        count++; 
-        printf("Masukkan judul buku         :  ");
-        scanf(" %s", data[i].judulBuku); 
-        printf("Masukkan nama author        :  ");
-        scanf(" %s", data[i].penulis); 
-        printf("Masukkan tahun terbit buku  :  ");
-        scanf("%s", data[i].tahunTerbit); 
-        printf("Masukkan ISBN buku          :  ");
-        scanf("%s", data[i].ISBN); 
-        printf("Masukkan tipe buku          :  ");   
-        scanf("%s", data[i].jenisBuku); 
+        while (k != 0)
+        {
+            fflush(stdin);
+            printf("Masukkan judul buku         :  ");
+            scanf(" %[^\n]s", data[i].judulBuku); 
+            printf("Masukkan nama author        :  ");
+            scanf(" %[^\n]s", data[i].penulis); 
+            printf("Masukkan tahun terbit buku  :  ");
+            scanf("%s", data[i].tahunTerbit); 
+            printf("Masukkan ISBN buku          :  ");
+            scanf("%s", data[i].ISBN); 
+            printf("Masukkan tipe buku          :  ");   
+            scanf("%s", data[i].jenisBuku); 
+            count++; 
 
-        fprintf(bukuBaru, "%s#%s#%s#%s#%s\n", 
+            bukuBaru = fopen("FileBuku.txt", "a");
+            fprintf(bukuBaru, "%s#%s#%s#%s#%s\n", 
                     data[i].judulBuku, data[i].penulis, data[i].tahunTerbit,
                     data[i].ISBN, data[i].jenisBuku
                     );
-    }
 
             fclose(bukuBaru);
-            fclose(buku);
+        }
+        
+    
 
     }
     else if(n == 2)
@@ -602,8 +543,6 @@ void borrowMenu(int borrower) {
         printf ("Priority       : ");
         scanf ("%d", &prior);
 
-        cekStok(judul);
-
         if (borrower == 0) {
             headBorrow = newBorrower(nama, judul, prior);
         }
@@ -713,10 +652,8 @@ int main(){//Main
                 borrowMenu(borrower);
                 break;
             case '3':
-                menuPengembalianBuku();
                 break;
             case '4':
-                printListBuku();
                 break;
             case '5':
                 editBuku();
