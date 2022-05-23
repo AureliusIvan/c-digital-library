@@ -225,7 +225,7 @@ char menuPengembalianBuku(){
 
 // Cek Member & Title valid ga
 
-DataBuku *searchBookBook (DataBuku *root, char *key){
+DataBuku *searchBookBook (DataBuku *root, char *key) {
     if (root == NULL || (strcmpi (root->judulBuku, key) == 0))
         return root;
     
