@@ -83,14 +83,24 @@ dataMember *headMem = NULL;
 
 //Data Peminjaman Buku  - ivan
 
-
-
-void searchBuku(){
-    char key[100];
-    printf("Buku di tengah: %s", root->judulBuku);
-
+void searchBuku(DataBuku *root, char key[100]){
+    if(root != NULL){
+        searchBuku(root->left, key);
+        char *ret = strstr(strlwr(root->judulBuku), strlwr(key));
+        if(ret){
+        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+        }
+        searchBuku(root->right, key);
+        
+    }
 }
 
+void displaySearchBuku(){
+    char key[100];
+    printf("Masukan Key: ");
+    scanf("%s",key);
+    searchBuku(root, key);
+}
 
 void displayDataPeminjamanBuku(){
     int counter = 1;
@@ -117,7 +127,7 @@ void displayBookMenu(){
     printf("Pilihan: "); scanf("%c", &choice);
     switch (choice){
     case '1':
-        searchBuku();
+        displaySearchBuku();
         break;
     case '2':
         displayDataPeminjamanBuku();
