@@ -13,10 +13,53 @@ typedef struct DataBuku{
     char penulis[100];
     char tahunTerbit[5];
     char ISBN[20];
-    char jenisBuku[10];
+    char jenisBuku[20];
     int jumlahBuku;
-    struct DataBuku *next, *prev;
+    struct DataBuku *right, *left;
 }DataBuku;
+
+DataBuku *root = NULL; 
+int counter = 1;
+
+DataBuku *newBookNode(char data[100],char data2[100],char data3[5],char data4[20], char data5[20]){
+    DataBuku *temp = (DataBuku*)malloc(sizeof(DataBuku));
+    strcpy(temp->judulBuku, data);
+    strcpy(temp->penulis, data2);
+    strcpy(temp->tahunTerbit, data3);
+    strcpy(temp->ISBN, data4);
+    strcpy(temp->jenisBuku, data5);
+    temp->left = temp->right = NULL;
+    return temp;
+}
+
+void inorder(DataBuku *root){
+    if(root != NULL){
+        inorder(root->left);
+        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+        inorder(root->right);
+        
+    }
+}
+
+DataBuku *insert(DataBuku *node, char key[100],     
+    char a[100],
+    char b[5],
+    char c[20],
+    char d[20]){
+    if(node == NULL){
+        return newBookNode(key, a,b,c,d);
+    }
+    if(strcmpi(key, node->judulBuku)<0)
+        node->left = insert(node->left, key, a,b,c,d);
+    else if(strcmpi(key, node->judulBuku)>0){
+        node->right = insert(node->right, key, a,b,c,d);
+    }
+
+    return node;
+}
+
+
+
 
 typedef struct dataMember {
     char name[45];
@@ -39,21 +82,24 @@ DataBuku *headBook;
 dataMember *headMem = NULL;
 
 //Data Peminjaman Buku  - ivan
+
+
+
+void searchBuku(){
+    char key[100];
+    printf("Buku di tengah: %s", root->judulBuku);
+}
+
+
 void displayDataPeminjamanBuku(){
-    DataBuku *curr;
-    curr = headBook;
     int counter = 1;
     printf("================================================================================================================================================================\n");
     printf("|                                                                               Daftar Buku                                                                    |\n");
     printf("================================================================================================================================================================\n");
     printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
     printf("================================================================================================================================================================\n");
-    while (curr->next != NULL && counter<=50){
-        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, curr->judulBuku, curr->penulis, curr->tahunTerbit, curr->ISBN, curr->jenisBuku);
-        curr = curr->next;
-        counter++;
-    }
     printf("================================================================================================================================================================\n");
+    inorder(root);
     printf("1. Next Page\n");
     printf("2. Previous Page\n");
     printf("0. Back\n");
@@ -61,6 +107,26 @@ void displayDataPeminjamanBuku(){
     return;
 }
 
+
+void displayBookMenu(){
+    while (1){
+    char choice;
+    printf("1. Cari Buku\n");
+    printf("2. Daftar buku \n");
+    printf("Pilihan: "); scanf("%c", &choice);
+    switch (choice){
+    case '1':
+        searchBuku();
+        break;
+    case '2':
+        displayDataPeminjamanBuku();
+    case '0':
+        return;
+    default:
+        break;
+    }
+    }
+}
 
 //HASH key
 
@@ -284,8 +350,8 @@ void searchMember() {
     }
 
     printf ("---------------------------------------------------------------------------\n\n");
-    printf ("\nPress any key to continue...");
-    getch();
+    printf ("\nPress any key to continue..."); getch();
+    return; //error :)
 }
 
 void newMemberMenu() {
@@ -417,7 +483,7 @@ void peekBorrower (peminjaman *headBorrow) {
             printf ("Type         : %s\n", currBook->jenisBuku);
             break;
         }
-        currBook = currBook->next;
+        //currBook = currBook->next;
     }
 
     // cari curr di database Member dan Book yg sama kyk nama and judul buku
@@ -560,23 +626,16 @@ int main(){//Main
     DataBuku *node, *curr;
     dataBUKU = fopen("FileBuku.txt", "r");
     while (!feof(dataBUKU)){
-    node = (DataBuku*)malloc(sizeof(DataBuku));
-    node->next = NULL;
-    fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", node->judulBuku, node->penulis, node->tahunTerbit, node->ISBN, node->jenisBuku);
-    curr = headBook;
-    if(headBook == NULL){
-            headBook = node;
-        }
-        else{
-            while (curr->next != NULL){
-                curr = curr->next;
-            }
-            curr->next = node;
-            node->prev = curr;
-        }
+    char judulBuku[100];
+    char penulis[100];
+    char tahunTerbit[5];
+    char ISBN[20];
+    char jenisBuku[20];
+    int jumlahBuku;
+    fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
+    root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku );
     }
     fclose(dataBUKU);
-
     defaultMember();
     int borrower = 0;
 
@@ -585,7 +644,7 @@ int main(){//Main
     {
         switch (menu()){
             case '1':
-                displayDataPeminjamanBuku();
+                displayBookMenu();
                 break;
             case '2':
                 // testDoang();
