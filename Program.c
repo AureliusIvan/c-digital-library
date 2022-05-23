@@ -136,6 +136,25 @@ void displayBookMenu(){
 
 //List Buku - soon 
 
+//Cek Stok Buku
+
+int cekStok(char judul){
+    DataBuku *node;
+    do{
+        if(node->judulBuku == judul){
+            break;
+        }
+        node = node->next;
+    }
+    while(node->judulBuku != NULL);
+    if (node->jumlahBuku == 0){
+        printf("Stock Buku Habis!");
+        return 0;
+    } else if(node->jumlahBuku > 0){
+        return 1;
+    }
+}
+
 //Edit Buku - marcel 
 
 void editBuku(){
@@ -563,6 +582,8 @@ void borrowMenu(int borrower) {
         printf ("Priority       : ");
         scanf ("%d", &prior);
 
+        cekStok(judul);
+
         if (borrower == 0) {
             headBorrow = newBorrower(nama, judul, prior);
         }
@@ -667,6 +688,7 @@ int main(){//Main
                 borrowMenu(borrower);
                 break;
             case '3':
+                menuPengembalianBuku();
                 break;
             case '4':
                 break;
