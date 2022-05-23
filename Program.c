@@ -146,11 +146,11 @@ void menuTurnitin(){
     switch (pilihan){
         case 1:
             break;
-        case 2;
+        case 2:
             break;
         case 0:
             printf ("\nThank you for using this service ^-^\n\n");
-            return 0;
+            return;
         default:
             printf("Pilihan salah!");
             break;
@@ -197,7 +197,7 @@ void menuPengembalianBuku(){
                     printf("%s, %s\n", nama, judul);
                     break;
                 case 0:
-                    return 0;
+                    return;
                 default:
                     printf("hmm");
                     break;
@@ -739,6 +739,7 @@ char ch;
             "4. List Data Buku\n"
             "5. Edit Data Buku\n"
             "6. Membership\n"
+            "7. Turn It In\n"
             "0. Exit\n"
             "Pilihan: "
     );
@@ -803,8 +804,8 @@ int main(){//Main
             case 6:
                 newMemberMenu();
                 break;
-            case 7;
-                turnitinMenu();
+            case 7:
+                menuTurnitin();
                 break;
             case 0:
                 printf ("\nThank you for using this service ^-^\n\n");
