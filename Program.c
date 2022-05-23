@@ -388,6 +388,8 @@ typedef struct data
 }DATA;
 
 void menuTurnitin(){
+    DATA *head, *tail;
+    head = tail = NULL;
     int pilihan;
     printf("\n");
     printf("==========================================================\n");
@@ -417,10 +419,8 @@ void menuTurnitin(){
     return;
 }
 
-void daftarTurnitin(){
+void daftarTurnitin(DATA **head, DATA **tail){
     DATA peminjam;
-    DATA *head, *tail;
-    head = tail = NULL;
     char nama[45], topik[100];
     int pilih;
     fflush(stdin);
@@ -458,7 +458,10 @@ void daftarTurnitin(){
 }
 void checkQueueTurnitin(){
     DATA *head;
+    char nama[45], topik[100];
     printf("Antrian Sekarang\n");
+    strcpy(nama, head->nama);
+    printf("%s\n", nama);
     
 
 }
@@ -470,19 +473,20 @@ void enqueue(DATA **head, DATA **tail, DATA peminjam){
     if(*head == NULL) *head = node;
     else (*tail)->next = node;
     *tail = node;
+    return;
 }
 void dequeue (DATA **head){
     DATA *hapus = *head;
     *head = (*head)->next;
     free(hapus);
 }
-int isempty(DATA *head){
+/* int isempty(DATA *head){
   	if(head == NULL) return 1;
   	else return 0;
 }
 DATA front(DATA *head){
     return head; //HEAD !ISEMPTY
-}
+} */
 
 //Menu Pengembalian Buku
 
