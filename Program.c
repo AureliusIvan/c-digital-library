@@ -108,17 +108,17 @@ void displayDataPeminjamanBuku(){
 
 void displayBookMenu(){
     while (1){
-    char choice;
-    printf("1. Cari Buku\n");
-    printf("2. Daftar Buku \n");
-    printf("Pilihan: "); scanf("%c", &choice);
+    int choice;
+    printf("\n1. Cari Buku\n");
+    printf("2. Daftar buku \n");
+    printf("Pilihan: "); scanf("%d", &choice);
     switch (choice){
-        case '1':
+        case 1:
             searchBuku();
             break;
-        case '2':
+        case 2:
             displayDataPeminjamanBuku();
-        case '0':
+        case 0:
             return;
         default:
             break;
@@ -129,6 +129,52 @@ void displayBookMenu(){
 //HASH key
 
 //Pengembalian Buku - edison
+
+//Menu Pengembalian Buku
+char menuPengembalianBuku(){
+    int pilihan;
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                     PENGEMBALIAN BUKU\n");
+    printf("==========================================================\n");
+    printf("1. Data Buku Yang Dipinjam\n"
+           "2. Kembalikan Buku\n"
+           "0. Exit\n"
+           "Pilihan: "
+    );
+    scanf("%d", &pilihan);
+    fflush(stdin);
+    switch (pilihan){
+                case 1:
+                    system("cls");
+                    printf ("=================================================================================================\n");
+                    printf ("                                               List Of Member                               \n");
+                    printf ("=================================================================================================\n\n");
+                    printf ("-------------------------------------------------------------------------------------------------\n"
+                            "| No. |                 Name                 |         Judul Buku          |      Priority      |\n"
+                            "-------------------------------------------------------------------------------------------------\n"
+                    );
+                    break;
+                case 2:
+                    char nama[30];
+                    char judul[30];
+                    printf("\n");
+                    printf("==========================================================\n");
+                    printf("                     PENGEMBALIAN BUKU\n");
+                    printf("==========================================================\n");
+                    printf("Nama            : "); scanf("%[^\n]", &nama);
+                    fflush(stdin);
+                    printf("Judul Buku      : "); scanf("%[^\n]", &judul);
+                    fflush(stdin);
+                    printf("%s, %s\n", nama, judul);
+                    break;
+                case 0:
+                    return 0;
+                default:
+                    printf("hmm");
+                    break;
+            } 
+}
 
 //List Buku - soon 
 
@@ -212,12 +258,12 @@ void editBuku(){
             printf("Masukkan nama author        :  ");
             scanf(" %[^\n]s", data[i].penulis); 
             printf("Masukkan tahun terbit buku  :  ");
-            scanf("%s", data[i].tahunTerbit); 
+            scanf(" %[^\n]s", data[i].tahunTerbit); 
             printf("Masukkan ISBN buku          :  ");
-            scanf("%s", data[i].ISBN); 
+            scanf(" %[^\n]s", data[i].ISBN); 
             printf("Masukkan tipe buku          :  ");   
-            scanf("%s", data[i].jenisBuku); 
-            // tambahin stock
+            scanf(" %[^\n]s", data[i].jenisBuku); 
+            // tambahin stock buku
             count++; 
 
             bukuBaru = fopen("FileBuku.txt", "a");
@@ -462,7 +508,7 @@ int checkMember(char *key) {
     dataMember *curr = headMem;
 
     while (curr != NULL) {
-        if (strcmpi(curr->name, key) == 0) {
+        if (stricmp(curr->name, key) == 0) {
             system ("cls");
             printf ("==========================================================\n");
             printf ("                          Pinjam Buku                     \n");
@@ -649,7 +695,7 @@ char menu(){//Menu awal
 // fclose(dataBUKU);
 
 char ch;
-    char choice;
+    int choice;
     // system ("cls");
     printf("\n");
     printf("==========================================================\n");
@@ -664,7 +710,7 @@ char ch;
             "0. Exit\n"
             "Pilihan: "
     );
-    scanf("%c", &choice);
+    scanf("%d", &choice);
     return choice;
 }
 
@@ -707,25 +753,26 @@ int main(){//Main
     while (1)
     {
         switch (menu()){
-            case '1':
+            case 1:
                 displayBookMenu();
                 break;
-            case '2':
+            case 2:
                 // testDoang();
                 borrowMenu(borrower);
                 break;
             case '3':
-                // menuPengembalianBuku();
+                menuPengembalianBuku();
                 break;
-            case '4':
+            case 4:
                 break;
-            case '5':
+            case 5:
                 editBuku();
                 break;
-            case '6':
+            case 6:
+
                 newMemberMenu();
                 break;
-            case '0':
+            case 0:
                 printf ("\nThank you for using this service ^-^\n\n");
                 return 0;
             default:
