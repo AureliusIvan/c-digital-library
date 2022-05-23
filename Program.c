@@ -470,7 +470,7 @@ int checkMember(char *key) {
     dataMember *curr = headMem;
 
     while (curr != NULL) {
-        if (strcmpi(curr->name, key) == 0) {
+        if (stricmp(curr->name, key) == 0) {
             system ("cls");
             printf ("==========================================================\n");
             printf ("                          Pinjam Buku                     \n");
