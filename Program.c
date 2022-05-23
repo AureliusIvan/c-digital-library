@@ -380,6 +380,13 @@ void displayPeminjaman() {
 
 //Menu Turnitin
 
+typedef struct data
+{
+    char nama[45];
+    char topik[100];
+  	struct data *next;
+}DATA;
+
 void menuTurnitin(){
     int pilihan;
     printf("\n");
@@ -395,8 +402,10 @@ void menuTurnitin(){
     fflush(stdin);
     switch (pilihan){
         case 1:
+            daftarTurnitin();
             break;
         case 2:
+            checkQueueTurnitin();
             break;
         case 0:
             printf ("\nThank you for using this service ^-^\n\n");
@@ -406,6 +415,73 @@ void menuTurnitin(){
             break;
     }
     return;
+}
+
+void daftarTurnitin(){
+    DATA peminjam;
+    DATA *head, *tail;
+    head = tail = NULL;
+    char nama[45], topik[100];
+    int pilih;
+    fflush(stdin);
+    printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
+    fflush(stdin);
+    if (!checkMember(nama)) {
+        while(1) {
+            printf ("\nMember tidak ditemukan. Daftar member terlebih dahulu\n");
+            printf ("1. Daftar Member\n"
+                    "0. Return\n"
+                    "Pilihan: "
+            );
+            scanf ("%d", &pilih);
+
+            if (pilih < 0 || pilih > 1) {
+                printf ("Pilihan salah!\nPress any key to continue");
+                getch();
+            }
+
+            else if (pilih == 0)
+                return;
+            
+            else if (pilih == 1)
+                inputNew();
+                return;
+        }
+    }
+    else {
+        fflush(stdin);
+        printf("Topik            : "); scanf("%[^\n]", topik);
+        strcpy(peminjam.nama, nama);
+        strcpy(peminjam.topik, topik);
+        enqueue(&head, &tail, peminjam);
+    }
+}
+void checkQueueTurnitin(){
+    DATA *head;
+    printf("Antrian Sekarang\n");
+    
+
+}
+void enqueue(DATA **head, DATA **tail, DATA peminjam){
+    DATA *node = (DATA*) malloc(sizeof(DATA));
+    strcpy(node->nama, peminjam.nama);
+    strcpy(node->topik, peminjam.topik);
+    node->next = NULL;
+    if(*head == NULL) *head = node;
+    else (*tail)->next = node;
+    *tail = node;
+}
+void dequeue (DATA **head){
+    DATA *hapus = *head;
+    *head = (*head)->next;
+    free(hapus);
+}
+int isempty(DATA *head){
+  	if(head == NULL) return 1;
+  	else return 0;
+}
+DATA front(DATA *head){
+    return head; //HEAD !ISEMPTY
 }
 
 //Menu Pengembalian Buku
