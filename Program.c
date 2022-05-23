@@ -231,11 +231,11 @@ void editBuku(){
             printf("Masukkan nama author        :  ");
             scanf(" %[^\n]s", data[i].penulis); 
             printf("Masukkan tahun terbit buku  :  ");
-            scanf("%s", data[i].tahunTerbit); 
+            scanf(" %[^\n]s", data[i].tahunTerbit); 
             printf("Masukkan ISBN buku          :  ");
-            scanf("%s", data[i].ISBN); 
+            scanf(" %[^\n]s", data[i].ISBN); 
             printf("Masukkan tipe buku          :  ");   
-            scanf("%s", data[i].jenisBuku); 
+            scanf(" %[^\n]s", data[i].jenisBuku); 
             count++; 
 
             bukuBaru = fopen("FileBuku.txt", "a");
