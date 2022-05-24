@@ -66,7 +66,7 @@ typedef struct dataMember {
     char id[10];
     int denda;
 
-    struct dataMember *next;
+    struct dataMember *next, *prev;
 }dataMember;
 
 typedef struct peminjaman {
@@ -100,9 +100,10 @@ void displaySearchBuku(){
     char key[100];
     counter = 1;
     printf("\n");
-    printf("Masukan Key: ");
-    scanf("%s",key);
+    printf("Masukan Keyword Judul: ");
+    scanf("\n%s",key);
     searchBuku(root, key);
+    getch();
 }
 
 void displayDataPeminjamanBuku(){
@@ -118,12 +119,18 @@ void displayDataPeminjamanBuku(){
     printf("2. Previous Page\n");
     printf("0. Back to menu\n");
     printf("Pilihan: ");
+    getch();
     return;
 }
 
 void displayBookMenu(){
     while (1){
+    system("cls");
     char choice;
+    printf("\n");
+    printf("=============================\n");
+    printf("    Menu List Data Buku \n");
+    printf("=============================\n");
     printf("1. Cari Buku\n");
     printf("2. Daftar buku \n");
     printf("Pilihan: "); scanf("\n%c", &choice);
@@ -376,11 +383,152 @@ void displayPeminjaman() {
     }
 }
 
+
+void inputNew() {
+    char idT[7]; // yg dipake cuma 8
+
+    dataMember *curr;
+    dataMember *node = (struct dataMember*) malloc(sizeof(dataMember));
+    
+    system("cls"); printf("\n");
+    printf("==========================================================\n");
+    printf("                      Input New Member                    \n");
+    printf("==========================================================\n");
+    
+    printf ("Nama           : "); 
+    scanf ("\n%[^\n]s", node->name);
+    printf ("Phone number   : "); 
+    scanf ("\n%[^\n]s", node->phoneNum); 
+    node->denda = 0;
+
+    // generate random id
+    char charset[] = "12345678";
+    srand(time(NULL));
+    for (int i = 0; i < 8; i++) {
+        idT[i] = charset[rand() % 7];
+    }
+    strcpy (node->id, idT);
+
+    FILE *insertData = fopen("DataMember.txt", "a");
+    fprintf (insertData, "\n%s#%s#%s#%d", node->name, node->phoneNum, node->id, node->denda);
+    fclose(insertData);
+
+    node->next = NULL;
+    curr = headMem;
+
+    while (curr != NULL && curr->next != NULL) {
+        curr = curr->next;
+    }
+    curr->next = node;
+
+    // // check
+    // printf ("Check nama     : %s\n", node->name);
+    // printf ("Check no.telp  : %s\n", node->phoneNum);
+    // printf ("Check ID       : %s", node->id);
+    // printf ("\n");
+
+    printf ("\nData berhasil ditambahkan\n");
+    printf ("Press any key to continue...");
+    getch();
+}
+
 //HASH key
 
 //Menu Turnitin
+typedef struct data
+{
+    char nama[45];
+    char topik[100];
+   struct data *next;
+}DATA;
+
+DATA *headQueue;
+
+void dequeue (){
+    DATA *hapus = headQueue;
+    headQueue = (headQueue)->next;
+    free(hapus);
+}
+
+
+void checkQueueTurnitin(){
+    char choice, persentage[3];
+    char charset[] = "0123456789";
+    printf("===============================\n");
+    printf("Antrian Paling depan Sekarang:\n");
+    printf("===============================\n");
+    printf("Nama: %s\n", headQueue->nama);
+    printf("Topik: %s\n", headQueue->topik);
+    printf("-----------------------------------\n");
+    printf("1. Pindai Plagiarasime Sekarang \n");
+    printf("0. Keluar\n");
+    scanf("%c", choice);
+    switch (choice){
+    case '1':
+        dequeue();
+        break;
+    case '2':
+        return;
+    default:
+        break;
+    }
+
+}
+void enqueue(DATA **tail, DATA peminjam){
+    DATA *node = (DATA*) malloc(sizeof(DATA));
+    strcpy(node->nama, peminjam.nama);
+    strcpy(node->topik, peminjam.topik);
+    node->next = NULL;
+    if(headQueue == NULL) headQueue = node;
+    else (*tail)->next = node;
+    *tail = node;
+    return;
+}
+
+void daftarTurnitin(DATA **head, DATA **tail){
+    DATA peminjam;
+    char nama[45], topik[100];
+    int pilih;
+    fflush(stdin);
+    printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
+    fflush(stdin);
+    if (!checkMember(nama)) {
+        while(1) {
+            printf ("\nMember tidak ditemukan. Daftar member terlebih dahulu\n");
+            printf ("1. Daftar Member\n"
+                    "0. Return\n"
+                    "Pilihan: "
+            );
+            scanf ("%d", &pilih);
+
+            if (pilih < 0 || pilih > 1) {
+                printf ("Pilihan salah!\nPress any key to continue");
+                getch();
+            }
+
+            else if (pilih == 0)
+                return;
+            
+            else if (pilih == 1)
+                inputNew();
+                return;
+        }
+    }
+    else {
+        fflush(stdin);
+        printf("Topik            : "); scanf("%[^\n]", topik);
+        strcpy(peminjam.nama, nama);
+        strcpy(peminjam.topik, topik);
+        enqueue(tail, peminjam);
+    }
+}
+
+
+
 
 void menuTurnitin(){
+    DATA *head, *tail;
+    head = tail = NULL;
     int pilihan;
     printf("\n");
     printf("==========================================================\n");
@@ -395,8 +543,10 @@ void menuTurnitin(){
     fflush(stdin);
     switch (pilihan){
         case 1:
+            daftarTurnitin(&head, &tail);
             break;
         case 2:
+            checkQueueTurnitin();
             break;
         case 0:
             printf ("\nThank you for using this service ^-^\n\n");
@@ -408,6 +558,16 @@ void menuTurnitin(){
     return;
 }
 
+
+
+
+/* int isempty(DATA *head){
+   if(head == NULL) return 1;
+   else return 0;
+}
+DATA front(DATA *head){
+    return head; //HEAD !ISEMPTY
+} */
 //Menu Pengembalian Buku
 
 void returnBook() {
@@ -664,58 +824,11 @@ void defaultMember() {
                 curr = curr->next;
             }
             curr->next = node;
+            node->prev = curr;
         }
     }
 
     fclose(defaultMem);
-}
-
-void inputNew() {
-    char idT[10]; // yg dipake cuma 8
-
-    dataMember *curr;
-    dataMember *node = (struct dataMember*) malloc(sizeof(dataMember));
-    
-    system("cls"); printf("\n");
-    printf("==========================================================\n");
-    printf("                      Input New Member                    \n");
-    printf("==========================================================\n");
-    
-    printf ("Nama           : "); 
-    scanf ("\n%[^\n]s", node->name);
-    printf ("Phone number   : "); 
-    scanf ("\n%[^\n]s", node->phoneNum); 
-    node->denda = 0;
-
-    // generate random id
-    char charset[] = "0123456789";
-    srand(time(NULL));
-    for (int i = 0; i < 8; i++) {
-        idT[i] = charset[rand() % 9];
-    }
-    strcpy (node->id, idT);
-
-    FILE *insertData = fopen("DataMember.txt", "a");
-    fprintf (insertData, "%s#%s#%s#%d\n", node->name, node->phoneNum, node->id, node->denda);
-    fclose(insertData);
-
-    node->next = NULL;
-    curr = headMem;
-
-    while (curr != NULL && curr->next != NULL) {
-        curr = curr->next;
-    }
-    curr->next = node;
-
-    // // check
-    // printf ("Check nama     : %s\n", node->name);
-    // printf ("Check no.telp  : %s\n", node->phoneNum);
-    // printf ("Check ID       : %s", node->id);
-    // printf ("\n");
-
-    printf ("\nData berhasil ditambahkan\n");
-    printf ("Press any key to continue...");
-    getch();
 }
 
 void showMember() {
@@ -754,10 +867,8 @@ void showMember() {
 
 void searchMember() {
     dataMember *curr = headMem;
-
-    char key[20], *ret;
+    char key[45], *ret;
     printf ("\nInput keyword: "); scanf (" %[^\n]s", key);
-
     system("cls");
     printf ("\n");
     printf ("===========================================================================\n");
@@ -770,7 +881,7 @@ void searchMember() {
 
     int count = 1;
     while (curr != NULL) {
-        char *compare; 
+        char compare[45]; 
         strcpy (compare, curr->name);
 
         ret = strstr(strlwr(compare), strlwr(key));
@@ -901,8 +1012,12 @@ void peekBorrower (peminjaman *curr) {
 void borrowMenu() {
     peminjaman *headBorrow;
     char nama[45], judul[100];
-    int pilih;
-
+    char pilih;
+    while (1)
+    {
+        
+    
+    
     system ("cls");
     printf ("==========================================================\n");
     printf ("                          Pinjam Buku                     \n");
@@ -910,26 +1025,47 @@ void borrowMenu() {
 
     //check nama
     printf ("Nama peminjam  : "); scanf (" %[^\n]s", nama);
+    
     if (!checkMember(nama)) {
+        printf ("\nMember tidak ditemukan. Silhkan daftarkan member terlebih dahulu");
+        printf ("Mungkin maksud anda : \n");
+        printf("---------------------------------------------------------------------------\n");
         while(1) {
-            printf ("\nMember tidak ditemukan. Daftar member terlebih dahulu\n");
+                dataMember *curr = headMem;
+                char *ret;
+                int count = 1;
+                while (curr != NULL) {
+                char compare[45]; 
+                strcpy (compare, curr->name);
+
+                ret = strstr(strlwr(compare), strlwr(nama));
+                if (ret) {
+                    printf ("| %-3d | %-36s | %-14s | %-9s |\n", count, curr->name, curr->phoneNum, curr->id);
+                    count += 1;
+                }
+        
+        curr = curr->next;
+    }         
+            printf("---------------------------------------------------------------------------\n");   
             printf ("1. Daftar Member\n"
+                    "2. Cari Lagi\n"
                     "0. Return\n"
                     "Pilihan: "
             );
-            scanf ("%d", &pilih);
-
-            if (pilih < 0 || pilih > 1) {
-                printf ("Pilihan salah!\nPress any key to continue");
-                getch();
-            }
-
-            else if (pilih == 0)
-                return;
-            
-            else if (pilih == 1)
+            scanf ("\n%c", &pilih);
+            switch (pilih)
+            {
+            case '1':
                 inputNew();
+                break;
+            case '2':
+                break;
+            case '0':
                 return;
+            default:
+                break;
+            }
+            
         }
     }
 
@@ -949,6 +1085,7 @@ void borrowMenu() {
         printf ("Press any key to continue...");
         getch();
     }
+    }
 }
 
 //
@@ -956,34 +1093,27 @@ void display1(){
     return;
 }
 
-char menu(){//Menu awal
-// FILE *dataBUKU;
-// DataBuku *node, *curr;
-// dataBUKU = fopen("DataBuku.txt", "r");
-// while (!feof(dataBUKU)){
-// node = (DataBuku*)malloc(sizeof(DataBuku));
-// node->next = NULL;
-// }
-// fclose(dataBUKU);
-
+char menu(){
     char ch;
-    int choice;
-    // system ("cls");
+    char choice;
+    system("cls");
     printf("\n");
-    printf("==========================================================\n");
-    printf("                          MY PERPUS\n");
-    printf("==========================================================\n");
-    printf("1. Data Peminjaman Buku\n"
-            "2. Pinjam Buku\n"
-            "3. Pengembalian Buku\n"
-            "4. List Data Buku\n"
-            "5. Edit Data Buku\n"
-            "6. Membership\n"
-            "7. Turn It In\n"
-            "0. Exit\n"
-            "Pilihan: "
+    printf(" =========================================================\n");
+    printf(" =========================================================\n");
+    printf("                         MY PERPUS                        \n");
+    printf(" =========================================================\n");
+    printf(" =========================================================\n");
+     printf("|1.| Pinjam Buku\n"
+            "|2.| Pengembalian Buku\n"
+            "|3.| Data Peminjaman Buku\n"
+            "|4.| List Data Buku\n"
+            "|5.| Edit Data Buku\n"
+            "|6.| Membership\n"
+            "|7.| Turn It In\n"
+            "|0.| Exit\n"
+            "PILIHAN : "
     );
-    scanf("%d", &choice);
+    scanf("%c", &choice);
     return choice;
 }
 
@@ -1011,30 +1141,28 @@ int main(){//Main
     while (1)
     {
         switch (menu()){
-            case 1:
-                displayPeminjaman();
-                // displayBookMenu();
-                break;
-            case 2:
-                // testDoang();
+            case '1':
                 borrowMenu();
                 break;
-            case 3:
+            case '2':
                 menuPengembalianBuku();
                 break;
-            case 4:
+            case '3':
+                displayPeminjaman();
+                break;
+            case '4':
                 displayBookMenu();
                 break;
-            case 5:
+            case '5':
                 editBuku();
                 break;
-            case 6:
+            case '6':
                 newMemberMenu();
                 break;
-            case 7:
+            case '7':
                 menuTurnitin();
                 break;
-            case 0:
+            case '0':
                 printf ("\nThank you for using this service ^-^\n\n");
                 return 0;
             default:
