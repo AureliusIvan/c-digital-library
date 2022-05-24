@@ -7,8 +7,6 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#define TABLE_SIZE 100000
-
 // bikin tree sesuai abjad judul
 typedef struct DataBuku{
     char judulBuku[100]; // sejauh ini paling panjang 71 char
@@ -532,9 +530,9 @@ void menuTurnitin(){
     int pilihan;
     printf("\n");
     printf("==========================================================\n");
-    printf("                     TURN IT IN\n");
+    printf("                          TURNITIN\n");
     printf("==========================================================\n");
-    printf("1. Daftar Turn It In\n"
+    printf("1. Daftar Turnitin\n"
            "2. Cek Queue\n"
            "0. Exit\n"
            "Pilihan: "
