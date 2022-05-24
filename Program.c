@@ -133,6 +133,7 @@ void displayBookMenu(){
     char choice;
     printf("1. Cari Buku\n");
     printf("2. Daftar buku \n");
+    printf("0. Back to menu\n");
     printf("Pilihan: "); scanf("\n%c", &choice);
     switch (choice){
     case '1':
@@ -339,6 +340,7 @@ void displayPeminjaman() {
 
 void menuTurnitin(){
     int pilihan;
+    system ("cls");
     printf("\n");
     printf("   ______________________                             \n"
            "    | ___                |                             \n"
