@@ -21,13 +21,14 @@ typedef struct DataBuku{
 DataBuku *root = NULL; 
 int counter = 1;
 
-DataBuku *newBookNode(char data[100],char data2[100],char data3[5],char data4[20], char data5[20]){
+DataBuku *newBookNode(char data[100],char data2[100],char data3[5],char data4[20], char data5[20], int data6){
     DataBuku *temp = (DataBuku*)malloc(sizeof(DataBuku));
     strcpy(temp->judulBuku, data);
     strcpy(temp->penulis, data2);
     strcpy(temp->tahunTerbit, data3);
     strcpy(temp->ISBN, data4);
     strcpy(temp->jenisBuku, data5);
+    temp->jumlahBuku = data6;
     temp->left = temp->right = NULL;
     return temp;
 }
@@ -45,14 +46,15 @@ DataBuku *insert(DataBuku *node, char key[100],
     char a[100],
     char b[5],
     char c[20],
-    char d[20]){
+    char d[20],
+    int e){
     if(node == NULL){
-        return newBookNode(key, a,b,c,d);
+        return newBookNode(key, a,b,c,d,e);
     }
     if(strcmpi(key, node->judulBuku)<0)
-        node->left = insert(node->left, key, a,b,c,d);
+        node->left = insert(node->left, key, a,b,c,d,e);
     else if(strcmpi(key, node->judulBuku)>0){
-        node->right = insert(node->right, key, a,b,c,d);
+        node->right = insert(node->right, key, a,b,c,d,e);
     }
 
     return node;
@@ -106,17 +108,19 @@ void displaySearchBuku(){
 
 void displayDataPeminjamanBuku(){
     counter = 1;
+    printf(" _______    __    __ __     ____   _    __   ___  _       |  * | _______   __       _____ __   _ ___      ___ _ __   _    _      \n"
+            "||  __  |__|  |  /  |  |__ | || |-| |__|  | |   |||       |  * |||  __  |_|  |__   /  / /|  |_| |   |__ _|   | |  | | |__| |      \n"
+            "|| |__| |  |  | / / |  |  || || | | |  |  |-|   |||       |  * ||| |__| | |  |  | /  / / |  | | |   |  | |   | |  |-| |  | |     \n"
+            "||      |  |  |/ /  |  |  ||    | | |  |  | |   |||       |  * |||      | |  |  |/  / /  |  | | |   |  | |   | |  | | |  | |     \n"
+            "||______|  |  |_/   |  |  ||    | | |  |  | |   |||____   |  * |||      | |  |  |__/_/   |  | | |   |  | |   | |  | | |  | |     \n");
     printf("================================================================================================================================================================\n");
     printf("|                                                                               Daftar Buku                                                                    |\n");
     printf("================================================================================================================================================================\n");
     printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
     printf("================================================================================================================================================================\n");
-    printf("================================================================================================================================================================\n");
     inorder(root);
-    printf("1. Next Page\n");
-    printf("2. Previous Page\n");
-    printf("0. Back to menu\n");
-    printf("Pilihan: ");
+     printf("================================================================================================================================================================\n");
+    printf("\nPress Anything to continue......... \n ");
     getch();
     return;
 }
@@ -145,9 +149,6 @@ void displayBookMenu(){
     }
     }
 }
-
-
-
 
 
 void defaultPeminjaman() {
@@ -184,60 +185,6 @@ void defaultPeminjaman() {
     fclose(defaultBorrower);
 
 }
-
-
-
-
-
-
-//Menu Pengembalian Buku
-/*
-char menuPengembalianBuku(){
-    int pilihan;
-    printf("\n");
-    printf("==========================================================\n");
-    printf("                     PENGEMBALIAN BUKU\n");
-    printf("==========================================================\n");
-    printf("1. Data Buku Yang Dipinjam\n"
-           "2. Kembalikan Buku\n"
-           "0. Exit\n"
-           "Pilihan: "
-    );
-    scanf("%d", &pilihan);
-    fflush(stdin);
-    switch (pilihan){
-                case 1:
-                    system("cls");
-                    printf ("=================================================================================================\n");
-                    printf ("                                               List Of Member                               \n");
-                    printf ("=================================================================================================\n\n");
-                    printf ("-------------------------------------------------------------------------------------------------\n"
-                            "| No. |                 Name                 |         Judul Buku          |      Priority      |\n"
-                            "-------------------------------------------------------------------------------------------------\n"
-                    );
-                    break;
-                case 2:
-                    char nama[30];
-                    char judul[30];
-                    printf("\n");
-                    printf("==========================================================\n");
-                    printf("                     PENGEMBALIAN BUKU\n");
-                    printf("==========================================================\n");
-                    printf("Nama            : "); scanf("%[^\n]", &nama);
-                    fflush(stdin);
-                    printf("Judul Buku      : "); scanf("%[^\n]", &judul);
-                    fflush(stdin);
-                    printf("%s, %s\n", nama, judul);
-                    break;
-                case 0:
-                    return 0;
-                default:
-                    printf("hmm");
-                    break;
-            } 
-}
-*/
-
 
 // Cek Member & Title valid ga
 
@@ -310,11 +257,19 @@ void displayPeminjaman() {
 
     if (headBorrow == NULL) {
         printf ("\nNo Data in Database\n");
+        getch();
         return;
     }
 
     while (curr != NULL) {
         system("cls");
+        printf ("    ___________                                 \n"
+                "    |___________|            ________________    \n"
+                "   (____________)           |    PLEASE    |    \n"
+                "  |______________|___       |  RETURN IT   |    \n"
+                "   [_________________]__    |   ON TIME!   |    \n"
+                "  |_____________________|   |______________|    \n"
+                " (______________________)          ||           \n");
         printf ("==========================================================\n");
         printf ("                     Data Peminjaman Buku                 \n");
         printf ("==========================================================\n");
@@ -346,7 +301,7 @@ void displayPeminjaman() {
         printf("1. Next\n");
         printf("2. Prev\n");
         printf("0. Back to menu\n");
-        printf("Pilihan : "); scanf ("%d", &pilih);
+        printf("Pilihan : "); scanf ("\n%d", &pilih);
         printf("\n");
 
         switch (pilih) {
@@ -382,15 +337,22 @@ void displayPeminjaman() {
 }
 
 
+
 void inputNew() {
-    char idT[7]; // yg dipake cuma 8
+    char idT[10]; // yg dipake cuma 8
 
     dataMember *curr;
     dataMember *node = (struct dataMember*) malloc(sizeof(dataMember));
     
     system("cls"); printf("\n");
     printf("==========================================================\n");
-    printf("                      Input New Member                    \n");
+    printf ("             _________________________\n"
+            "            |  _____                  | \n"
+            "            | |  O  |   New Member__  | \n"
+            "            | |__n__|   ____________  | \n"
+            "            |                         | \n"
+            "            |  *****                  | \n"
+            "            |_________________________| \n");
     printf("==========================================================\n");
     
     printf ("Nama           : "); 
@@ -400,15 +362,15 @@ void inputNew() {
     node->denda = 0;
 
     // generate random id
-    char charset[] = "12345678";
+    char charset[] = "0123456789";
     srand(time(NULL));
     for (int i = 0; i < 8; i++) {
-        idT[i] = charset[rand() % 7];
+        idT[i] = charset[rand() % 9];
     }
     strcpy (node->id, idT);
 
     FILE *insertData = fopen("DataMember.txt", "a");
-    fprintf (insertData, "\n%s#%s#%s#%d", node->name, node->phoneNum, node->id, node->denda);
+    fprintf (insertData, "%s#%s#%s#%d\n", node->name, node->phoneNum, node->id, node->denda);
     fclose(insertData);
 
     node->next = NULL;
@@ -443,20 +405,36 @@ typedef struct data
 DATA *headQueue;
 
 void dequeue (){
+    if(headQueue!=NULL){
     DATA *hapus = headQueue;
+    printf("test");
     headQueue = (headQueue)->next;
     free(hapus);
+    }
+    else{
+        printf("data masih kosong\n");
+        getch();
+    }
+    return;
 }
 
 
 void checkQueueTurnitin(){
+    system("cls");
     char choice, persentage[3];
     char charset[] = "0123456789";
     printf("===============================\n");
     printf("Antrian Paling depan Sekarang:\n");
     printf("===============================\n");
-    printf("Nama: %s\n", headQueue->nama);
-    printf("Topik: %s\n", headQueue->topik);
+    if(headQueue != NULL){
+        printf("Nama: %s\n", headQueue->nama);
+        printf("Topik: %s\n", headQueue->topik);
+    }else{
+        printf("Antrian sekarang kosong\n");
+        printf("Press anything to continue....\n");
+        getchar();
+        return;
+    }
     printf("-----------------------------------\n");
     printf("1. Pindai Plagiarasime Sekarang \n");
     printf("0. Keluar\n");
@@ -525,15 +503,26 @@ void daftarTurnitin(DATA **head, DATA **tail){
 
 
 void menuTurnitin(){
+    system("cls");
     DATA *head, *tail;
     head = tail = NULL;
     int pilihan;
     printf("\n");
+    printf("   ______________________                              \n"
+           "    | ___                |                             \n"
+           "    |  ________________  |       ______   _____        \n"
+           "    |  ________________  |  /   |      | |     |       \n"
+           "    |  ________________  | <    |      | |     | () /  \n"
+           "    |  ________________  |       ______  |     |   /   \n"
+           "    |  ________________  |      |      | |     |  / () \n"
+           "    |  ________________  |      |      | |     |       \n"
+           "    |___________________ |       ______   _____        \n");
     printf("==========================================================\n");
     printf("                          TURNITIN\n");
     printf("==========================================================\n");
     printf("1. Daftar Turnitin\n"
            "2. Cek Queue\n"
+           "3. Pindai Plagiarisme\n"
            "0. Exit\n"
            "Pilihan: "
     );
@@ -545,6 +534,10 @@ void menuTurnitin(){
             break;
         case 2:
             checkQueueTurnitin();
+            break;
+        case 3:
+            dequeue();
+            printf("Berhasil Pindai Plagiarisme!\n");
             break;
         case 0:
             printf ("\nThank you for using this service ^-^\n\n");
@@ -575,10 +568,21 @@ void returnBook() {
 
     system ("cls");
     printf("\n");
+    printf (" ______________________                                         \n"
+            "|  __________________  |                 ___________            \n"
+            "| |    ---           | |  /   ___   _   |___________|           \n"
+            "| | O  ____________  | | <   |   |_| | (____________)           \n"
+            "| | n  ____________  | |     |   | | ||______________|___       \n"
+            "| |__________________| |     |   | | |[_________________]__     \n"
+            "|______________________|     |   | | |_____________________|    \n"
+            "           |||               |   | | (______________________)__ \n"
+            "          _|||_              |   | | |________________________| \n ");   
     printf("==========================================================\n");
     printf("                     PENGEMBALIAN BUKU                    \n");
     printf("==========================================================\n");
     fflush(stdin);
+
+    
     printf("Nama Peminjam   : "); scanf("%[^\n]", nama);
     fflush(stdin);
     printf("Judul Buku      : "); scanf("%[^\n]", judul);
@@ -592,6 +596,7 @@ void returnBook() {
         dataMember *currMem = headMem;
         while (currMem != NULL) {
             if (strcmpi(currMem->name, nama) == 0) {
+                free(currMem);
                 break;
             }
             currMem = currMem->next;
@@ -604,7 +609,7 @@ void returnBook() {
             curr = curr->next;
         }
         fclose(delBorrower);
-        free(currMem->name);
+        free(currMem);
         printf("%s", currMem->name);
         printf ("\nPengembalian buku berhasil\n");
     }
@@ -620,6 +625,15 @@ void returnBook() {
 void menuPengembalianBuku() {
     int pilihan;
     printf ("\n");
+    printf (" ______________________                                         \n"
+            "|  __________________  |                 ___________            \n"
+            "| |    ---           | |  /   ___   _   |___________|           \n"
+            "| | O  ____________  | | <   |   |_| | (____________)           \n"
+            "| | n  ____________  | |     |   | | ||______________|___       \n"
+            "| |__________________| |     |   | | |[_________________]__     \n"
+            "|______________________|     |   | | |_____________________|    \n"
+            "           |||               |   | | (______________________)__ \n"
+            "          _|||_              |   | | |________________________| \n ");
     printf ("==========================================================\n");
     printf ("                     PENGEMBALIAN BUKU                    \n");
     printf ("==========================================================\n");
@@ -670,27 +684,44 @@ void tambahBuku(){
     char ISBN[20];
     char jenisBuku[20];
     int jumlahBuku;
-    printf("Masukan Judul Buku: ");
-    scanf("%s",judulBuku);
-    printf("Masukan Penulis Buku: ");
-    scanf("\n%s",penulis);
-    printf("Masukan Tahun Terbit: ");
-    scanf("\n%s", tahunTerbit);
-    printf("Masukan ISBN: ");
-    scanf("\n%s", ISBN);
-    printf("Masukan Jenis Buku: ");
-    scanf("\n%s", jenisBuku);
-    printf("Masukan Jumlah Buku: ");
-    root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
-    FILE *data , *ptr;
+
+    system ("cls");
+    printf ("               ___________               \n"
+            "    ___   _   |___________|              \n"
+            "   |   |_| | (____________)              \n"
+            "   |   | | ||______________|___          \n"
+            "   |   | | |[_________________]__       \n"
+            "   |   | | |_____________________|      \n"
+            "   |   | | (______________________)     \n");
+    printf("==========================================================\n");
+    printf("                       Menu Edit Buku                     \n");
+    printf("==========================================================\n");
+
+    printf("Masukan Judul Buku      : ");
+    scanf(" %[^\n]",judulBuku);
+    printf("Masukan Penulis Buku    : ");
+    scanf(" %[^\n]",penulis);
+    printf("Masukan Tahun Terbit    : ");
+    scanf(" %[^\n]", tahunTerbit);
+    printf("Masukan ISBN            : ");
+    scanf(" %[^\n]", ISBN);
+    printf("Masukan Jenis Buku      : ");
+    scanf(" %[^\n]", jenisBuku);
+    printf("Masukan Jumlah Buku     : ");
+    scanf("%d", &jumlahBuku);
+    
+    root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, jumlahBuku);
+    
+    FILE *data;
     data = fopen("FileBuku.txt", "a");
-    fprintf(data,"\n%s#%s#%s#%s#%s",judulBuku,penulis,tahunTerbit, ISBN, jenisBuku);
+    fprintf(data,"%s#%s#%s#%s#%s#%d\n",judulBuku,penulis,tahunTerbit, ISBN, jenisBuku, jumlahBuku);
     fclose(data);
-    printf("data berhasil dimasukan!");
+
+    printf ("Data berhasil dimasukan!\n");
+    printf ("Press any key to continue\n");
     getchar();
     return;
 }
-
 
 
 void search(DataBuku *cur, char key[100], DataBuku *parent)  
@@ -712,7 +743,6 @@ DataBuku* findMinimum(DataBuku* cur)  {
     }  
     return cur;  
 }  
-
 
 
 void deleteNode(DataBuku *root, char key[100] )  
@@ -763,23 +793,108 @@ void deleteNode(DataBuku *root, char key[100] )
     }  
 }  
 
+
+// beda cara delete yg 2 di bawah ini
+DataBuku *successor (DataBuku *node) {
+    DataBuku *curr = node;
+
+    // cari anak paling kiri
+    while (curr != NULL && curr->left != NULL)
+        curr = curr->left;
+    
+    return curr;
+}
+
+DataBuku *delete (DataBuku *treeRoot, char *key) {
+    if (strcmpi(key, treeRoot->judulBuku) < 0)
+        treeRoot->left = delete(treeRoot->left, key);
+
+    else if (strcmpi(key, treeRoot->judulBuku) > 0)
+        treeRoot->left = delete(treeRoot->left, key);
+
+    else {
+        if (treeRoot->left == NULL) {
+            DataBuku *temp = treeRoot->right;
+            free(treeRoot);
+            return temp;
+        }
+        else if (treeRoot->right == NULL) {
+            DataBuku *temp = treeRoot->left;
+            free(treeRoot);
+            return temp;
+        }
+
+        // jika node memiliki 2 anak
+        DataBuku *temp = successor(treeRoot->right);
+        
+        // letakan inorder successornya di posisi node yang bakal di delete
+        
+        strcpy (treeRoot->judulBuku, temp->judulBuku);
+        strcpy (treeRoot->penulis, temp->penulis);
+        strcpy (treeRoot->tahunTerbit, temp->tahunTerbit);
+        strcpy (treeRoot->ISBN, temp->ISBN);
+        strcpy (treeRoot->jenisBuku, temp->jenisBuku);
+        treeRoot->jumlahBuku = temp->jumlahBuku;
+
+        treeRoot->right = delete(treeRoot->right, temp->judulBuku);
+    }
+    return treeRoot;
+}
+
 void hapusBuku(){
     char key[100];
-    printf("Judul Buku yang ingin di hapus: ");
-    scanf("%s", key);
-    deleteNode(root, key);
-    printf("Penghapusan Sukses\n");
+
+    system ("cls");
+    printf ("               ___________               \n"
+            "    ___   _   |___________|              \n"
+            "   |   |_| | (____________)              \n"
+            "   |   | | ||______________|___          \n"
+            "   |   | | |[_________________]__       \n"
+            "   |   | | |_____________________|      \n"
+            "   |   | | (______________________)     \n");
+    printf("==========================================================\n");
+    printf("                         Hapus Buku                       \n");
+    printf("==========================================================\n");
+    printf("Judul Buku : ");
+    scanf(" %[^\n]", key);
+
+    DataBuku *treeRoot = root;
+    DataBuku *temp = searchBookBook(treeRoot, key);
+
+    if (temp != NULL) {
+        root = delete(treeRoot, key);
+        displayDataPeminjamanBuku(root);
+        printf("\n\nPenghapusan Sukses\n");
+    }
+    else {
+        printf("Data buku tidak ditemukan\n");
+    }
+    
+    // deleteNode(root, key);
+    getch();
     return;
 }
+
+
 
 void editBuku(){
     while (1){
     char choice;
-    printf("====== Menu Edit Buku ======\n");
+
+    system ("cls");
+    printf ("               ___________               \n"
+            "    ___   _   |___________|              \n"
+            "   |   |_| | (____________)              \n"
+            "   |   | | ||______________|___          \n"
+            "   |   | | |[_________________]__       \n"
+            "   |   | | |_____________________|      \n"
+            "   |   | | (______________________)     \n");
+    printf("==========================================================\n");
+    printf("                       Menu Edit Buku                     \n");
+    printf("==========================================================\n");
     printf("1. Tambah buku\n");
     printf("2. Hapus buku\n");
-    printf("3. Edit info buku\n");
-    printf("0. Kembali ke menu utama\n");
+    printf("0. Back to menu\n");
     printf("Pilihan: ");
     scanf("\n%c", &choice);
     switch (choice){
@@ -788,8 +903,6 @@ void editBuku(){
         break;
     case '2':
         hapusBuku();
-        break;
-    case '3':
         break;
     case '0':
         return;
@@ -829,6 +942,7 @@ void defaultMember() {
     fclose(defaultMem);
 }
 
+
 void showMember() {
     dataMember *kepala = headMem;
     // dataMember *tail = headMem;
@@ -841,6 +955,15 @@ void showMember() {
 
     system("cls");
     printf ("\n");
+    printf ("    ______________________                                   \n"
+            "   |  __________________  |     _________________________    \n"
+            "   | |    ---           | |  / |  _____                  |   \n"
+            "   | | O  ____________  | | <  | |  O  |   ____________  |   \n"
+            "   | | n  ____________  | |    | |__n__|   ____________  |   \n"
+            "   | |__________________| |    |                         |   \n"
+            "   |______________________|    |  *****                  |   \n"
+            "             |||               |_________________________|   \n"
+            "            _|||_                                            \n ");
     printf ("===========================================================================\n");
     printf ("                              List Of Member                               \n");
     printf ("===========================================================================\n\n");
@@ -869,6 +992,15 @@ void searchMember() {
     printf ("\nInput keyword: "); scanf (" %[^\n]s", key);
     system("cls");
     printf ("\n");
+    printf ("    ______________________                                   \n"
+            "   |  __________________  |     _________________________    \n"
+            "   | |    ---           | |  / |  _____                  |   \n"
+            "   | | O  ____________  | | <  | |  O  |   ____________  |   \n"
+            "   | | n  ____________  | |    | |__n__|   ____________  |   \n"
+            "   | |__________________| |    |                         |   \n"
+            "   |______________________|    |  *****                  |   \n"
+            "             |||               |_________________________|   \n"
+            "            _|||_                                            \n ");
     printf ("===========================================================================\n");
     printf ("                              List Of Member                               \n");
     printf ("===========================================================================\n\n");
@@ -892,7 +1024,8 @@ void searchMember() {
     }
 
     printf ("---------------------------------------------------------------------------\n\n");
-    printf ("\nPress any key to continue..."); getch();
+    // printf ("\nPress any key to continue..."); 
+    // getch();
     return; //error :)
 }
 
@@ -902,6 +1035,15 @@ void newMemberMenu() {
     while(1) {
         system("cls");
         printf("\n");
+        printf ("    ______________________                                   \n"
+                "   |  __________________  |     _________________________    \n"
+                "   | |    ---           | |  / |  _____                  |   \n"
+                "   | | O  ____________  | | <  | |  O  |   ____________  |   \n"
+                "   | | n  ____________  | |    | |__n__|   ____________  |   \n"
+                "   | |__________________| |    |                         |   \n"
+                "   |______________________|    |  *****                  |   \n"
+                "             |||               |_________________________|   \n"
+                "            _|||_                                            \n ");
         printf("==========================================================\n");
         printf("                         New Member                       \n");
         printf("==========================================================\n");
@@ -931,6 +1073,8 @@ void newMemberMenu() {
                 }
                 case 3 : {
                     searchMember();
+                    printf ("Press any key to continue..."); 
+                    getch();
                     break;
                 }
             }
@@ -977,6 +1121,13 @@ void peekBorrower (peminjaman *curr) {
     time(&t);
 
     system ("cls");
+    printf ("    ___________                                 \n"
+            "   |___________|            ________________    \n"
+            "   (____________)           |    PLEASE    |    \n"
+            "  |______________|___       |  RETURN IT   |    \n"
+            "   [_________________]__    |   ON TIME!   |    \n"
+            "  |_____________________|   |______________|    \n"
+            " (______________________)          ||           \n");
     printf ("==========================================================\n");
     printf ("                   Data Peminjaman Baru                   \n");
     printf ("==========================================================\n");
@@ -1005,18 +1156,24 @@ void peekBorrower (peminjaman *curr) {
     FILE *insertBorrow = fopen("DataPeminjaman.txt", "a");
     fprintf (insertBorrow, "%s#%s#%s#%s\n", currMem->name, currMem->id, toPrint->judulBuku, toPrint->ISBN);
     fclose(insertBorrow);
+    return;
 }
 
 void borrowMenu() {
     peminjaman *headBorrow;
     char nama[45], judul[100];
     char pilih;
-    while (1)
-    {
         
     
     
     system ("cls");
+    printf ("    ___________                                 \n"
+            "   |___________|            ________________    \n"
+            "   (____________)           |    PLEASE    |    \n"
+            "  |______________|___       |  RETURN IT   |    \n"
+            "   [_________________]__    |   ON TIME!   |    \n"
+            "  |_____________________|   |______________|    \n"
+            " (______________________)          ||           \n");
     printf ("==========================================================\n");
     printf ("                          Pinjam Buku                     \n");
     printf ("==========================================================\n");
@@ -1025,7 +1182,7 @@ void borrowMenu() {
     printf ("Nama peminjam  : "); scanf (" %[^\n]s", nama);
     
     if (!checkMember(nama)) {
-        printf ("\nMember tidak ditemukan. Silhkan daftarkan member terlebih dahulu");
+        printf ("\nMember tidak ditemukan. Silhkan daftarkan member terlebih dahulu\n");
         printf ("Mungkin maksud anda : \n");
         printf("---------------------------------------------------------------------------\n");
         while(1) {
@@ -1083,7 +1240,7 @@ void borrowMenu() {
         printf ("Press any key to continue...");
         getch();
     }
-    }
+    
 }
 
 //
@@ -1093,23 +1250,31 @@ void display1(){
 
 char menu(){
     char ch;
-    char choice;
-    system("cls");
+    int choice;
+    system ("cls");
     printf("\n");
-    printf(" =========================================================\n");
-    printf(" =========================================================\n");
-    printf("                         MY PERPUS                        \n");
-    printf(" =========================================================\n");
-    printf(" =========================================================\n");
-     printf("|1.| Pinjam Buku\n"
-            "|2.| Pengembalian Buku\n"
-            "|3.| Data Peminjaman Buku\n"
-            "|4.| List Data Buku\n"
-            "|5.| Edit Data Buku\n"
-            "|6.| Membership\n"
-            "|7.| Turn It In\n"
-            "|0.| Exit\n"
-            "PILIHAN : "
+    time_t t;
+    time(&t);
+    printf("-----------------------------------------------------------\n");
+    printf ("   Waktu Sistem : %s", ctime(&t));
+    printf("-----------------------------------------------------------\n");
+    printf (" _______    __       __     ____   _    __   ___  _      \n"
+            "||  __  |__|  |  /- |  |__ | || |-| |__|  | |   |||      \n"
+            "|| |__| |  |  | / / |  |  || || | | |  |  |-|   |||      \n"
+            "||      |  |  |/ /  |  |  || *  | | |  |  | |   |||      \n"
+            "||______|  |  |_/   |  |  || *  | | |  |  | |   |||____  \n");
+    printf("==========================================================\n");
+    printf("                        MY PERPUS\n");
+    printf("==========================================================\n");
+    printf("1. Pinjam Buku\n"
+            "2. Pengembalian Buku\n"
+            "3. Data Peminjaman Buku\n"
+            "4. List Data Buku\n"
+            "5. Edit Data Buku\n"
+            "6. Membership\n"
+            "7. Turnitin\n"
+            "0. Exit\n"
+            "Pilihan: "
     );
     scanf("%c", &choice);
     return choice;
@@ -1128,8 +1293,8 @@ int main(){//Main
         char ISBN[20];
         char jenisBuku[20];
         int jumlahBuku;
-        fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku);
-        root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku );
+        fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, &jumlahBuku);
+        root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, jumlahBuku );
     }
     fclose(dataBUKU);
     defaultMember();
