@@ -101,14 +101,15 @@ DataBuku *insert(DataBuku *node, char key[100],
 
 // Data Peminjaman Buku  - ivan
 
-
-void searchBuku(DataBuku *root, char key[100]){
-    if(root != NULL){
+void searchBuku(DataBuku *root, char key[100])
+{
+    if (root != NULL)
+    {
         searchBuku(root->left, key);
         char *ret = strstr(strlwr(root->judulBuku), strlwr(key));
         if (ret)
         {
-            printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+            printf("|%-4d|%-73s|%-31s|%-12s|%-14s|%-22s|%-4d|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku, root->jumlahBuku);
             counter++;
         }
         searchBuku(root->right, key);
@@ -122,7 +123,13 @@ void displaySearchBuku()
     printf("\n");
     printf("Masukan Keyword Judul: ");
     scanf("\n%s", key);
+    printf("========================================================================================================================================================================\n");
+    printf("|NO. |                       Judul Buku                                        |             Penulis           |  Tahun     |    ISBN      |       Jenis Buku     |jum.|\n");
+    printf("========================================================================================================================================================================\n");
     searchBuku(root, key);
+    printf("========================================================================================================================================================================\n");
+    printf("\n");
+    printf("Press anything to continue....");
     getch();
 }
 
@@ -293,23 +300,28 @@ int cekStok(char *judul, DataBuku *root)
 
     // kl ada bukunya
     DataBuku *toCheck = searchBookBook(treeRoot, judul);
-    if (toCheck->jumlahBuku == 0) {
-        printf ("Stock buku habis!\n");
-        return 0;
-    }
-    else   
-        return 1;
+    printf("Jumlah stock dari %s : %d", toCheck->judulBuku);
+    // if (toCheck->jumlahBuku == 0)
+    // {
+    //     printf("Stock buku habis!\n");
+    //     return 0;
+    // }
+    // else
+    //     return 1;
 }
 
 // untuk hubungin data dari linked list peminjaman (nama) ke linked listnya member
-dataMember *searchMemberMember (dataMember *head, char *keyName) {
+dataMember *searchMemberMember(dataMember *head, char *keyName)
+{
     dataMember *curr = headMem;
 
-    while (curr != NULL) {
-        if (strcmpi(curr->name, keyName) == 0) {
+    while (curr != NULL)
+    {
+        if (strcmpi(curr->name, keyName) == 0)
+        {
             return curr;
         }
-        
+
         curr = curr->next;
     }
 }
@@ -330,20 +342,23 @@ int checkMember(char *key)
 }
 
 // check apakah member dengan id [input] ada di linked list member
-int checkID(char *input) {
+int checkID(char *input)
+{
     dataMember *curr = headMem;
 
-    while (curr != NULL) {
-        if (stricmp(curr->id, input) == 0) {
+    while (curr != NULL)
+    {
+        if (stricmp(curr->id, input) == 0)
+        {
             return 1;
         }
-        
+
         curr = curr->next;
     }
 }
 
-void displayPeminjaman() {
-    int urutan = 1;
+void displayPeminjaman()
+{int urutan = 1;
     int pilih;
     peminjaman *curr = headBorrow;
     dataMember *currMem = headMem;
@@ -504,9 +519,10 @@ void inputNew()
     printf("==========================================================\n");
     printf("                          Welcome !                       \n");
     printf("==========================================================\n");
-    printf ("Nama Member    : %s\n", node->name);
-    printf ("No. Telp       : %s\n", node->phoneNum);
-    printf ("ID Member      : %s\n", node->id);
+    printf("Nama Member    : %s\n", node->name);
+    printf("No. Telp       : %s\n", node->phoneNum);
+    printf("ID Member      : %s", node->id);
+    printf("\n");
 
     printf("\nData berhasil ditambahkan\n");
 
@@ -1274,18 +1290,21 @@ void newMemberMenu()
 
 // Input data peminjaman baru
 
-peminjaman *newBorrower (char *id, char *judul) {
-    peminjaman *node = (peminjaman*) malloc(sizeof(peminjaman));
+peminjaman *newBorrower(char *id, char *judul)
+{
+    peminjaman *node = (peminjaman *)malloc(sizeof(peminjaman));
     peminjaman *curr;
     dataMember *currMem = headMem;
-    
-    strcpy (node->id, id);
-    strcpy (node->what, judul);
+
+    strcpy(node->id, id);
+    strcpy(node->what, judul);
 
     // cari namanya
-     while (currMem != NULL) {
-        if (strcmpi(currMem->id, id) == 0) {
-            strcpy (node->who, currMem->name);
+    while (currMem != NULL)
+    {
+        if (strcmpi(currMem->id, id) == 0)
+        {
+            strcpy(node->who, currMem->name);
             break;
         }
         currMem = currMem->next;
@@ -1362,82 +1381,86 @@ void peekBorrower(peminjaman *curr)
     return;
 }
 
-void borrowMenu() {
+void borrowMenu()
+{
     peminjaman *headBorrow;
     char judul[100];
     char idT[10];
     int pilih;
 
-    system ("cls");
-    printf ("    ___________                                 \n"
-            "   |___________|            ________________    \n"
-            "   (____________)           |    PLEASE    |    \n"
-            "  |______________|___       |  RETURN IT   |    \n"
-            "   [_________________]__    |   ON TIME!   |    \n"
-            "  |_____________________|   |______________|    \n"
-            " (______________________)          ||           \n");
-    printf ("==========================================================\n");
-    printf ("                          Pinjam Buku                     \n");
-    printf ("==========================================================\n");
+    system("cls");
+    printf("    ___________                                 \n"
+           "   |___________|            ________________    \n"
+           "   (____________)           |    PLEASE    |    \n"
+           "  |______________|___       |  RETURN IT   |    \n"
+           "   [_________________]__    |   ON TIME!   |    \n"
+           "  |_____________________|   |______________|    \n"
+           " (______________________)          ||           \n");
+    printf("==========================================================\n");
+    printf("                          Pinjam Buku                     \n");
+    printf("==========================================================\n");
 
-    //check ID
-    printf ("ID peminjam    : "); scanf ("%s", idT);
-    if (!checkID(idT)) {
-        while(1) {
-            printf ("\nMember dengan ID %s tidak ditemukan. Daftar menjadi member terlebih dahulu\n", idT);
-            printf ("1. Daftar Member\n"
-                    "0. Return\n"
-                    "Pilihan: "
-            );
-            scanf ("%d", &pilih);
+    // check ID
+    printf("ID peminjam    : ");
+    scanf("%s", idT);
+    if (!checkID(idT))
+    {
+        while (1)
+        {
+            printf("\nMember dengan ID %s tidak ditemukan. Daftar menjadi member terlebih dahulu\n", idT);
+            printf("1. Daftar Member\n"
+                   "0. Return\n"
+                   "Pilihan: ");
+            scanf("%d", &pilih);
 
-            if (pilih < 0 || pilih > 1) {
-                printf ("Pilihan salah!\nPress any key to continue");
+            if (pilih < 0 || pilih > 1)
+            {
+                printf("Pilihan salah!\nPress any key to continue");
                 getch();
             }
 
             else if (pilih == 0)
                 return;
-            
+
             else if (pilih == 1)
                 inputNew();
-                return;
+            return;
         }
     }
 
-    else {
-        printf ("Judul buku     : "); 
-        scanf (" %[^\n]s", judul);
+    else
+    {
+        printf("Judul buku     : ");
+        scanf(" %[^\n]s", judul);
 
         DataBuku *treeRoot = root;
-        
-        if (checkBook(treeRoot, judul)) {
+
+        if (checkBook(treeRoot, judul))
+        {
             // if (cekStok(judul, treeRoot)) {
-                peminjaman *curr = newBorrower(idT, judul);
-                peekBorrower(curr);
-                printf ("\nData berhasil ditambahkan\n");
+            peminjaman *curr = newBorrower(idT, judul);
+            peekBorrower(curr);
+            printf("\nData berhasil ditambahkan\n");
             // }
             // else ("\nStok buku dengan habis");
         }
-        else {
-            printf ("\nData gagal ditambahkan karena buku tidak ditemukan\n");
+        else
+        {
+            printf("\nData gagal ditambahkan karena buku tidak ditemukan\n");
         }
 
-        printf ("Press any key to continue...");
+        printf("Press any key to continue...");
         getch();
     }
 }
 
-//
-void display1()
-{
-    return;
-}
+//////////
 
-char menu(){//Menu awal
+char menu()
+{ // Menu awal
     char ch;
     int choice;
-    system ("cls");
+    system("cls");
     printf("\n");
     time_t t;
     time(&t);
@@ -1458,7 +1481,6 @@ char menu(){//Menu awal
            "4. List Data Buku\n"
            "5. Edit Data Buku\n"
            "6. Membership\n"
-           "7. Turnitin\n"
            "0. Exit\n"
            "Pilihan: ");
     scanf("%c", &choice);
@@ -1473,13 +1495,14 @@ int main()
     dataBUKU = fopen("FileBuku.txt", "r");
     while (!feof(dataBUKU))
     {
+        char separator[10];
         char judulBuku[100];
         char penulis[100];
         char tahunTerbit[5];
         char ISBN[20];
         char jenisBuku[20];
         int jumlahBuku;
-        fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, &jumlahBuku);
+        fscanf(dataBUKU, " %[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%d%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, &jumlahBuku, separator);
         root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, jumlahBuku);
     }
     fclose(dataBUKU);
@@ -1508,9 +1531,6 @@ int main()
             break;
         case '6':
             newMemberMenu();
-            break;
-        case '7':
-            menuTurnitin();
             break;
         case '0':
             printf("\nThank you for using this service ^-^\n\n");
