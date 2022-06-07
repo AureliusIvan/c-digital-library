@@ -49,6 +49,7 @@ int countbookamount;
 
 DataBuku *newBookNode(char data[100], char data2[100], char data3[5], char data4[20], char data5[20], int data6)
 {
+    countbookamount++;
     DataBuku *temp = (DataBuku *)malloc(sizeof(DataBuku));
     strcpy(temp->judulBuku, data);
     strcpy(temp->penulis, data2);
@@ -64,7 +65,7 @@ void inorder(DataBuku *root, int upperpagging, int lowerpagging)
 {
     if (root != NULL)
     {
-        
+
         inorder(root->left, upperpagging, lowerpagging);
         if (counter <= upperpagging && counter >= lowerpagging)
         {
@@ -87,7 +88,9 @@ DataBuku *insert(DataBuku *node, char key[100],
         return newBookNode(key, a, b, c, d, e);
     }
     if (strcmpi(key, node->judulBuku) < 0)
+    {
         node->left = insert(node->left, key, a, b, c, d, e);
+    }
     else if (strcmpi(key, node->judulBuku) > 0)
     {
         node->right = insert(node->right, key, a, b, c, d, e);
@@ -161,18 +164,26 @@ void displayDataPeminjamanBuku()
                 upperpagging = 50;
             }
             lowerpagging = upperpagging - 50;
+            printf("\n");
+            printf("%d\n", upperpagging);
+            printf("%d\n", lowerpagging);
+            break;
         case '2':
             counter = 0;
-            lowerpagging = lowerpagging + 50;
-            if (lowerpagging < 0)
-            {
-                lowerpagging = 0;
-            }
             upperpagging = upperpagging + 50;
             if (upperpagging > countbookamount)
             {
                 upperpagging = countbookamount;
             }
+            lowerpagging = upperpagging - 50;
+            if (lowerpagging < 0)
+            {
+                lowerpagging = 0;
+            }
+
+            printf("\n");
+            printf("%d\n", countbookamount);
+            break;
         default:
             break;
         }
@@ -1429,12 +1440,11 @@ int main()
         int jumlahBuku;
         fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, &jumlahBuku);
         root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, jumlahBuku);
-        countbookamount++;
     }
     fclose(dataBUKU);
     defaultMember();
     // defaultPeminjaman();
-
+    
     char ch;
     while (1)
     {
