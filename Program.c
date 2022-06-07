@@ -6,7 +6,9 @@
 #include <time.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <ctype.h>
 
+int counter = 1;
 // bikin tree sesuai abjad judul
 typedef struct DataBuku
 {
@@ -19,8 +21,31 @@ typedef struct DataBuku
     struct DataBuku *right, *left;
 } DataBuku;
 
+typedef struct dataMember
+{
+    char name[45];
+    char phoneNum[15];
+    char id[10];
+    int denda;
+
+    struct dataMember *next, *prev;
+} dataMember;
+
+typedef struct peminjaman
+{
+    char what[100];
+    char who[45];
+    int priority;
+
+    struct peminjaman *next, *prev;
+} peminjaman;
+
 DataBuku *root = NULL;
-int counter = 1;
+DataBuku *headBook;
+dataMember *headMem = NULL;
+peminjaman *headBorrow = NULL;
+int countbookamount;
+///////
 
 DataBuku *newBookNode(char data[100], char data2[100], char data3[5], char data4[20], char data5[20], int data6)
 {
@@ -35,14 +60,18 @@ DataBuku *newBookNode(char data[100], char data2[100], char data3[5], char data4
     return temp;
 }
 
-void inorder(DataBuku *root)
+void inorder(DataBuku *root, int upperpagging, int lowerpagging)
 {
     if (root != NULL)
     {
-        inorder(root->left);
-        printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+        
+        inorder(root->left, upperpagging, lowerpagging);
+        if (counter <= upperpagging && counter >= lowerpagging)
+        {
+            printf("|%-4d|%-73s|%-28s|%-12s|%-14s|%-22s|\n", counter, root->judulBuku, root->penulis, root->tahunTerbit, root->ISBN, root->jenisBuku);
+        }
         counter++;
-        inorder(root->right);
+        inorder(root->right, upperpagging, lowerpagging);
     }
 }
 
@@ -66,29 +95,6 @@ DataBuku *insert(DataBuku *node, char key[100],
 
     return node;
 }
-
-typedef struct dataMember
-{
-    char name[45];
-    char phoneNum[15];
-    char id[10];
-    int denda;
-
-    struct dataMember *next, *prev;
-} dataMember;
-
-typedef struct peminjaman
-{
-    char what[100];
-    char who[45];
-    int priority;
-
-    struct peminjaman *next, *prev;
-} peminjaman;
-
-DataBuku *headBook;
-dataMember *headMem = NULL;
-peminjaman *headBorrow = NULL;
 
 // Data Peminjaman Buku  - ivan
 
@@ -121,21 +127,56 @@ void displaySearchBuku()
 void displayDataPeminjamanBuku()
 {
     counter = 1;
-    printf(" _______    __    __ __     ____   _    __   ___  _       |  * | _______   __       _____ __   _ ___      ___ _ __   _    _      \n"
-           "||  __  |__|  |  /  |  |__ | || |-| |__|  | |   |||       |  * |||  __  |_|  |__   /  / /|  |_| |   |__ _|   | |  | | |__| |      \n"
-           "|| |__| |  |  | / / |  |  || || | | |  |  |-|   |||       |  * ||| |__| | |  |  | /  / / |  | | |   |  | |   | |  |-| |  | |     \n"
-           "||      |  |  |/ /  |  |  ||    | | |  |  | |   |||       |  * |||      | |  |  |/  / /  |  | | |   |  | |   | |  | | |  | |     \n"
-           "||______|  |  |_/   |  |  ||    | | |  |  | |   |||____   |  * |||      | |  |  |__/_/   |  | | |   |  | |   | |  | | |  | |     \n");
-    printf("================================================================================================================================================================\n");
-    printf("|                                                                               Daftar Buku                                                                    |\n");
-    printf("================================================================================================================================================================\n");
-    printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
-    printf("================================================================================================================================================================\n");
-    inorder(root);
-    printf("================================================================================================================================================================\n");
-    printf("\nPress Anything to continue......... \n ");
-    getch();
-    return;
+    int upperpagging = 50;
+    int lowerpagging = 0;
+    char choice;
+    while (1)
+    {
+        printf(" _______    __    __ __     ____   _    __   ___  _       |  * | _______   __       _____ __   _ ___      ___ _ __   _    _      \n"
+               "||  __  |__|  |  /  |  |__ | || |-| |__|  | |   |||       |  * |||  __  |_|  |__   /  / /|  |_| |   |__ _|   | |  | | |__| |      \n"
+               "|| |__| |  |  | / / |  |  || || | | |  |  |-|   |||       |  * ||| |__| | |  |  | /  / / |  | | |   |  | |   | |  |-| |  | |     \n"
+               "||      |  |  |/ /  |  |  ||    | | |  |  | |   |||       |  * |||      | |  |  |/  / /  |  | | |   |  | |   | |  | | |  | |     \n"
+               "||______|  |  |_/   |  |  ||    | | |  |  | |   |||____   |  * |||      | |  |  |__/_/   |  | | |   |  | |   | |  | | |  | |     \n");
+        printf("================================================================================================================================================================\n");
+        printf("|                                                                               Daftar Buku                                                                    |\n");
+        printf("================================================================================================================================================================\n");
+        printf("| No |                            Judul Buku                                   |           Penulis          |Tahun Terbit|     ISBN     |       Jenis Buku     |\n");
+        printf("================================================================================================================================================================\n");
+        inorder(root, upperpagging, lowerpagging);
+        printf("================================================================================================================================================================\n");
+        printf("\n");
+        printf("MENU \n");
+        printf("1. Prev\n");
+        printf("2. Next\n");
+        printf("0. Back\n");
+        printf("Pilihan: ");
+        scanf("\n%c", &choice);
+        switch (choice)
+        {
+        case '1':
+            counter = 0;
+            upperpagging = upperpagging - 50;
+            if (upperpagging < 50)
+            {
+                upperpagging = 50;
+            }
+            lowerpagging = upperpagging - 50;
+        case '2':
+            counter = 0;
+            lowerpagging = lowerpagging + 50;
+            if (lowerpagging < 0)
+            {
+                lowerpagging = 0;
+            }
+            upperpagging = upperpagging + 50;
+            if (upperpagging > countbookamount)
+            {
+                upperpagging = countbookamount;
+            }
+        default:
+            break;
+        }
+    }
 }
 
 void displayBookMenu()
@@ -562,7 +603,7 @@ void menuTurnitin()
     DATA *head, *tail;
     head = tail = NULL;
     int pilihan;
-    system ("cls");
+    system("cls");
     printf("\n");
     printf("   ______________________                              \n"
            "    | ___                |                             \n"
@@ -1374,6 +1415,7 @@ char menu()
 
 int main()
 { // Main
+    countbookamount = 0;
     FILE *dataBUKU;
     DataBuku *node, *curr;
     dataBUKU = fopen("FileBuku.txt", "r");
@@ -1387,6 +1429,7 @@ int main()
         int jumlahBuku;
         fscanf(dataBUKU, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, &jumlahBuku);
         root = insert(root, judulBuku, penulis, tahunTerbit, ISBN, jenisBuku, jumlahBuku);
+        countbookamount++;
     }
     fclose(dataBUKU);
     defaultMember();
