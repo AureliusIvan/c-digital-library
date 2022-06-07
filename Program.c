@@ -358,7 +358,8 @@ int checkID(char *input)
 }
 
 void displayPeminjaman()
-{int urutan = 1;
+{
+    int urutan = 1;
     int pilih;
     peminjaman *curr = headBorrow;
     dataMember *currMem = headMem;
@@ -384,11 +385,11 @@ void displayPeminjaman()
         printf("==========================================================\n");
         printf("                     Data Peminjaman Buku                 \n");
         printf("==========================================================\n");
-        printf ("\nData - %d\n", urutan);
+        printf("\nData - %d\n", urutan);
         dataMember *toDisplay = searchMemberMember(currMem, curr->who);
-        printf ("Nama         : %s\n", toDisplay->name);
-        printf ("ID           : %s\n", toDisplay->id);
-        printf ("No. Telp     : %s\n", toDisplay->phoneNum);
+        printf("Nama         : %s\n", toDisplay->name);
+        printf("ID           : %s\n", toDisplay->id);
+        printf("No. Telp     : %s\n", toDisplay->phoneNum);
 
         DataBuku *toPrint = searchBookBook(currBook, curr->what);
         printf("Judul Buku   : %s\n", toPrint->judulBuku);
@@ -1437,10 +1438,183 @@ char menu()
            "4. List Data Buku\n"
            "5. Edit Data Buku\n"
            "6. Membership\n"
+           "7. Booking Ruang \n"
            "0. Exit\n"
            "Pilihan: ");
     scanf("%c", &choice);
     return choice;
+}
+
+/// queue untuk booking ruangan
+typedef struct dataROOM
+{
+    char nama[45];
+    char id[10];
+    struct dataROOM *next;
+} DATAROOM;
+
+DATAROOM *headROOM = NULL, *tailROOM = NULL;
+
+void enqueueROOM(char nama[45], char id[10])
+{
+    DATAROOM *node = (DATAROOM *)malloc(sizeof(DATAROOM));
+    strcpy(node->nama, nama);
+    strcpy(node->id, id);
+    node->next = NULL;
+    if (headROOM == NULL)
+    {
+        headROOM = node;
+    }
+    else
+        (tailROOM)->next = node;
+    tailROOM = node;
+    return;
+}
+
+void dequeueROOM()
+{
+    DATAROOM *hapus = headROOM;
+    if (headROOM->next != NULL)
+    {
+        headROOM = headROOM->next;
+    }
+    else
+    {
+        headROOM = NULL;
+    }
+    free(hapus);
+}
+
+int isemptyROOM()
+{
+    if (headROOM == NULL)
+        return 1;
+    else
+        return 0;
+}
+
+const char *frontROOM()
+{
+    return headROOM->nama;
+}
+
+void BookingRuangMeeting()
+{
+    char ID[10];
+    char choice;
+    dataMember *curr;
+    while (1)
+    {
+        system("cls");
+        printf("Input ID: ");
+        scanf("%s", ID);
+        curr = headMem;
+        while (curr != NULL)
+        {
+            if (strcmpi(curr->id, ID) == 0)
+            {
+                char nama[45];
+                strcpy(nama, curr->name);
+                enqueueROOM(nama, ID);
+                printf("\nBerhasil Masukan ke dalam antrian atas nama %s!\n", nama);
+                printf("\n");
+                printf("Press anything to continue...");
+                getch();
+                return;
+            }
+            curr = curr->next;
+        }
+        printf("ID yang dimasukan tidak valid!\n");
+        printf("1. Coba lagi\n");
+        printf("2. Masukan New Member\n");
+        printf("0. Kembali\n");
+        printf("Pilihan: ");
+        scanf("\n%c", &choice);
+        switch (choice)
+        {
+        case '1':
+            break;
+        case '2':
+            // input new mem
+        case '0':
+            return;
+        default:
+            break;
+        }
+    }
+    return;
+}
+
+/////Booking ruang meeting
+void checkoutROOM()
+{
+    if (headROOM != NULL)
+    {
+        system("cls");
+        printf("%s Telah Berhasil Check out...\n", frontROOM());
+        dequeueROOM();
+        if (headROOM != NULL)
+        {
+            printf("%s Berhasil melakukan Check in ruangan diskusi...\n", frontROOM());
+            printf("\n");
+            printf("Press anything to continue...");
+            getch();
+        }
+        else
+        {
+            printf("Antrian Kosong!");
+            printf("Press anything to continue...");
+            getch();
+        }
+    }
+    else
+    {
+        printf("Antrian Kosong!");
+        printf("Press anything to continue...");
+        getch();
+    }
+}
+
+void listBooking()
+{
+    system("cls");
+    printf("\nPengguna yang sedang menggunakan ruangan : %s\n", frontROOM());
+    printf("\n");
+    getch();
+}
+
+void MenuBookingMeeting()
+{
+    while (1)
+    {
+        system("cls");
+        char choice;
+        printf("===========================================\n");
+        printf("        Menu Booking Ruang Diskusi\n");
+        printf("===========================================\n");
+        printf("1. Booking Ruang Diskusi\n");
+        printf("2. List booking \n");
+        printf("3. Checkout Ruangan \n");
+        printf("0. Exit\n");
+        printf("Pilihan: ");
+        scanf("%c", &choice);
+        switch (choice)
+        {
+        case '1':
+            BookingRuangMeeting();
+            break;
+        case '2':
+            listBooking();
+            break;
+        case '3':
+            checkoutROOM();
+            break;
+        case '0':
+            return;
+        default:
+            break;
+        }
+    }
 }
 
 int main()
@@ -1488,6 +1662,8 @@ int main()
         case '6':
             newMemberMenu();
             break;
+        case '7':
+            MenuBookingMeeting();
         case '0':
             printf("\nThank you for using this service ^-^\n\n");
             return 0;
