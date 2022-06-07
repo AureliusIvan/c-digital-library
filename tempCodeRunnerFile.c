@@ -1,1 +1,1 @@
-printf ("\nWaktu Peminjaman : %s", ctime(&t));
+HEAD
