@@ -696,6 +696,7 @@ void returnBook()
     DataBuku *treeRoot = root;
     char nama[45];
     char judul[100];
+    char idT[10];
 
     system("cls");
     printf("\n");
@@ -716,16 +717,18 @@ void returnBook()
     printf("Nama Peminjam   : ");
     scanf("%[^\n]", nama);
     fflush(stdin);
+    printf("Id peminjam     : ");
+    scanf("%[^\n]", idT);
+    fflush(stdin);
     printf("Judul Buku      : ");
     scanf("%[^\n]", judul);
     fflush(stdin);
 
     // check nama
-    if (checkMember(nama) && checkBook(treeRoot, judul))
+    if (checkMember(nama) && checkID(idT) && checkBook(treeRoot, judul))
     {
         DataBuku *toRestock = searchBookBook(treeRoot, judul);
         toRestock->jumlahBuku += 1;
-
         dataMember *currMem = headMem;
         while (currMem != NULL)
         {
