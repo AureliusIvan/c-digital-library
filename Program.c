@@ -301,6 +301,7 @@ int cekStok(char *judul, DataBuku *root)
         return 1;
 }
 
+// untuk hubungin data dari linked list peminjaman (nama) ke linked listnya member
 dataMember *searchMemberMember (dataMember *head, char *keyName) {
     dataMember *curr = headMem;
 
@@ -328,6 +329,7 @@ int checkMember(char *key)
     }
 }
 
+// check apakah member dengan id [input] ada di linked list member
 int checkID(char *input) {
     dataMember *curr = headMem;
 
@@ -478,10 +480,16 @@ void inputNew()
     curr->next = node;
 
     // // check
-    // printf ("Check nama     : %s\n", node->name);
-    // printf ("Check no.telp  : %s\n", node->phoneNum);
-    // printf ("Check ID       : %s", node->id);
-    // printf ("\n");
+    system("cls");
+
+    printf("\n");
+    printf("==========================================================\n");
+    printf("                          Welcome !                       \n");
+    printf("==========================================================\n");
+    printf ("Nama Member    : %s\n", node->name);
+    printf ("No. Telp       : %s\n", node->phoneNum);
+    printf ("ID Member      : %s", node->id);
+    printf ("\n");
 
     printf("\nData berhasil ditambahkan\n");
     printf("Press any key to continue...");
@@ -1386,7 +1394,7 @@ void display1()
 char menu(){//Menu awal
     char ch;
     int choice;
-    // system ("cls");
+    system ("cls");
     printf("\n");
     time_t t;
     time(&t);
