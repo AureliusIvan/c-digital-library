@@ -187,6 +187,7 @@ void defaultPeminjaman() {
 
 // Cek Member & Title valid ga
 
+// untuk hubungin data dari linked list peminjaman (judul) ke linked listnya buku
 DataBuku *searchBookBook (DataBuku *root, char *key){
     if (root == NULL || (strcmpi (root->judulBuku, key) == 0))
         return root;
@@ -213,6 +214,7 @@ bool checkBook (DataBuku *root, char *key){
     return res2;
 }
 
+// belom kepake krn blm berhasil
 int cekStok(char *judul, DataBuku *root){
     DataBuku *treeRoot = root;
 
@@ -226,6 +228,7 @@ int cekStok(char *judul, DataBuku *root){
         return 1;
 }
 
+// untuk hubungin data dari linked list peminjaman (nama) ke linked listnya member
 dataMember *searchMemberMember (dataMember *head, char *keyName) {
     dataMember *curr = headMem;
 
@@ -238,6 +241,7 @@ dataMember *searchMemberMember (dataMember *head, char *keyName) {
     }
 }
 
+// check apakah member dengan nama [key] ada di linked list member
 int checkMember(char *key) {
     dataMember *curr = headMem;
 
@@ -250,6 +254,7 @@ int checkMember(char *key) {
     }
 }
 
+// check apakah member dengan id [input] ada di linked list member
 int checkID(char *input) {
     dataMember *curr = headMem;
 
