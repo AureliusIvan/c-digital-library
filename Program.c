@@ -562,6 +562,7 @@ void menuTurnitin()
     DATA *head, *tail;
     head = tail = NULL;
     int pilihan;
+    system ("cls");
     printf("\n");
     printf("   ______________________                              \n"
            "    | ___                |                             \n"
