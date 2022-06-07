@@ -24,7 +24,7 @@ typedef struct DataBuku
 typedef struct dataMember
 {
     char name[45];
-    char phoneNum[15];
+    char phoneNum[20];
     char id[10];
     int denda;
 
