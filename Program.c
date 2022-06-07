@@ -74,7 +74,7 @@ typedef struct dataMember {
 typedef struct peminjaman {
     char what[100];
     char who[45];
-    int priority;
+    char id[10];
 
     struct peminjaman *next, *prev;
 }peminjaman;
@@ -217,21 +217,25 @@ int cekStok(char *judul, DataBuku *root){
     DataBuku *treeRoot = root;
 
     // kl ada bukunya
-    if (checkBook (root, judul)) {
-        DataBuku *toCheck = searchBookBook(treeRoot, judul);
-
-        if (toCheck->jumlahBuku == 0) {
-            printf ("Stock buku habis!\n");
-            return 0;
-        }
-        else   
-            return 1;
-
+    DataBuku *toCheck = searchBookBook(treeRoot, judul);
+    if (toCheck->jumlahBuku == 0) {
+        printf ("Stock buku habis!\n");
+        return 0;
     }
+    else   
+        return 1;
+}
 
-    // kl gaada
-    else
-        printf ("Buku tidak tersedia\n");
+dataMember *searchMemberMember (dataMember *head, char *keyName) {
+    dataMember *curr = headMem;
+
+    while (curr != NULL) {
+        if (strcmpi(curr->name, keyName) == 0) {
+            return curr;
+        }
+        
+        curr = curr->next;
+    }
 }
 
 int checkMember(char *key) {
@@ -246,6 +250,17 @@ int checkMember(char *key) {
     }
 }
 
+int checkID(char *input) {
+    dataMember *curr = headMem;
+
+    while (curr != NULL) {
+        if (stricmp(curr->id, input) == 0) {
+            return 1;
+        }
+        
+        curr = curr->next;
+    }
+}
 
 void displayPeminjaman() {
     int urutan = 1;
@@ -272,19 +287,31 @@ void displayPeminjaman() {
         printf ("                     Data Peminjaman Buku                 \n");
         printf ("==========================================================\n");
 
-        // gabisa prev
         // data kedua, etc ga nampilin informasi orang yang pinjem buku, cuma bukunya
 
         printf ("\nData - %d\n", urutan);
-        while (currMem != NULL) {
-            if (strcmpi(currMem->name, curr->who) == 0) {
-                printf ("Nama         : %s\n", currMem->name);
-                printf ("ID           : %s\n", currMem->id);
-                printf ("No. Telp     : %s\n", currMem->phoneNum);
-                break;
-            }
-            currMem = currMem->next;
-        }
+
+        // char nameT[45];
+        // char phoneNumT[15];
+        // char idT[10];
+        // char judulBuku[100];
+        // char ISBNT[20];
+        // char penulisT[100];
+        // char tahunTerbitT[5];
+        // char jenisBukuT[20];
+        
+        // while (currMem != NULL) {
+        //     printf ("Nama         : %s\n", currMem->name);
+        //     printf ("ID           : %s\n", currMem->id);
+        //     printf ("No. Telp     : %s\n", currMem->phoneNum);
+
+        //     currMem = currMem->next;
+        // }
+
+        dataMember *toDisplay = searchMemberMember(currMem, curr->who);
+        printf ("Nama         : %s\n", toDisplay->name);
+        printf ("ID           : %s\n", toDisplay->id);
+        printf ("No. Telp     : %s\n", toDisplay->phoneNum);
 
         DataBuku *toPrint = searchBookBook(currBook, curr->what);
         printf ("Judul Buku   : %s\n", toPrint->judulBuku);
@@ -549,7 +576,7 @@ void search(DataBuku *cur, char key[100], DataBuku *parent)
     }  
 }  
 
-  
+
 DataBuku* findMinimum(DataBuku* cur)  {  
     while(cur->left != NULL) {  
         cur = cur->left;  
@@ -954,12 +981,22 @@ void newMemberMenu() {
 
 // Input data peminjaman baru
 
-peminjaman *newBorrower (char *nama, char *judul) {
+peminjaman *newBorrower (char *id, char *judul) {
     peminjaman *node = (peminjaman*) malloc(sizeof(peminjaman));
     peminjaman *curr;
+    dataMember *currMem = headMem;
     
-    strcpy (node->who, nama);
+    strcpy (node->id, id);
     strcpy (node->what, judul);
+
+    // cari namanya
+     while (currMem != NULL) {
+        if (strcmpi(currMem->id, id) == 0) {
+            strcpy (node->who, currMem->name);
+            break;
+        }
+        currMem = currMem->next;
+    }
 
     node->next = NULL;
     node->prev = NULL;
@@ -1027,7 +1064,8 @@ void peekBorrower (peminjaman *curr) {
 
 void borrowMenu() {
     peminjaman *headBorrow;
-    char nama[45], judul[100];
+    char judul[100];
+    char idT[10];
     int pilih;
 
     system ("cls");
@@ -1042,11 +1080,11 @@ void borrowMenu() {
     printf ("                          Pinjam Buku                     \n");
     printf ("==========================================================\n");
 
-    //check nama
-    printf ("Nama peminjam  : "); scanf (" %[^\n]s", nama);
-    if (!checkMember(nama)) {
+    //check ID
+    printf ("ID peminjam    : "); scanf ("%s", idT);
+    if (!checkID(idT)) {
         while(1) {
-            printf ("\nMember tidak ditemukan. Daftar member terlebih dahulu\n");
+            printf ("\nMember dengan ID %s tidak ditemukan. Daftar menjadi member terlebih dahulu\n", idT);
             printf ("1. Daftar Member\n"
                     "0. Return\n"
                     "Pilihan: "
@@ -1073,12 +1111,17 @@ void borrowMenu() {
 
         DataBuku *treeRoot = root;
         
-        // if (cekStok(judul, treeRoot)) {
-            peminjaman *curr = newBorrower(nama, judul);
-            peekBorrower(curr);
-;
-            printf ("\nData berhasil ditambahkan\n");
-        // }
+        if (checkBook(treeRoot, judul)) {
+            // if (cekStok(judul, treeRoot)) {
+                peminjaman *curr = newBorrower(idT, judul);
+                peekBorrower(curr);
+                printf ("\nData berhasil ditambahkan\n");
+            // }
+            // else ("\nStok buku dengan habis");
+        }
+        else {
+            printf ("\nData gagal ditambahkan karena buku tidak ditemukan\n");
+        }
 
         printf ("Press any key to continue...");
         getch();
@@ -1091,18 +1134,9 @@ void display1(){
 }
 
 char menu(){//Menu awal
-// FILE *dataBUKU;
-// DataBuku *node, *curr;
-// dataBUKU = fopen("DataBuku.txt", "r");
-// while (!feof(dataBUKU)){
-// node = (DataBuku*)malloc(sizeof(DataBuku));
-// node->next = NULL;
-// }
-// fclose(dataBUKU);
-
     char ch;
     int choice;
-    system ("cls");
+    // system ("cls");
     printf("\n");
     printf (" _______    __       __     ____   _    __   ___  _      \n"
             "||  __  |__|  |  /- |  |__ | || |-| |__|  | |   |||      \n"
@@ -1144,7 +1178,7 @@ int main(){//Main
     }
     fclose(dataBUKU);
     defaultMember();
-    //defaultPeminjaman();
+    defaultPeminjaman();
 
     char ch;
     while (1)
