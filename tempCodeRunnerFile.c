@@ -1,1 +1,1 @@
-strstr(strlwr(compare), strlwr(key))
+printf ("\nWaktu Peminjaman : %s", ctime(&t));
