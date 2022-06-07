@@ -12,7 +12,7 @@ int counter = 1;
 // bikin tree sesuai abjad judul
 typedef struct DataBuku
 {
-    char judulBuku[100]; // sejauh ini paling panjang 71 char
+    char judulBuku[100]; 
     char penulis[100];
     char tahunTerbit[5];
     char ISBN[20];
@@ -98,8 +98,6 @@ DataBuku *insert(DataBuku *node, char key[100],
 
     return node;
 }
-
-// Data Peminjaman Buku  - ivan
 
 void searchBuku(DataBuku *root, char key[100])
 {
@@ -294,22 +292,6 @@ bool checkBook(DataBuku *root, char *key)
     return res2;
 }
 
-int cekStok(char *judul, DataBuku *root)
-{
-    DataBuku *treeRoot = root;
-
-    // kl ada bukunya
-    DataBuku *toCheck = searchBookBook(treeRoot, judul);
-    printf("Jumlah stock dari %s : %d", toCheck->judulBuku);
-    // if (toCheck->jumlahBuku == 0)
-    // {
-    //     printf("Stock buku habis!\n");
-    //     return 0;
-    // }
-    // else
-    //     return 1;
-}
-
 // untuk hubungin data dari linked list peminjaman (nama) ke linked listnya member
 dataMember *searchMemberMember(dataMember *head, char *keyName)
 {
@@ -321,7 +303,6 @@ dataMember *searchMemberMember(dataMember *head, char *keyName)
         {
             return curr;
         }
-
         curr = curr->next;
     }
 }
@@ -358,7 +339,8 @@ int checkID(char *input)
 }
 
 void displayPeminjaman()
-{int urutan = 1;
+{
+    int urutan = 1;
     int pilih;
     peminjaman *curr = headBorrow;
     dataMember *currMem = headMem;
@@ -384,13 +366,11 @@ void displayPeminjaman()
         printf("==========================================================\n");
         printf("                     Data Peminjaman Buku                 \n");
         printf("==========================================================\n");
-
-        printf ("\nData - %d\n", urutan);
-        
+        printf ("\nData - %d\n", urutan);        
         dataMember *toDisplay = searchMemberMember(currMem, curr->who);
-        printf ("Nama         : %s\n", toDisplay->name);
-        printf ("ID           : %s\n", toDisplay->id);
-        printf ("No. Telp     : %s\n", toDisplay->phoneNum);
+        printf("Nama         : %s\n", toDisplay->name);
+        printf("ID           : %s\n", toDisplay->id);
+        printf("No. Telp     : %s\n", toDisplay->phoneNum);
 
         DataBuku *toPrint = searchBookBook(currBook, curr->what);
         printf("Judul Buku   : %s\n", toPrint->judulBuku);
@@ -529,177 +509,6 @@ void inputNew()
     printf("Press any key to continue...");
     getch();
 }
-
-// Menu Turnitin
-typedef struct data
-{
-    char nama[45];
-    char topik[100];
-    struct data *next;
-} DATA;
-
-DATA *headQueue;
-
-void dequeue()
-{
-    if (headQueue != NULL)
-    {
-        DATA *hapus = headQueue;
-        printf("test");
-        headQueue = (headQueue)->next;
-        free(hapus);
-    }
-    else
-    {
-        printf("data masih kosong\n");
-        getch();
-    }
-    return;
-}
-
-void checkQueueTurnitin()
-{
-    system("cls");
-    char choice, persentage[3];
-    char charset[] = "0123456789";
-    printf("===============================\n");
-    printf("Antrian Paling depan Sekarang:\n");
-    printf("===============================\n");
-    if (headQueue != NULL)
-    {
-        printf("Nama: %s\n", headQueue->nama);
-        printf("Topik: %s\n", headQueue->topik);
-    }
-    else
-    {
-        printf("Antrian sekarang kosong\n");
-        printf("Press anything to continue....\n");
-        getchar();
-        return;
-    }
-    printf("-----------------------------------\n");
-    printf("1. Pindai Plagiarasime Sekarang \n");
-    printf("0. Keluar\n");
-    scanf("%c", choice);
-    switch (choice)
-    {
-    case '1':
-        dequeue();
-        break;
-    case '2':
-        return;
-    default:
-        break;
-    }
-}
-
-void enqueue(DATA **tail, DATA peminjam)
-{
-    DATA *node = (DATA *)malloc(sizeof(DATA));
-    strcpy(node->nama, peminjam.nama);
-    strcpy(node->topik, peminjam.topik);
-    node->next = NULL;
-    if (headQueue == NULL)
-        headQueue = node;
-    else
-        (*tail)->next = node;
-    *tail = node;
-    return;
-}
-
-void daftarTurnitin(DATA **head, DATA **tail)
-{
-    DATA peminjam;
-    char nama[45], topik[100];
-    int pilih;
-    fflush(stdin);
-    printf("Nama Peminjam   : ");
-    scanf("%[^\n]", nama);
-    fflush(stdin);
-    if (!checkMember(nama))
-    {
-        while (1)
-        {
-            printf("\nMember tidak ditemukan. Daftar member terlebih dahulu\n");
-            printf("1. Daftar Member\n"
-                   "0. Return\n"
-                   "Pilihan: ");
-            scanf("%d", &pilih);
-
-            if (pilih < 0 || pilih > 1)
-            {
-                printf("Pilihan salah!\nPress any key to continue");
-                getch();
-            }
-
-            else if (pilih == 0)
-                return;
-
-            else if (pilih == 1)
-                inputNew();
-            return;
-        }
-    }
-    else
-    {
-        fflush(stdin);
-        printf("Topik            : ");
-        scanf("%[^\n]", topik);
-        strcpy(peminjam.nama, nama);
-        strcpy(peminjam.topik, topik);
-        enqueue(tail, peminjam);
-    }
-}
-
-void menuTurnitin()
-{
-    system("cls");
-    DATA *head, *tail;
-    head = tail = NULL;
-    int pilihan;
-    system("cls");
-    printf("\n");
-    printf ("    ______________________                             \n"
-            "    | ___                |                             \n"
-            "    |  ________________  |       ______   _____        \n"
-            "    |  ________________  |  /   |      | |     |       \n"
-            "    |  ________________  | <    |      | |     | () /  \n"
-            "    |  ________________  |       ______  |     |   /   \n"
-            "    |  ________________  |      |      | |     |  / () \n"
-            "    |  ________________  |      |      | |     |       \n"
-            "    |___________________ |       ______   _____        \n");
-    printf("==========================================================\n");
-    printf("                          TURNITIN\n");
-    printf("==========================================================\n");
-    printf("1. Daftar Turnitin\n"
-           "2. Cek Queue\n"
-           "3. Pindai Plagiarisme\n"
-           "0. Exit\n"
-           "Pilihan: ");
-    scanf("%d", &pilihan);
-    fflush(stdin);
-    switch (pilihan)
-    {
-    case 1:
-        daftarTurnitin(&head, &tail);
-        break;
-    case 2:
-        checkQueueTurnitin();
-        break;
-    case 3:
-        dequeue();
-        printf("Berhasil Pindai Plagiarisme!\n");
-        break;
-    case 0:
-        printf("\nThank you for using this service ^-^\n\n");
-        return;
-    default:
-        printf("Pilihan salah!");
-        break;
-    }
-    return;
-}
-
 // Menu Pengembalian Buku
 
 int checkPeminjaman(char *id, char *title) {
@@ -822,39 +631,7 @@ void menuPengembalianBuku()
 
     returnBook();
 
-    // printf ("1. Data Buku Yang Dipinjam\n"
-    //         "2. Kembalikan Buku\n"
-    //         "0. Exit\n"
-    //         "Pilihan: "
-    // );
-    // scanf("%d", &pilihan);
-    // fflush(stdin);
-
-    // switch (pilihan){
-    //     case 1:
-    //         system("cls");
-    //         printf ("=================================================================================================\n");
-    //         printf ("                                           List Peminjam Buku                                    \n");
-    //         printf ("=================================================================================================\n\n");
-    //         printf ("-------------------------------------------------------------------------------------------------\n"
-    //                 "| No. |                 Name                 |                              Judul Buku                             |    ID    |\n"
-    //                 "-------------------------------------------------------------------------------------------------\n"
-    //         );
-    //         break;
-    //     case 2:
-    //         returnBook();
-    //         break;
-    //     case 0:
-    //         return;
-    //     default:
-    //         printf("hmm");
-    //         break;
-    // }
 }
-
-// List Buku - soon
-
-// Edit Buku - marcel
 
 void tambahBuku()
 {
@@ -924,6 +701,7 @@ DataBuku *findMinimum(DataBuku *cur)
     }
     return cur;
 }
+
 
 void deleteNode(DataBuku *root, char key[100])
 {
@@ -1063,6 +841,8 @@ void hapusBuku()
     return;
 }
 
+
+
 void editBuku()
 {
     while (1)
@@ -1102,7 +882,6 @@ void editBuku()
 }
 
 // Anggota Baru - mae
-
 void defaultMember()
 {
     FILE *defaultMem = fopen("DataMember.txt", "r");
@@ -1454,7 +1233,6 @@ void borrowMenu()
     }
 }
 
-//////////
 
 char menu()
 { // Menu awal
@@ -1481,10 +1259,183 @@ char menu()
            "4. List Data Buku\n"
            "5. Edit Data Buku\n"
            "6. Membership\n"
+           "7. Booking Ruang \n"
            "0. Exit\n"
            "Pilihan: ");
     scanf("%c", &choice);
     return choice;
+}
+
+/// queue untuk booking ruangan
+typedef struct dataROOM
+{
+    char nama[45];
+    char id[10];
+    struct dataROOM *next;
+} DATAROOM;
+
+DATAROOM *headROOM = NULL, *tailROOM = NULL;
+
+void enqueueROOM(char nama[45], char id[10])
+{
+    DATAROOM *node = (DATAROOM *)malloc(sizeof(DATAROOM));
+    strcpy(node->nama, nama);
+    strcpy(node->id, id);
+    node->next = NULL;
+    if (headROOM == NULL)
+    {
+        headROOM = node;
+    }
+    else
+        (tailROOM)->next = node;
+    tailROOM = node;
+    return;
+}
+
+void dequeueROOM()
+{
+    DATAROOM *hapus = headROOM;
+    if (headROOM->next != NULL)
+    {
+        headROOM = headROOM->next;
+    }
+    else
+    {
+        headROOM = NULL;
+    }
+    free(hapus);
+}
+
+int isemptyROOM()
+{
+    if (headROOM == NULL)
+        return 1;
+    else
+        return 0;
+}
+
+const char *frontROOM()
+{
+    return headROOM->nama;
+}
+
+void BookingRuangMeeting()
+{
+    char ID[10];
+    char choice;
+    dataMember *curr;
+    while (1)
+    {
+        system("cls");
+        printf("Input ID: ");
+        scanf("%s", ID);
+        curr = headMem;
+        while (curr != NULL)
+        {
+            if (strcmpi(curr->id, ID) == 0)
+            {
+                char nama[45];
+                strcpy(nama, curr->name);
+                enqueueROOM(nama, ID);
+                printf("\nBerhasil Masukan ke dalam antrian atas nama %s!\n", nama);
+                printf("\n");
+                printf("Press anything to continue...");
+                getch();
+                return;
+            }
+            curr = curr->next;
+        }
+        printf("ID yang dimasukan tidak valid!\n");
+        printf("1. Coba lagi\n");
+        printf("2. Masukan New Member\n");
+        printf("0. Kembali\n");
+        printf("Pilihan: ");
+        scanf("\n%c", &choice);
+        switch (choice)
+        {
+        case '1':
+            break;
+        case '2':
+            // input new mem
+        case '0':
+            return;
+        default:
+            break;
+        }
+    }
+    return;
+}
+
+/////Booking ruang meeting
+void checkoutROOM()
+{
+    if (headROOM != NULL)
+    {
+        system("cls");
+        printf("%s Telah Berhasil Check out...\n", frontROOM());
+        dequeueROOM();
+        if (headROOM != NULL)
+        {
+            printf("%s Berhasil melakukan Check in ruangan diskusi...\n", frontROOM());
+            printf("\n");
+            printf("Press anything to continue...");
+            getch();
+        }
+        else
+        {
+            printf("Antrian Kosong!");
+            printf("Press anything to continue...");
+            getch();
+        }
+    }
+    else
+    {
+        printf("Antrian Kosong!");
+        printf("Press anything to continue...");
+        getch();
+    }
+}
+
+void listBooking()
+{
+    system("cls");
+    printf("\nPengguna yang sedang menggunakan ruangan : %s\n", frontROOM());
+    printf("\n");
+    getch();
+}
+
+void MenuBookingMeeting()
+{
+    while (1)
+    {
+        system("cls");
+        char choice;
+        printf("===========================================\n");
+        printf("        Menu Booking Ruang Diskusi\n");
+        printf("===========================================\n");
+        printf("1. Booking Ruang Diskusi\n");
+        printf("2. List booking \n");
+        printf("3. Checkout Ruangan \n");
+        printf("0. Exit\n");
+        printf("Pilihan: ");
+        scanf("%c", &choice);
+        switch (choice)
+        {
+        case '1':
+            BookingRuangMeeting();
+            break;
+        case '2':
+            listBooking();
+            break;
+        case '3':
+            checkoutROOM();
+            break;
+        case '0':
+            return;
+        default:
+            break;
+        }
+    }
 }
 
 int main()
@@ -1532,6 +1483,8 @@ int main()
         case '6':
             newMemberMenu();
             break;
+        case '7':
+            MenuBookingMeeting();
         case '0':
             printf("\nThank you for using this service ^-^\n\n");
             return 0;
